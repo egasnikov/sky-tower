@@ -52,13 +52,18 @@ input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;bac
 .sens tbody tr.cur{background:var(--tealt);}
 .sens tbody tr.cur td{font-weight:700;color:var(--navy);}
 .sens .cap{font-size:10.5px;color:var(--mut);margin-top:8px;}
+.scen{display:inline-flex;margin-top:12px;border:1px solid var(--teal);border-radius:6px;overflow:hidden;}
+.scen button{border:none;background:transparent;color:#9FB6C2;padding:7px 20px;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;}
+.scen button.active{background:var(--teal);color:var(--navy);}
+.sl.hide,.grp.hide,.r.hide{display:none;}
 </style></head><body>
 <div class="wrap">
   <div class="mast">
     <div class="meta">JUNE 2026</div>
     <div class="brand">Palm &amp; Peak Real Estate</div>
     <h1>Sky Tower — Interactive Returns Dashboard</h1>
-    <div class="sub">Levered Scenario · drag the key assumptions and watch LP returns update live</div>
+    <div class="sub">Drag the key assumptions and watch LP returns update live</div>
+    <div class="scen" id="scen"></div>
   </div>
   <div class="grid">
     <div class="panel">
@@ -72,7 +77,7 @@ input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;bac
         <div class="bar"><div class="debt" id="barDebt"></div><div class="eq" id="barEq"></div></div>
         <div class="facts">
           <div class="r"><span>Total project cost</span><span id="fUses"></span></div>
-          <div class="r"><span>Senior debt</span><span id="fDebt"></span></div>
+          <div class="r" id="rowDebt"><span>Senior debt</span><span id="fDebt"></span></div>
           <div class="r"><span>LP equity required</span><span id="fEq"></span></div>
           <div class="r"><span>Gross exit value</span><span id="fExit"></span></div>
           <div class="r"><span>LP total distributions</span><span id="fLPd"></span></div>
@@ -115,13 +120,16 @@ function model(p){const MO=12;const sqft=p.sqft,hold=p.hold;const cap=sqft/p.des
  const lpirr=irr(icf);let sn=0,sd=0;for(let y=1;y<=hold;y++){sn+=noi(y);sd+=ds(y);}
  return{lpeq,debt,uses,lpirr,mult,lptot,gp,dscr:sd>0?sn/sd:NaN,gexit,exit_noi,noi3:noi(3),neq,debtpct:debt/uses,eqpct:lpeq/uses};}
 
-const BASE={sqft:23000,purchase:48000000,acq_rate:0.041,vat:0.05,reno_psf:350,cont_rate:0.05,fitout:7,hold:4,ltv:0.70,interest:0.12,desk_density:70,stab_occ:0.95,rent_mo:3500,rent_esc:0.05,opex_esc:0.03,broker:0.10,service_psf:18,exit_cap:0.09,disp:0.02,mgmt:0.02,pref:0.08,gp_catchup:0.02,lp_share:0.80,gp_share:0.20};
+const BASE_LEV={sqft:23000,purchase:48000000,acq_rate:0.041,vat:0.05,reno_psf:350,cont_rate:0.05,fitout:7,hold:4,ltv:0.70,interest:0.12,desk_density:70,stab_occ:0.95,rent_mo:3500,rent_esc:0.05,opex_esc:0.03,broker:0.10,service_psf:18,exit_cap:0.09,disp:0.02,mgmt:0.02,pref:0.08,gp_catchup:0.02,lp_share:0.80,gp_share:0.20};
+const BASE_UNLEV={...BASE_LEV,ltv:0};
+let SCEN="lev";let BASE=BASE_LEV;
 const SL=[
- {g:"Acquisition & Debt"},
+ {g:"Acquisition"},
  {k:"purchase",lab:"Purchase Price",min:40e6,max:56e6,step:250000,fmt:v=>"AED "+(v/1e6).toFixed(1)+"M"},
  {k:"reno_psf",lab:"Renovation Cost",min:250,max:500,step:10,fmt:v=>"AED "+v+"/sqft"},
- {k:"ltv",lab:"Loan-to-Value (LTV)",min:0,max:0.75,step:0.05,fmt:v=>(v*100).toFixed(0)+"%"},
- {k:"interest",lab:"Interest Rate",min:0.08,max:0.15,step:0.0025,fmt:v=>(v*100).toFixed(2)+"%"},
+ {g:"Debt"},
+ {k:"ltv",lab:"Loan-to-Value (LTV)",min:0,max:0.75,step:0.05,fmt:v=>(v*100).toFixed(0)+"%",debt:true},
+ {k:"interest",lab:"Interest Rate",min:0.08,max:0.15,step:0.0025,fmt:v=>(v*100).toFixed(2)+"%",debt:true},
  {g:"Revenue"},
  {k:"rent_mo",lab:"Rent / Desk / Month",min:2500,max:5000,step:50,fmt:v=>"AED "+v.toLocaleString()},
  {k:"stab_occ",lab:"Stabilised Occupancy",min:0.70,max:1.0,step:0.01,fmt:v=>(v*100).toFixed(0)+"%"},
@@ -135,8 +143,8 @@ const aed=v=>"AED "+(v/1e6).toFixed(1)+"M";
 const usd=v=>"USD "+(v/3.6725/1e6).toFixed(1)+"M";
 
 function buildSliders(){const c=document.getElementById("sliders");let h="";
- SL.forEach(s=>{if(s.g){h+=`<div class="grp">${s.g}</div>`;return;}
-  h+=`<div class="sl"><div class="row"><span class="lab">${s.lab}<span class="base" id="b_${s.k}"></span></span><span class="val" id="v_${s.k}"></span></div>
+ SL.forEach(s=>{if(s.g){h+=`<div class="grp" id="grp_${s.g.replace(/[^A-Za-z]/g,'')}">${s.g}</div>`;return;}
+  h+=`<div class="sl" id="row_${s.k}"><div class="row"><span class="lab">${s.lab}<span class="base" id="b_${s.k}"></span></span><span class="val" id="v_${s.k}"></span></div>
   <input type="range" id="s_${s.k}" min="${s.min}" max="${s.max}" step="${s.step}" value="${P[s.k]}"></div>`;});
  h+=`<button class="btn" id="reset">Reset to Base Case</button>`;c.innerHTML=h;
  SL.forEach(s=>{if(s.g)return;const el=document.getElementById("s_"+s.k);
@@ -174,7 +182,19 @@ function render(){
  const caps=[0.07,0.08,0.09,0.10,0.11,0.12];let near=0,nd=9;caps.forEach((c,i)=>{const dd=Math.abs(c-P.exit_cap);if(dd<nd){nd=dd;near=i;}});
  document.getElementById("sensBody").innerHTML=caps.map((c,i)=>{const rr=model({...P,exit_cap:c});return `<tr class="${i===near?'cur':''}"><td>${(c*100).toFixed(0)}%</td><td>${isNaN(rr.lpirr)?'n/a':(rr.lpirr*100).toFixed(1)+'%'}</td><td>${rr.mult.toFixed(2)}x</td><td>${aed(rr.lptot)}</td></tr>`;}).join("");
  const warn=r.dscr<1.25&&!isNaN(r.dscr)?` <span class="warn">· DSCR below 1.25x covenant zone</span>`:"";
- document.getElementById("note").innerHTML=`Mirrors Sky_Tower_Levered_4Y_Model_v2.xlsx exactly (base case: 44.2% LP IRR, 3.69x). Base exit assumes a stabilised sale at the chosen cap rate; AED pegged at 3.6725 = USD 1.00. Deltas shown vs base case. Illustrative only — not an offer.${warn}`;
+ const src=SCEN==="lev"?"Mirrors Sky_Tower_Levered_4Y_Model_v2.xlsx exactly (base case: 44.2% LP IRR, 3.69x, 70% LTV).":"Mirrors Sky_Tower_AllEquity_4Y_Model.xlsx exactly (base case: 28.2% LP IRR, 2.44x, all-equity / no debt).";
+ document.getElementById("note").innerHTML=`${src} Base exit assumes a stabilised sale at the chosen cap rate; AED pegged at 3.6725 = USD 1.00. Deltas shown vs the selected scenario's base case. Illustrative only — not an offer.${warn}`;
 }
-buildSliders();render();
+function buildScen(){const c=document.getElementById("scen");
+ c.innerHTML=`<button data-s="lev">Levered · 70% LTV</button><button data-s="unlev">Unlevered · All-Equity</button>`;
+ c.querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>setScen(b.dataset.s)));}
+function setScen(s){SCEN=s;BASE=(s==="lev")?BASE_LEV:BASE_UNLEV;P={...BASE};
+ SL.forEach(o=>{if(o.g)return;document.getElementById("s_"+o.k).value=P[o.k];document.getElementById("b_"+o.k).textContent="· base "+o.fmt(BASE[o.k]);});
+ const lev=s==="lev";
+ document.getElementById("grp_Debt").classList.toggle("hide",!lev);
+ SL.forEach(o=>{if(!o.g&&o.debt)document.getElementById("row_"+o.k).classList.toggle("hide",!lev);});
+ document.getElementById("rowDebt").classList.toggle("hide",!lev);
+ document.querySelectorAll("#scen button").forEach(b=>b.classList.toggle("active",b.dataset.s===s));
+ render();}
+buildSliders();buildScen();setScen("lev");
 </script></body></html>
