@@ -75,7 +75,6 @@ input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;bac
           <div class="r"><span>Senior debt</span><span id="fDebt"></span></div>
           <div class="r"><span>LP equity required</span><span id="fEq"></span></div>
           <div class="r"><span>Gross exit value</span><span id="fExit"></span></div>
-          <div class="r"><span>Year-exit stabilised NOI</span><span id="fNOI"></span></div>
           <div class="r"><span>LP total distributions</span><span id="fLPd"></span></div>
           <div class="r"><span>Net equity from exit</span><span id="fNeq"></span></div>
         </div>
@@ -170,7 +169,6 @@ function render(){
  document.getElementById("fDebt").textContent=aed(r.debt);
  document.getElementById("fEq").textContent=aed(r.lpeq)+" · "+usd(r.lpeq);
  document.getElementById("fExit").textContent=aed(r.gexit);
- document.getElementById("fNOI").textContent=aed(r.exit_noi);
  document.getElementById("fLPd").textContent=aed(r.lptot);
  document.getElementById("fNeq").textContent=aed(r.neq);
  const caps=[0.07,0.08,0.09,0.10,0.11,0.12];let near=0,nd=9;caps.forEach((c,i)=>{const dd=Math.abs(c-P.exit_cap);if(dd<nd){nd=dd;near=i;}});
