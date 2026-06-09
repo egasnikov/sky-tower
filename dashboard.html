@@ -76,6 +76,7 @@ input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;bac
           <div class="r"><span>LP equity required</span><span id="fEq"></span></div>
           <div class="r"><span>Gross exit value</span><span id="fExit"></span></div>
           <div class="r"><span>Year-exit stabilised NOI</span><span id="fNOI"></span></div>
+          <div class="r"><span>Stabilised NOI yield on cost</span><span id="fNOIyld"></span></div>
           <div class="r"><span>LP total distributions</span><span id="fLPd"></span></div>
           <div class="r"><span>GP promote</span><span id="fGP"></span></div>
           <div class="r"><span>Net equity from exit</span><span id="fNeq"></span></div>
@@ -115,7 +116,7 @@ function model(p){const MO=12;const sqft=p.sqft,hold=p.hold;const cap=sqft/p.des
  const lptot=roc+pref+resid*p.lp_share,gp=catch_+resid*p.gp_share,mult=lptot/lpeq;
  let icf=[-lpeq];for(let y=1;y<hold;y++)icf.push(cfs[y-1]);icf.push(lptot-cfs.slice(0,hold-1).reduce((a,b)=>a+b,0));
  const lpirr=irr(icf);let sn=0,sd=0;for(let y=1;y<=hold;y++){sn+=noi(y);sd+=ds(y);}
- return{lpeq,debt,uses,lpirr,mult,lptot,gp,dscr:sd>0?sn/sd:NaN,gexit,exit_noi,neq,debtpct:debt/uses,eqpct:lpeq/uses};}
+ return{lpeq,debt,uses,lpirr,mult,lptot,gp,dscr:sd>0?sn/sd:NaN,gexit,exit_noi,noi3:noi(3),neq,debtpct:debt/uses,eqpct:lpeq/uses};}
 
 const BASE={sqft:23000,purchase:48000000,acq_rate:0.041,vat:0.05,reno_psf:350,cont_rate:0.05,fitout:7,hold:4,ltv:0.70,interest:0.12,desk_density:70,stab_occ:0.95,rent_mo:3500,rent_esc:0.05,opex_esc:0.03,broker:0.10,service_psf:18,exit_cap:0.09,disp:0.02,mgmt:0.02,pref:0.08,gp_catchup:0.02,lp_share:0.80,gp_share:0.20};
 const SL=[
@@ -172,6 +173,7 @@ function render(){
  document.getElementById("fEq").textContent=aed(r.lpeq)+" · "+usd(r.lpeq);
  document.getElementById("fExit").textContent=aed(r.gexit);
  document.getElementById("fNOI").textContent=aed(r.exit_noi);
+ document.getElementById("fNOIyld").textContent=(r.noi3/r.uses*100).toFixed(1)+"%";
  document.getElementById("fLPd").textContent=aed(r.lptot);
  document.getElementById("fGP").textContent=aed(r.gp);
  document.getElementById("fNeq").textContent=aed(r.neq);
