@@ -83,7 +83,7 @@ input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;bac
       </div>
       <div class="stack sens">
         <h3>Returns Sensitivity — Exit Cap Rate</h3>
-        <table><thead><tr><th>Exit Cap</th><th>LP IRR</th><th>LP Multiple</th><th>GP Promote</th></tr></thead><tbody id="sensBody"></tbody></table>
+        <table><thead><tr><th>Exit Cap</th><th>LP IRR</th><th>LP Multiple</th><th>LP Distributions</th></tr></thead><tbody id="sensBody"></tbody></table>
         <div class="cap">All other assumptions held at current slider settings. Highlighted row = selected exit cap.</div>
       </div>
     </div>
@@ -176,7 +176,7 @@ function render(){
  document.getElementById("fGP").textContent=aed(r.gp);
  document.getElementById("fNeq").textContent=aed(r.neq);
  const caps=[0.07,0.08,0.09,0.10,0.11,0.12];let near=0,nd=9;caps.forEach((c,i)=>{const dd=Math.abs(c-P.exit_cap);if(dd<nd){nd=dd;near=i;}});
- document.getElementById("sensBody").innerHTML=caps.map((c,i)=>{const rr=model({...P,exit_cap:c});return `<tr class="${i===near?'cur':''}"><td>${(c*100).toFixed(0)}%</td><td>${isNaN(rr.lpirr)?'n/a':(rr.lpirr*100).toFixed(1)+'%'}</td><td>${rr.mult.toFixed(2)}x</td><td>${aed(rr.gp)}</td></tr>`;}).join("");
+ document.getElementById("sensBody").innerHTML=caps.map((c,i)=>{const rr=model({...P,exit_cap:c});return `<tr class="${i===near?'cur':''}"><td>${(c*100).toFixed(0)}%</td><td>${isNaN(rr.lpirr)?'n/a':(rr.lpirr*100).toFixed(1)+'%'}</td><td>${rr.mult.toFixed(2)}x</td><td>${aed(rr.lptot)}</td></tr>`;}).join("");
  const warn=r.dscr<1.25&&!isNaN(r.dscr)?` <span class="warn">· DSCR below 1.25x covenant zone</span>`:"";
  document.getElementById("note").innerHTML=`Mirrors Sky_Tower_Levered_4Y_Model_v2.xlsx exactly (base case: 44.2% LP IRR, 3.69x). Base exit assumes a stabilised sale at the chosen cap rate; AED pegged at 3.6725 = USD 1.00. Deltas shown vs base case. Illustrative only — not an offer.${warn}`;
 }
