@@ -45,6 +45,13 @@ input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;bac
 .facts .r span:last-child{font-weight:700;color:var(--navy);font-variant-numeric:tabular-nums;}
 .note{font-size:11px;color:var(--mut);padding:0 28px;line-height:1.5;}
 .warn{color:var(--down);font-weight:600;}
+.sens table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;}
+.sens th,.sens td{text-align:right;padding:6px 8px;font-size:12.5px;border-bottom:1px solid var(--line);}
+.sens th{font-size:10.5px;text-transform:uppercase;letter-spacing:.5px;color:var(--mut);font-weight:700;border-bottom:2px solid var(--line);}
+.sens td:first-child,.sens th:first-child{text-align:left;}
+.sens tbody tr.cur{background:var(--tealt);}
+.sens tbody tr.cur td{font-weight:700;color:var(--navy);}
+.sens .cap{font-size:10.5px;color:var(--mut);margin-top:8px;}
 </style></head><body>
 <div class="wrap">
   <div class="mast">
@@ -73,6 +80,11 @@ input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;bac
           <div class="r"><span>GP promote</span><span id="fGP"></span></div>
           <div class="r"><span>Net equity from exit</span><span id="fNeq"></span></div>
         </div>
+      </div>
+      <div class="stack sens">
+        <h3>Returns Sensitivity — Exit Cap Rate</h3>
+        <table><thead><tr><th>Exit Cap</th><th>LP IRR</th><th>LP Multiple</th><th>GP Promote</th></tr></thead><tbody id="sensBody"></tbody></table>
+        <div class="cap">All other assumptions held at current slider settings. Highlighted row = selected exit cap.</div>
       </div>
     </div>
   </div>
@@ -163,6 +175,8 @@ function render(){
  document.getElementById("fLPd").textContent=aed(r.lptot);
  document.getElementById("fGP").textContent=aed(r.gp);
  document.getElementById("fNeq").textContent=aed(r.neq);
+ const caps=[0.07,0.08,0.09,0.10,0.11,0.12];let near=0,nd=9;caps.forEach((c,i)=>{const dd=Math.abs(c-P.exit_cap);if(dd<nd){nd=dd;near=i;}});
+ document.getElementById("sensBody").innerHTML=caps.map((c,i)=>{const rr=model({...P,exit_cap:c});return `<tr class="${i===near?'cur':''}"><td>${(c*100).toFixed(0)}%</td><td>${isNaN(rr.lpirr)?'n/a':(rr.lpirr*100).toFixed(1)+'%'}</td><td>${rr.mult.toFixed(2)}x</td><td>${aed(rr.gp)}</td></tr>`;}).join("");
  const warn=r.dscr<1.25&&!isNaN(r.dscr)?` <span class="warn">· DSCR below 1.25x covenant zone</span>`:"";
  document.getElementById("note").innerHTML=`Mirrors Sky_Tower_Levered_4Y_Model_v2.xlsx exactly (base case: 44.2% LP IRR, 3.69x). Base exit assumes a stabilised sale at the chosen cap rate; AED pegged at 3.6725 = USD 1.00. Deltas shown vs base case. Illustrative only — not an offer.${warn}`;
 }
