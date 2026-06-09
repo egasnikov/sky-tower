@@ -76,9 +76,7 @@ input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;bac
           <div class="r"><span>LP equity required</span><span id="fEq"></span></div>
           <div class="r"><span>Gross exit value</span><span id="fExit"></span></div>
           <div class="r"><span>Year-exit stabilised NOI</span><span id="fNOI"></span></div>
-          <div class="r"><span>Stabilised NOI yield on cost</span><span id="fNOIyld"></span></div>
           <div class="r"><span>LP total distributions</span><span id="fLPd"></span></div>
-          <div class="r"><span>GP promote</span><span id="fGP"></span></div>
           <div class="r"><span>Net equity from exit</span><span id="fNeq"></span></div>
         </div>
       </div>
@@ -160,7 +158,7 @@ function render(){
   {l:"LP Equity Multiple",v:r.mult.toFixed(2)+"x",d:delta(r.mult,b.mult,false,false),hl:true},
   {l:"LP Equity Required",v:aed(r.lpeq),d:delta(r.lpeq,b.lpeq,false,true)},
   {l:"LP Total Distributions",v:aed(r.lptot),d:delta(r.lptot,b.lptot,false,false)},
-  {l:"GP Promote",v:aed(r.gp),d:delta(r.gp,b.gp,false,false)},
+  {l:"Stabilised NOI Yield",v:(r.noi3/r.uses*100).toFixed(1)+"%",d:aed(r.noi3)+" · "+delta(r.noi3/r.uses,b.noi3/b.uses,true,false)},
   {l:"Avg DSCR",v:isNaN(r.dscr)?"— (no debt)":r.dscr.toFixed(2)+"x",d:isNaN(r.dscr)?"":delta(r.dscr,b.dscr,false,false)},
  ];
  document.getElementById("kpis").innerHTML=cards.map(c=>`<div class="kpi ${c.hl?'hl':''}"><div class="l">${c.l}</div><div class="v">${c.v}</div><div class="d">${c.d}</div></div>`).join("");
@@ -173,9 +171,7 @@ function render(){
  document.getElementById("fEq").textContent=aed(r.lpeq)+" · "+usd(r.lpeq);
  document.getElementById("fExit").textContent=aed(r.gexit);
  document.getElementById("fNOI").textContent=aed(r.exit_noi);
- document.getElementById("fNOIyld").textContent=(r.noi3/r.uses*100).toFixed(1)+"%";
  document.getElementById("fLPd").textContent=aed(r.lptot);
- document.getElementById("fGP").textContent=aed(r.gp);
  document.getElementById("fNeq").textContent=aed(r.neq);
  const caps=[0.07,0.08,0.09,0.10,0.11,0.12];let near=0,nd=9;caps.forEach((c,i)=>{const dd=Math.abs(c-P.exit_cap);if(dd<nd){nd=dd;near=i;}});
  document.getElementById("sensBody").innerHTML=caps.map((c,i)=>{const rr=model({...P,exit_cap:c});return `<tr class="${i===near?'cur':''}"><td>${(c*100).toFixed(0)}%</td><td>${isNaN(rr.lpirr)?'n/a':(rr.lpirr*100).toFixed(1)+'%'}</td><td>${rr.mult.toFixed(2)}x</td><td>${aed(rr.lptot)}</td></tr>`;}).join("");
