@@ -1,0 +1,170 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sky Tower — Interactive Returns Dashboard</title>
+<style>
+:root{--navy:#051C2C;--navy2:#0E3A4F;--teal:#00A9CE;--tealt:#DCEFF6;--ink:#1A1F26;--mut:#6B7886;--line:#DBE2E8;--zeb:#F4F6F8;--up:#127C56;--down:#B23A48;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Helvetica Neue',Arial,sans-serif;color:var(--ink);background:#eef1f4;font-size:14px;line-height:1.4;}
+.wrap{max-width:1180px;margin:0 auto;padding:0 0 40px;}
+.mast{background:var(--navy);color:#fff;padding:20px 28px;border-bottom:4px solid var(--teal);}
+.mast .brand{font-size:11px;letter-spacing:3px;color:var(--teal);font-weight:700;text-transform:uppercase;}
+.mast h1{font-size:26px;font-weight:700;margin:4px 0 2px;}
+.mast .sub{font-size:13px;color:#9FB6C2;}
+.mast .meta{float:right;text-align:right;font-size:11px;color:#9FB6C2;letter-spacing:1px;}
+.grid{display:grid;grid-template-columns:360px 1fr;gap:22px;padding:22px 28px;}
+@media(max-width:880px){.grid{grid-template-columns:1fr;}}
+.panel{background:#fff;border:1px solid var(--line);border-radius:6px;overflow:hidden;}
+.phead{background:var(--navy);color:#fff;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:9px 14px;border-left:4px solid var(--teal);}
+.pbody{padding:14px 16px;}
+.grp{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--navy);margin:14px 0 8px;padding-bottom:4px;border-bottom:1px solid var(--line);}
+.grp:first-child{margin-top:0;}
+.sl{margin-bottom:13px;}
+.sl .row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:3px;}
+.sl .lab{font-size:12.5px;color:var(--ink);}
+.sl .val{font-size:13px;font-weight:700;color:var(--navy);font-variant-numeric:tabular-nums;}
+.sl .base{font-size:10px;color:var(--mut);margin-left:6px;font-weight:400;}
+input[type=range]{-webkit-appearance:none;width:100%;height:5px;border-radius:3px;background:linear-gradient(var(--teal),var(--teal)) no-repeat,var(--line);background-size:50% 100%;outline:none;cursor:pointer;}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:#fff;border:3px solid var(--teal);box-shadow:0 1px 3px rgba(0,0,0,.25);cursor:pointer;}
+input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:#fff;border:3px solid var(--teal);cursor:pointer;}
+.btn{margin-top:6px;width:100%;background:var(--navy2);color:#fff;border:none;padding:9px;border-radius:5px;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer;}
+.btn:hover{background:var(--navy);}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px;}
+@media(max-width:560px){.kpis{grid-template-columns:repeat(2,1fr);}}
+.kpi{background:#fff;border:1px solid var(--line);border-radius:6px;padding:13px 14px;position:relative;}
+.kpi.hl{background:var(--tealt);border-color:var(--teal);}
+.kpi .l{font-size:10.5px;text-transform:uppercase;letter-spacing:.6px;color:var(--mut);}
+.kpi .v{font-size:26px;font-weight:700;color:var(--navy);font-variant-numeric:tabular-nums;margin-top:3px;}
+.kpi .d{font-size:11px;font-weight:600;margin-top:2px;font-variant-numeric:tabular-nums;}
+.up{color:var(--up);}.down{color:var(--down);}.flat{color:var(--mut);}
+.stack{background:#fff;border:1px solid var(--line);border-radius:6px;padding:14px 16px;margin-bottom:16px;}
+.stack h3{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--navy);margin-bottom:9px;}
+.bar{display:flex;height:30px;border-radius:4px;overflow:hidden;font-size:11px;font-weight:700;color:#fff;}
+.bar .debt{background:var(--navy2);display:flex;align-items:center;justify-content:center;}
+.bar .eq{background:var(--teal);display:flex;align-items:center;justify-content:center;color:var(--navy);}
+.facts{display:grid;grid-template-columns:repeat(2,1fr);gap:0 22px;margin-top:11px;}
+.facts .r{display:flex;justify-content:space-between;font-size:12.5px;padding:4px 0;border-bottom:1px solid var(--line);}
+.facts .r span:last-child{font-weight:700;color:var(--navy);font-variant-numeric:tabular-nums;}
+.note{font-size:11px;color:var(--mut);padding:0 28px;line-height:1.5;}
+.warn{color:var(--down);font-weight:600;}
+</style></head><body>
+<div class="wrap">
+  <div class="mast">
+    <div class="meta">CONFIDENTIAL<br>JUNE 2026</div>
+    <div class="brand">Palm &amp; Peak Real Estate</div>
+    <h1>Sky Tower — Interactive Returns Dashboard</h1>
+    <div class="sub">Levered Scenario · drag the key assumptions and watch LP returns update live</div>
+  </div>
+  <div class="grid">
+    <div class="panel">
+      <div class="phead">Assumptions</div>
+      <div class="pbody" id="sliders"></div>
+    </div>
+    <div>
+      <div class="kpis" id="kpis"></div>
+      <div class="stack">
+        <h3>Capital Stack</h3>
+        <div class="bar"><div class="debt" id="barDebt"></div><div class="eq" id="barEq"></div></div>
+        <div class="facts">
+          <div class="r"><span>Total project cost</span><span id="fUses"></span></div>
+          <div class="r"><span>Senior debt</span><span id="fDebt"></span></div>
+          <div class="r"><span>LP equity required</span><span id="fEq"></span></div>
+          <div class="r"><span>Gross exit value</span><span id="fExit"></span></div>
+          <div class="r"><span>Year-exit stabilised NOI</span><span id="fNOI"></span></div>
+          <div class="r"><span>LP total distributions</span><span id="fLPd"></span></div>
+          <div class="r"><span>GP promote</span><span id="fGP"></span></div>
+          <div class="r"><span>Net equity from exit</span><span id="fNeq"></span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="note" id="note"></div>
+</div>
+<script>
+function irr(cfs){let lo=-0.95,hi=15.0;const npv=r=>cfs.reduce((s,c,i)=>s+c/Math.pow(1+r,i),0);if(npv(lo)*npv(hi)>0)return NaN;for(let k=0;k<300;k++){const m=(lo+hi)/2,v=npv(m);if(Math.abs(v)<1e-7)return m;(npv(lo)*v<0)?hi=m:lo=m;}return (lo+hi)/2;}
+function model(p){const MO=12;const sqft=p.sqft,hold=p.hold;const cap=sqft/p.desk_density,occ=cap*p.stab_occ;
+ const acq_f=p.purchase*p.acq_rate,vatp=p.purchase*p.vat,tacq=p.purchase+acq_f+vatp;
+ const reno=sqft*p.reno_psf,cont=reno*p.cont_rate,vatc=(reno+cont)*p.vat,tcap=reno+cont+vatc;
+ const init=690000,ires=tacq*p.ltv*p.interest/MO*p.fitout,uses=tacq+tcap+init+ires;
+ const debt=tacq*p.ltv,lpeq=uses-debt;
+ const rentmo=y=>p.rent_mo*Math.pow(1+p.rent_esc,y-1),opm=y=>y===1?MO-p.fitout:MO,gross=y=>rentmo(y)*opm(y)*occ;
+ const b1={pay:267500,util:145000,pan:42000,maint:40000,ins:31000},b2={pay:661260,util:358440,pan:103824,maint:98880,ins:76632};
+ function opex(y){let o,serv=sqft*p.service_psf*Math.pow(1+p.opex_esc,y-1),lic=50000;
+  if(y===1)o=b1;else if(y===2)o=b2;else{const f=Math.pow(1+p.opex_esc,y-2);o={pay:b2.pay*f,util:b2.util*f,pan:b2.pan*f,maint:b2.maint*f,ins:b2.ins*f};}
+  return o.pay+o.util+o.pan+o.maint+o.ins+serv+lic;}
+ const broker=y=>y===1?rentmo(1)*MO*occ*p.broker:(y===hold?gross(y)*p.broker:0);
+ const mgmt=y=>y===1?p.purchase*p.mgmt*(MO-p.fitout+2)/MO:p.purchase*p.mgmt;
+ const noi=y=>gross(y)-opex(y)-broker(y)-mgmt(y);
+ const ds=y=>y===1?debt*p.interest/MO*(MO-p.fitout):debt*p.interest;
+ const netlp=y=>noi(y)-ds(y)+(y===1?vatp+vatc:0);
+ const exit_noi=gross(hold)-opex(hold)-mgmt(hold),gexit=exit_noi/p.exit_cap,nsale=gexit*(1-p.disp),neq=nsale-debt;
+ let cfs=[];for(let y=1;y<=hold;y++)cfs.push(netlp(y));
+ const tdist=cfs.reduce((a,b)=>a+b,0)+neq;
+ const roc=lpeq;let pref=lpeq*(Math.pow(1+p.pref,hold)-1);for(let y=1;y<hold;y++)pref-=cfs[y-1]*(Math.pow(1+p.pref,hold-y)-1);
+ const catch_=pref*p.gp_share/p.lp_share,resid=tdist-roc-pref-catch_;
+ const lptot=roc+pref+resid*p.lp_share,gp=catch_+resid*p.gp_share,mult=lptot/lpeq;
+ let icf=[-lpeq];for(let y=1;y<hold;y++)icf.push(cfs[y-1]);icf.push(lptot-cfs.slice(0,hold-1).reduce((a,b)=>a+b,0));
+ const lpirr=irr(icf);let sn=0,sd=0;for(let y=1;y<=hold;y++){sn+=noi(y);sd+=ds(y);}
+ return{lpeq,debt,uses,lpirr,mult,lptot,gp,dscr:sd>0?sn/sd:NaN,gexit,exit_noi,neq,debtpct:debt/uses,eqpct:lpeq/uses};}
+
+const BASE={sqft:23000,purchase:48000000,acq_rate:0.041,vat:0.05,reno_psf:350,cont_rate:0.05,fitout:7,hold:4,ltv:0.70,interest:0.12,desk_density:70,stab_occ:0.95,rent_mo:3500,rent_esc:0.05,opex_esc:0.03,broker:0.10,service_psf:18,exit_cap:0.09,disp:0.02,mgmt:0.02,pref:0.08,gp_catchup:0.02,lp_share:0.80,gp_share:0.20};
+const SL=[
+ {g:"Acquisition & Debt"},
+ {k:"purchase",lab:"Purchase Price",min:40e6,max:56e6,step:250000,fmt:v=>"AED "+(v/1e6).toFixed(1)+"M"},
+ {k:"reno_psf",lab:"Renovation Cost",min:250,max:500,step:10,fmt:v=>"AED "+v+"/sqft"},
+ {k:"ltv",lab:"Loan-to-Value (LTV)",min:0,max:0.75,step:0.05,fmt:v=>(v*100).toFixed(0)+"%"},
+ {k:"interest",lab:"Interest Rate",min:0.08,max:0.15,step:0.0025,fmt:v=>(v*100).toFixed(2)+"%"},
+ {g:"Revenue"},
+ {k:"rent_mo",lab:"Rent / Desk / Month",min:2500,max:5000,step:50,fmt:v=>"AED "+v.toLocaleString()},
+ {k:"stab_occ",lab:"Stabilised Occupancy",min:0.70,max:1.0,step:0.01,fmt:v=>(v*100).toFixed(0)+"%"},
+ {k:"rent_esc",lab:"Annual Rent Escalation",min:0,max:0.10,step:0.005,fmt:v=>(v*100).toFixed(1)+"%"},
+ {g:"Exit & Hold"},
+ {k:"exit_cap",lab:"Exit Cap Rate",min:0.06,max:0.13,step:0.0025,fmt:v=>(v*100).toFixed(2)+"%"},
+ {k:"hold",lab:"Hold Period",min:3,max:6,step:1,fmt:v=>v+" years"},
+];
+let P={...BASE};
+const aed=v=>"AED "+(v/1e6).toFixed(1)+"M";
+const usd=v=>"USD "+(v/3.6725/1e6).toFixed(1)+"M";
+
+function buildSliders(){const c=document.getElementById("sliders");let h="";
+ SL.forEach(s=>{if(s.g){h+=`<div class="grp">${s.g}</div>`;return;}
+  h+=`<div class="sl"><div class="row"><span class="lab">${s.lab}<span class="base" id="b_${s.k}"></span></span><span class="val" id="v_${s.k}"></span></div>
+  <input type="range" id="s_${s.k}" min="${s.min}" max="${s.max}" step="${s.step}" value="${P[s.k]}"></div>`;});
+ h+=`<button class="btn" id="reset">Reset to Base Case</button>`;c.innerHTML=h;
+ SL.forEach(s=>{if(s.g)return;const el=document.getElementById("s_"+s.k);
+  document.getElementById("b_"+s.k).textContent="· base "+s.fmt(BASE[s.k]);
+  el.addEventListener("input",()=>{P[s.k]=parseFloat(el.value);render();});});
+ document.getElementById("reset").addEventListener("click",()=>{P={...BASE};SL.forEach(s=>{if(!s.g)document.getElementById("s_"+s.k).value=P[s.k];});render();});
+}
+function fillTrack(el){const pct=(el.value-el.min)/(el.max-el.min)*100;el.style.backgroundSize=pct+"% 100%";}
+function delta(cur,base,pct,inv){if(Math.abs(cur-base)<1e-9)return `<span class="flat">— at base</span>`;
+ const up=cur>base;const good=inv?!up:up;const cls=good?"up":"down";const ar=up?"▲":"▼";
+ const d=pct?((cur-base)*100).toFixed(1)+" pp":((cur/base-1)*100).toFixed(1)+"%";
+ return `<span class="${cls}">${ar} ${d} vs base</span>`;}
+function render(){
+ SL.forEach(s=>{if(s.g)return;const el=document.getElementById("s_"+s.k);document.getElementById("v_"+s.k).textContent=s.fmt(P[s.k]);fillTrack(el);});
+ const r=model(P),b=model(BASE);
+ const cards=[
+  {l:"LP IRR (Base Exit)",v:isNaN(r.lpirr)?"n/a":(r.lpirr*100).toFixed(1)+"%",d:isNaN(r.lpirr)?"":delta(r.lpirr,b.lpirr,true,false),hl:true},
+  {l:"LP Equity Multiple",v:r.mult.toFixed(2)+"x",d:delta(r.mult,b.mult,false,false),hl:true},
+  {l:"LP Equity Required",v:aed(r.lpeq),d:delta(r.lpeq,b.lpeq,false,true)},
+  {l:"LP Total Distributions",v:aed(r.lptot),d:delta(r.lptot,b.lptot,false,false)},
+  {l:"GP Promote",v:aed(r.gp),d:delta(r.gp,b.gp,false,false)},
+  {l:"Avg DSCR",v:isNaN(r.dscr)?"— (no debt)":r.dscr.toFixed(2)+"x",d:isNaN(r.dscr)?"":delta(r.dscr,b.dscr,false,false)},
+ ];
+ document.getElementById("kpis").innerHTML=cards.map(c=>`<div class="kpi ${c.hl?'hl':''}"><div class="l">${c.l}</div><div class="v">${c.v}</div><div class="d">${c.d}</div></div>`).join("");
+ document.getElementById("barDebt").style.width=(r.debtpct*100)+"%";
+ document.getElementById("barEq").style.width=(r.eqpct*100)+"%";
+ document.getElementById("barDebt").textContent=r.debtpct>0.06?"Debt "+(r.debtpct*100).toFixed(0)+"%":"";
+ document.getElementById("barEq").textContent="Equity "+(r.eqpct*100).toFixed(0)+"%";
+ document.getElementById("fUses").textContent=aed(r.uses);
+ document.getElementById("fDebt").textContent=aed(r.debt);
+ document.getElementById("fEq").textContent=aed(r.lpeq)+" · "+usd(r.lpeq);
+ document.getElementById("fExit").textContent=aed(r.gexit);
+ document.getElementById("fNOI").textContent=aed(r.exit_noi);
+ document.getElementById("fLPd").textContent=aed(r.lptot);
+ document.getElementById("fGP").textContent=aed(r.gp);
+ document.getElementById("fNeq").textContent=aed(r.neq);
+ const warn=r.dscr<1.25&&!isNaN(r.dscr)?` <span class="warn">· DSCR below 1.25x covenant zone</span>`:"";
+ document.getElementById("note").innerHTML=`Mirrors Sky_Tower_Levered_4Y_Model_v2.xlsx exactly (base case: 44.2% LP IRR, 3.69x). Base exit assumes a stabilised sale at the chosen cap rate; AED pegged at 3.6725 = USD 1.00. Deltas shown vs base case. Illustrative only — not an offer.${warn}`;
+}
+buildSliders();render();
+</script></body></html>
