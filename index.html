@@ -31,9 +31,30 @@ section{padding:44px 0}
 section.alt{background:var(--bg)}
 h2{font-size:24px;color:var(--navy);margin-bottom:6px}
 .lead{color:var(--muted);font-size:15px;margin-bottom:24px}
-.dash-card{background:var(--navy);border-radius:14px;padding:28px;color:#fff;display:flex;flex-wrap:wrap;gap:20px;align-items:center;justify-content:space-between}
-.dash-card h3{font-size:20px;margin-bottom:6px}
-.dash-card p{color:#b9c8d4;font-size:14px;max-width:480px}
+.dash-card{background:var(--navy);border-radius:16px;padding:32px;color:#fff;display:flex;flex-wrap:wrap;gap:28px;align-items:center;justify-content:space-between;text-decoration:none;position:relative;overflow:hidden;border:1px solid rgba(0,169,206,.25);transition:transform .2s,box-shadow .2s,border-color .2s}
+.dash-card:hover{transform:translateY(-3px);box-shadow:0 16px 40px rgba(5,28,44,.35);border-color:var(--teal)}
+.dash-card .dc-text{flex:1 1 260px}
+.dash-card h3{font-size:22px;margin-bottom:8px}
+.dash-card p{color:#b9c8d4;font-size:14.5px;max-width:420px}
+.live{display:inline-flex;align-items:center;gap:7px;font-size:11.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);margin-bottom:12px}
+.live i{width:8px;height:8px;border-radius:50%;background:var(--teal);animation:pulse 1.6s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(0,169,206,.6)}70%{box-shadow:0 0 0 9px rgba(0,169,206,0)}100%{box-shadow:0 0 0 0 rgba(0,169,206,0)}}
+.dc-preview{flex:0 1 340px;min-width:260px;background:#0a2c44;border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:18px;pointer-events:none}
+.dc-row{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.dc-row span{font-size:11px;color:#8aa0b0;width:92px;flex:0 0 auto}
+.dc-track{flex:1;height:4px;border-radius:2px;background:rgba(255,255,255,.14);position:relative}
+.dc-fill{position:absolute;left:0;top:0;height:100%;border-radius:2px;background:var(--teal)}
+.dc-knob{position:absolute;top:50%;transform:translate(-50%,-50%);width:13px;height:13px;border-radius:50%;background:#fff;box-shadow:0 0 0 3px rgba(0,169,206,.35)}
+.dc-knob.anim{animation:slide 3.2s ease-in-out infinite alternate}
+.dc-fill.anim{animation:grow 3.2s ease-in-out infinite alternate}
+@keyframes slide{from{left:62%}to{left:86%}}
+@keyframes grow{from{width:62%}to{width:86%}}
+.dc-out{display:flex;align-items:flex-end;justify-content:space-between;margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,.1)}
+.dc-irr b{display:block;font-size:26px;color:var(--teal);font-weight:800;line-height:1}
+.dc-irr span{font-size:10.5px;color:#8aa0b0;letter-spacing:.08em;text-transform:uppercase}
+.dc-bars{display:flex;align-items:flex-end;gap:5px;height:44px}
+.dc-bars i{width:11px;background:var(--teal);border-radius:2px 2px 0 0;opacity:.85}
+.btn-ghost{display:inline-block;margin-top:16px;background:var(--teal);color:var(--navy);font-weight:700;padding:13px 26px;border-radius:8px;font-size:15px}
 .btn{display:inline-block;background:var(--teal);color:var(--navy);font-weight:700;padding:13px 26px;border-radius:8px;text-decoration:none;font-size:15px;white-space:nowrap}
 .btn:active{opacity:.85}
 .docs{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}
@@ -106,13 +127,23 @@ footer a{color:#9fb3c2}
 <section><div class="wrap">
 <h2>Play with the numbers</h2>
 <p class="lead">Start here. Adjust occupancy, desk rates and exit assumptions - returns update in real time. Works on your phone.</p>
-<div class="dash-card">
-<div>
+<a class="dash-card" href="dashboard.html">
+<div class="dc-text">
+<div class="live"><i></i>Interactive - live model</div>
 <h3>Interactive Returns Dashboard</h3>
-<p>Levered / unlevered toggle, live sensitivity on occupancy, rates, escalation and exit cap. Mirrors the underwriting models below.</p>
+<p>Drag occupancy, desk rates and exit cap - IRR and multiple recalculate as you move. Levered / unlevered toggle. Mirrors the underwriting models below.</p>
+<span class="btn-ghost">Try the dashboard →</span>
 </div>
-<a class="btn" href="dashboard.html">Open dashboard →</a>
+<div class="dc-preview" aria-hidden="true">
+<div class="dc-row"><span>Occupancy</span><div class="dc-track"><div class="dc-fill anim"></div><div class="dc-knob anim"></div></div></div>
+<div class="dc-row"><span>Desk rate</span><div class="dc-track"><div class="dc-fill" style="width:55%"></div><div class="dc-knob" style="left:55%"></div></div></div>
+<div class="dc-row" style="margin-bottom:0"><span>Exit cap</span><div class="dc-track"><div class="dc-fill" style="width:40%"></div><div class="dc-knob" style="left:40%"></div></div></div>
+<div class="dc-out">
+<div class="dc-irr"><b>44.2%</b><span>LP IRR</span></div>
+<div class="dc-bars"><i style="height:10px"></i><i style="height:18px"></i><i style="height:24px"></i><i style="height:32px"></i><i style="height:44px"></i></div>
 </div>
+</div>
+</a>
 </div></section>
 
 <section class="alt"><div class="wrap">
