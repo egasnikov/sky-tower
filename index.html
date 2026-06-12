@@ -245,7 +245,9 @@ var targets=[].slice.call(document.querySelectorAll('section .kicker,section h2,
 targets.forEach(function(el,i){el.classList.add('reveal');el.style.transitionDelay=(el.classList.contains('doc')?(i%4)*70:0)+'ms'});
 if(!('IntersectionObserver' in window)){targets.forEach(function(el){el.classList.add('in')});}
 else{var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12,rootMargin:'0px 0px -40px 0px'});
-targets.forEach(function(el){io.observe(el)});}
+targets.forEach(function(el){io.observe(el)});
+/* failsafe: if observer never fired (e.g. unusual browser), reveal everything */
+setTimeout(function(){if(!document.querySelector('.reveal.in'))targets.forEach(function(el){el.classList.add('in')})},3000);}
 /* KPI count-up */
 var ks=[].slice.call(document.querySelectorAll('[data-count]'));
 if(!rm){ks.forEach(function(el){
