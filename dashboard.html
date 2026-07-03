@@ -1,7 +1,7 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Sky Tower — Interactive Returns Dashboard</title>
+<title>Sky Tower - Interactive Returns Dashboard</title>
 <style>
-:root{--navy:#051C2C;--navy2:#0E3A4F;--teal:#00A9CE;--tealt:#DCEFF6;--ink:#1A1F26;--mut:#6B7886;--line:#DBE2E8;--zeb:#F4F6F8;--up:#127C56;--down:#B23A48;}
+:root{--navy:#051C2C;--navy2:#0E3A4F;--teal:#00A9CE;--tealt:#DCEFF6;--ink:#1A1F26;--mut:#6B7886;--line:#DBE2E8;--zeb:#F4F6F8;--up:#00A9CE;--down:#6B7886;}
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:'Helvetica Neue',Arial,sans-serif;color:var(--ink);background:#eef1f4;font-size:14px;line-height:1.4;}
 .wrap{max-width:1180px;margin:0 auto;padding:0 0 40px;}
@@ -59,9 +59,9 @@ input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;bac
 </style></head><body>
 <div class="wrap">
   <div class="mast">
-    <div class="meta">JUNE 2026</div>
+    <div class="meta">JULY 2026</div>
     <div class="brand">Palm &amp; Peak Real Estate</div>
-    <h1>Sky Tower — Interactive Returns Dashboard</h1>
+    <h1>Sky Tower - Interactive Returns Dashboard</h1>
     <div class="sub">Drag the key assumptions and watch LP returns update live</div>
     <div class="scen" id="scen"></div>
   </div>
@@ -85,7 +85,7 @@ input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;bac
         </div>
       </div>
       <div class="stack sens">
-        <h3>Returns Sensitivity — Exit Cap Rate</h3>
+        <h3>Returns Sensitivity - Exit Cap Rate</h3>
         <table><thead><tr><th>Exit Cap</th><th>LP IRR</th><th>LP Multiple</th><th>LP Distributions</th></tr></thead><tbody id="sensBody"></tbody></table>
         <div class="cap">All other assumptions held at current slider settings. Highlighted row = selected exit cap.</div>
       </div>
@@ -153,7 +153,7 @@ function buildSliders(){const c=document.getElementById("sliders");let h="";
  document.getElementById("reset").addEventListener("click",()=>{P={...BASE};SL.forEach(s=>{if(!s.g)document.getElementById("s_"+s.k).value=P[s.k];});render();});
 }
 function fillTrack(el){const pct=(el.value-el.min)/(el.max-el.min)*100;el.style.backgroundSize=pct+"% 100%";}
-function delta(cur,base,pct,inv){if(Math.abs(cur-base)<1e-9)return `<span class="flat">— at base</span>`;
+function delta(cur,base,pct,inv){if(Math.abs(cur-base)<1e-9)return `<span class="flat">- at base</span>`;
  const up=cur>base;const good=inv?!up:up;const cls=good?"up":"down";const ar=up?"▲":"▼";
  const d=pct?((cur-base)*100).toFixed(1)+" pp":((cur/base-1)*100).toFixed(1)+"%";
  return `<span class="${cls}">${ar} ${d} vs base</span>`;}
@@ -166,7 +166,7 @@ function render(){
   {l:"LP Equity Required",v:aed(r.lpeq),d:delta(r.lpeq,b.lpeq,false,true)},
   {l:"LP Total Distributions",v:aed(r.lptot),d:delta(r.lptot,b.lptot,false,false)},
   {l:"Stabilised NOI Yield",v:(r.noi3/r.uses*100).toFixed(1)+"%",d:aed(r.noi3)+" · "+delta(r.noi3/r.uses,b.noi3/b.uses,true,false)},
-  {l:"Avg DSCR",v:isNaN(r.dscr)?"— (no debt)":r.dscr.toFixed(2)+"x",d:isNaN(r.dscr)?"":delta(r.dscr,b.dscr,false,false)},
+  {l:"Avg DSCR",v:isNaN(r.dscr)?"- (no debt)":r.dscr.toFixed(2)+"x",d:isNaN(r.dscr)?"":delta(r.dscr,b.dscr,false,false)},
  ];
  document.getElementById("kpis").innerHTML=cards.map(c=>`<div class="kpi ${c.hl?'hl':''}"><div class="l">${c.l}</div><div class="v">${c.v}</div><div class="d">${c.d}</div></div>`).join("");
  document.getElementById("barDebt").style.width=(r.debtpct*100)+"%";
@@ -183,7 +183,7 @@ function render(){
  document.getElementById("sensBody").innerHTML=caps.map((c,i)=>{const rr=model({...P,exit_cap:c});return `<tr class="${i===near?'cur':''}"><td>${(c*100).toFixed(0)}%</td><td>${isNaN(rr.lpirr)?'n/a':(rr.lpirr*100).toFixed(1)+'%'}</td><td>${rr.mult.toFixed(2)}x</td><td>${aed(rr.lptot)}</td></tr>`;}).join("");
  const warn=r.dscr<1.25&&!isNaN(r.dscr)?` <span class="warn">· DSCR below 1.25x covenant zone</span>`:"";
  const src=SCEN==="lev"?"Mirrors Sky_Tower_Levered_4Y_Model_v2.xlsx exactly (base case: 44.2% LP IRR, 3.69x, 70% LTV).":"Mirrors Sky_Tower_AllEquity_4Y_Model.xlsx exactly (base case: 28.2% LP IRR, 2.44x, all-equity / no debt).";
- document.getElementById("note").innerHTML=`${src} Base exit assumes a stabilised sale at the chosen cap rate; AED pegged at 3.6725 = USD 1.00. Deltas shown vs the selected scenario's base case. Illustrative only — not an offer.${warn}`;
+ document.getElementById("note").innerHTML=`${src} Base exit assumes a stabilised sale at the chosen cap rate; AED pegged at 3.6725 = USD 1.00. Deltas shown vs the selected scenario's base case. Illustrative only - not an offer.${warn}`;
 }
 function buildScen(){const c=document.getElementById("scen");
  c.innerHTML=`<button data-s="lev">Levered · 70% LTV</button><button data-s="unlev">Unlevered · All-Equity</button>`;

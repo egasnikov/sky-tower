@@ -3,259 +3,1069 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sky Tower Abu Dhabi - Investor Data Room | Palm &amp; Peak</title>
-<meta name="description" content="Sky Tower Abu Dhabi - Investor Data Room by Palm & Peak. Interactive model, investment memorandum, financial models.">
+<title>Sky Tower Abu Dhabi - Investment Opportunity | Palm & Peak</title>
+<meta name="description" content="Sky Tower Abu Dhabi - Managed Office Investment Opportunity by Palm & Peak">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
-:root{--navy:#051C2C;--teal:#00A9CE;--ink:#1a2b3a;--muted:#5b6b7a;--line:#e3e8ed;--bg:#f7f9fa}
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;color:var(--ink);background:#fff;line-height:1.55;-webkit-font-smoothing:antialiased}
-.wrap{max-width:880px;margin:0 auto;padding:0 20px}
-header{background:var(--navy);color:#fff;padding:14px 0}
-header .wrap{display:flex;justify-content:space-between;align-items:center}
-.logo{font-weight:700;letter-spacing:.12em;font-size:14px}
-.logo span{color:var(--teal)}
-.tag{font-size:12px;color:#9fb3c2}
-.hero{background:linear-gradient(180deg,var(--navy) 0%,#0a2940 100%);color:#fff;padding:48px 0 56px;overflow:hidden;position:relative}
-.hero .wrap{position:relative;z-index:1}
-.hero-art{position:absolute;right:0;bottom:0;height:108%;width:auto;z-index:0;pointer-events:none;opacity:.5}
-@media(max-width:760px){.hero-art{opacity:.25}}
-.hero .loc{color:var(--teal);font-size:13px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:10px}
-.hero h1{font-size:clamp(30px,6vw,46px);line-height:1.1;font-weight:800}
-.hero p.sub{margin-top:12px;color:#b9c8d4;font-size:16px;max-width:560px}
-.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:32px}
-.kpi{background:#0b2c44;border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:14px 12px;text-align:center}
-.kpi b{display:block;font-size:clamp(18px,3.4vw,26px);color:var(--teal);font-weight:800}
-.kpi span{font-size:11.5px;color:#9fb3c2}
-.note{margin-top:14px;font-size:12px;color:#8aa0b0}
-section{padding:44px 0}
-section.alt{background:var(--bg)}
-h2{font-size:24px;color:var(--navy);margin-bottom:6px}
-.lead{color:var(--muted);font-size:15px;margin-bottom:24px}
-.dash-card{background:var(--navy);border-radius:16px;padding:32px;color:#fff;display:flex;flex-wrap:wrap;gap:28px;align-items:center;justify-content:space-between;text-decoration:none;position:relative;overflow:hidden;border:1px solid rgba(0,169,206,.25);transition:transform .2s,box-shadow .2s,border-color .2s}
-.dash-card:hover{transform:translateY(-3px);box-shadow:0 16px 40px rgba(5,28,44,.35);border-color:var(--teal)}
-.dash-card .dc-text{flex:1 1 260px}
-.dash-card h3{font-size:22px;margin-bottom:8px}
-.dash-card p{color:#b9c8d4;font-size:14.5px;max-width:420px}
-.live{display:inline-flex;align-items:center;gap:7px;font-size:11.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);margin-bottom:12px}
-.live i{width:8px;height:8px;border-radius:50%;background:var(--teal);animation:pulse 1.6s infinite}
-@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(0,169,206,.6)}70%{box-shadow:0 0 0 9px rgba(0,169,206,0)}100%{box-shadow:0 0 0 0 rgba(0,169,206,0)}}
-.dc-preview{flex:0 1 340px;min-width:260px;background:#0a2c44;border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:18px;pointer-events:none}
-.dc-row{display:flex;align-items:center;gap:10px;margin-bottom:12px}
-.dc-row span{font-size:11px;color:#8aa0b0;width:92px;flex:0 0 auto}
-.dc-track{flex:1;height:4px;border-radius:2px;background:rgba(255,255,255,.14);position:relative}
-.dc-fill{position:absolute;left:0;top:0;height:100%;border-radius:2px;background:var(--teal)}
-.dc-knob{position:absolute;top:50%;transform:translate(-50%,-50%);width:13px;height:13px;border-radius:50%;background:#fff;box-shadow:0 0 0 3px rgba(0,169,206,.35)}
-.dc-knob.anim{animation:slide 3.2s ease-in-out infinite alternate}
-.dc-fill.anim{animation:grow 3.2s ease-in-out infinite alternate}
-@keyframes slide{from{left:62%}to{left:86%}}
-@keyframes grow{from{width:62%}to{width:86%}}
-.dc-out{display:flex;align-items:flex-end;justify-content:space-between;margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,.1)}
-.dc-irr b{display:block;font-size:26px;color:var(--teal);font-weight:800;line-height:1}
-.dc-irr span{font-size:10.5px;color:#8aa0b0;letter-spacing:.08em;text-transform:uppercase}
-.dc-bars{display:flex;align-items:flex-end;gap:5px;height:44px}
-.dc-bars i{width:11px;background:var(--teal);border-radius:2px 2px 0 0;opacity:.85}
-.btn-ghost{display:inline-block;margin-top:16px;background:var(--teal);color:var(--navy);font-weight:700;padding:13px 26px;border-radius:8px;font-size:15px}
-.btn{display:inline-block;background:var(--teal);color:var(--navy);font-weight:700;padding:13px 26px;border-radius:8px;text-decoration:none;font-size:15px;white-space:nowrap}
-.btn:active{opacity:.85}
-.docs{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}
-.doc{background:#fff;border:1px solid var(--line);border-radius:12px;padding:20px;text-decoration:none;color:var(--ink);display:block;transition:box-shadow .15s,border-color .15s}
-.doc:hover{border-color:var(--teal);box-shadow:0 4px 16px rgba(5,28,44,.08)}
-.doc .type{font-size:11px;font-weight:700;letter-spacing:.1em;color:var(--teal);text-transform:uppercase}
-.doc h3{font-size:16px;color:var(--navy);margin:6px 0 6px}
-.doc p{font-size:13px;color:var(--muted)}
-.doc .open{display:inline-block;margin-top:12px;font-size:13px;font-weight:700;color:var(--teal)}
-.snapshot{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff}
-.snap{padding:16px 18px;border-bottom:1px solid var(--line)}
-.snap span{display:block;font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
-.snap b{font-size:15px;color:var(--navy)}
-.steps{list-style:none;border-left:2px solid var(--teal);margin-left:8px}
-.steps li{position:relative;padding:0 0 22px 24px}
-.steps li::before{content:"";position:absolute;left:-7px;top:5px;width:12px;height:12px;border-radius:50%;background:var(--teal)}
-.steps li.now::before{background:var(--navy);box-shadow:0 0 0 4px rgba(0,169,206,.25)}
-.steps b{color:var(--navy);font-size:15px}
-.steps span{display:block;font-size:13.5px;color:var(--muted)}
-.cta{background:var(--navy);color:#fff;text-align:center;padding:52px 0}
-.cta h2{color:#fff}
-.cta p{color:#b9c8d4;margin:8px 0 24px;font-size:15px}
-footer{background:#041521;color:#7e93a3;font-size:12.5px;padding:20px 0;text-align:center}
-footer a{color:#9fb3c2}
-@media(max-width:560px){.kpis{grid-template-columns:repeat(2,1fr)}.dash-card{padding:22px}}
-html{scroll-behavior:smooth}
-header{position:sticky;top:0;z-index:50;box-shadow:0 2px 12px rgba(5,28,44,.25)}
-.nav{display:flex;gap:18px}
-.nav a{color:#9fb3c2;font-size:12.5px;text-decoration:none;letter-spacing:.04em}
-.nav a:hover{color:var(--teal)}
-@media(max-width:700px){.nav{display:none}}
-.kicker{font-size:11.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--teal);margin-bottom:8px}
-.reveal{opacity:0;transform:translateY(26px);transition:opacity .7s cubic-bezier(.2,.6,.2,1),transform .7s cubic-bezier(.2,.6,.2,1)}
-.reveal.in{opacity:1;transform:none}
-@media(prefers-reduced-motion:reduce){.reveal{transform:none;transition:opacity .6s ease}.dc-fill.anim,.dc-knob.anim,.live i{animation:none}}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#051C2C;--navy-light:#0a2e47;--teal:#00A9CE;--teal-dark:#008aa8;
+  --white:#ffffff;--gray-50:#f8f9fa;--gray-100:#f1f3f5;--gray-200:#e9ecef;
+  --gray-300:#dee2e6;--gray-400:#ced4da;--gray-500:#adb5bd;--gray-600:#868e96;
+  --gray-700:#495057;--gray-800:#343a40;--gray-900:#212529;
+  --success:#2ecc71;
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:var(--gray-900);background:var(--white);line-height:1.6;overflow-x:hidden}
+
+/* NAV */
+.side-nav{position:fixed;left:0;top:0;width:220px;height:100vh;background:var(--navy);z-index:100;padding:2rem 0;display:flex;flex-direction:column;transition:transform .3s}
+.side-nav .logo{padding:0 1.5rem 2rem;border-bottom:1px solid rgba(255,255,255,.1)}
+.side-nav .logo h2{color:var(--white);font-size:14px;font-weight:600;letter-spacing:1px;text-transform:uppercase}
+.side-nav .logo p{color:var(--teal);font-size:11px;letter-spacing:2px;text-transform:uppercase;margin-top:2px}
+.nav-links{padding:1.5rem 0;flex:1;overflow-y:auto}
+.nav-links a{display:block;padding:8px 1.5rem;color:rgba(255,255,255,.5);font-size:13px;text-decoration:none;transition:all .2s;border-left:3px solid transparent}
+.nav-links a:hover{color:rgba(255,255,255,.8)}
+.nav-links a.active{color:var(--white);border-left-color:var(--teal);background:rgba(255,255,255,.05)}
+.nav-footer{padding:1rem 1.5rem;border-top:1px solid rgba(255,255,255,.1)}
+.nav-footer p{color:rgba(255,255,255,.3);font-size:10px;letter-spacing:1px;text-transform:uppercase}
+
+/* MOBILE NAV */
+.mobile-nav{display:none;position:fixed;top:0;left:0;right:0;height:56px;background:var(--navy);z-index:100;align-items:center;padding:0 1rem;justify-content:space-between}
+.mobile-nav h2{color:var(--white);font-size:13px;font-weight:600;letter-spacing:1px}
+.hamburger{background:none;border:none;color:var(--white);font-size:24px;cursor:pointer}
+
+/* MAIN */
+.main{margin-left:220px}
+
+/* SECTIONS */
+section{min-height:100vh;position:relative;display:flex;align-items:center;justify-content:center}
+.section-inner{width:100%;max-width:960px;padding:80px 3rem}
+
+/* HERO */
+.hero{background:var(--navy);color:var(--white);text-align:center;flex-direction:column}
+.hero-label{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--teal);margin-bottom:1rem;opacity:0;transform:translateY(20px);animation:fadeUp .8s .3s forwards}
+.hero h1{font-size:clamp(2.5rem,5vw,4rem);font-weight:300;letter-spacing:-1px;line-height:1.1;margin-bottom:.5rem;opacity:0;transform:translateY(20px);animation:fadeUp .8s .5s forwards}
+.hero h1 span{font-weight:700}
+.hero-sub{font-size:14px;color:var(--gray-500);letter-spacing:2px;margin-bottom:3rem;opacity:0;transform:translateY(20px);animation:fadeUp .8s .7s forwards}
+.hero-stats{display:flex;gap:3rem;justify-content:center;flex-wrap:wrap;margin-bottom:3rem;opacity:0;transform:translateY(20px);animation:fadeUp .8s .9s forwards}
+.hero-stat .number{font-size:clamp(2rem,4vw,3rem);font-weight:700;color:var(--teal);font-variant-numeric:tabular-nums}
+.hero-stat .label{font-size:12px;color:var(--gray-500);text-transform:uppercase;letter-spacing:1px;margin-top:4px}
+.scroll-cue{opacity:0;animation:fadeUp .8s 1.2s forwards}
+.scroll-cue p{font-size:12px;color:var(--gray-600);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px}
+.scroll-arrow{width:24px;height:24px;border-right:2px solid var(--teal);border-bottom:2px solid var(--teal);transform:rotate(45deg);margin:0 auto;animation:bounce 2s infinite}
+
+@keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
+@keyframes bounce{0%,100%{transform:rotate(45deg) translateY(0)}50%{transform:rotate(45deg) translateY(8px)}}
+
+/* REVEAL ANIMATION */
+.reveal{opacity:0;transform:translateY(40px);transition:opacity .7s,transform .7s}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* SECTION HEADERS */
+.section-label{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--teal);margin-bottom:.5rem}
+.section-title{font-size:clamp(1.8rem,3vw,2.5rem);font-weight:300;line-height:1.2;margin-bottom:.5rem}
+.section-title strong{font-weight:700}
+.section-desc{font-size:15px;color:var(--gray-600);max-width:600px;margin-bottom:2.5rem}
+
+/* STAT CARDS */
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;margin-bottom:2rem}
+.stat-card{background:var(--gray-50);border-radius:12px;padding:1.25rem;text-align:center}
+.stat-card .big{font-size:2rem;font-weight:700;color:var(--navy);font-variant-numeric:tabular-nums}
+.stat-card .big.teal{color:var(--teal)}
+.stat-card .sub{font-size:12px;color:var(--gray-600);margin-top:4px}
+
+/* SUPPLY TIMELINE */
+.timeline-bar{position:relative;background:var(--gray-100);border-radius:8px;height:80px;margin:2rem 0;display:flex;overflow:hidden}
+.timeline-bar .segment{display:flex;align-items:center;justify-content:center;flex-direction:column;padding:8px;font-size:12px;font-weight:600;transition:flex .6s}
+.segment.gap{background:linear-gradient(135deg,var(--teal),var(--teal-dark));color:var(--white);flex:3}
+.segment.future{background:var(--gray-200);color:var(--gray-600);flex:1}
+.segment small{font-weight:400;font-size:10px;opacity:.8}
+
+/* INFO BOXES */
+.info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1rem;margin-top:1.5rem}
+.info-box{border-left:3px solid var(--teal);padding:1rem 1rem 1rem 1.25rem;background:var(--gray-50);border-radius:0 8px 8px 0}
+.info-box h4{font-size:14px;font-weight:600;margin-bottom:4px}
+.info-box p{font-size:13px;color:var(--gray-600)}
+
+/* ASSET SECTION */
+.spec-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-bottom:2rem}
+.spec-item{display:flex;align-items:flex-start;gap:12px;padding:1rem;background:var(--gray-50);border-radius:8px}
+.spec-icon{width:40px;height:40px;background:var(--navy);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--teal);font-size:18px;flex-shrink:0}
+.spec-item .spec-label{font-size:11px;color:var(--gray-500);text-transform:uppercase;letter-spacing:.5px}
+.spec-item .spec-value{font-size:15px;font-weight:600;color:var(--navy)}
+
+/* ADVANTAGES */
+.advantage-list{display:grid;gap:.75rem;margin-top:1.5rem}
+.advantage{display:flex;gap:12px;align-items:flex-start;padding:1rem;border:1px solid var(--gray-200);border-radius:8px;transition:border-color .2s}
+.advantage:hover{border-color:var(--teal)}
+.advantage .check{width:24px;height:24px;background:var(--teal);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--white);font-size:14px;flex-shrink:0;margin-top:2px}
+.advantage p{font-size:14px;color:var(--gray-700)}
+
+/* TENANT MIX */
+.tenant-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:1.5rem}
+.tenant-card{border-radius:12px;padding:1.5rem;text-align:center;cursor:pointer;transition:transform .2s,box-shadow .2s;border:1px solid var(--gray-200)}
+.tenant-card:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(0,0,0,.08)}
+.tenant-card .pct{font-size:2.5rem;font-weight:700;color:var(--navy)}
+.tenant-card h4{font-size:14px;font-weight:600;margin:.5rem 0}
+.tenant-card p{font-size:12px;color:var(--gray-600)}
+.tenant-card.active{border-color:var(--teal);background:rgba(0,169,206,.04)}
+
+/* COMPETITIVE */
+.comp-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;margin-top:1.5rem}
+.comp-card{border:1px solid var(--gray-200);border-radius:12px;padding:1.25rem;position:relative;transition:all .2s}
+.comp-card:hover{border-color:var(--gray-400)}
+.comp-card.ours{border-color:var(--teal);background:rgba(0,169,206,.03)}
+.comp-card.ours::before{content:'OUR ASSET';position:absolute;top:-10px;right:12px;background:var(--teal);color:var(--white);font-size:10px;font-weight:600;letter-spacing:1px;padding:2px 10px;border-radius:4px}
+.comp-card h4{font-size:15px;font-weight:600;margin-bottom:8px}
+.comp-card .comp-detail{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--gray-100);font-size:13px}
+.comp-card .comp-detail:last-child{border:none}
+.comp-card .comp-detail span:first-child{color:var(--gray-600)}
+.comp-card .comp-detail span:last-child{font-weight:600}
+
+/* USES OF CAPITAL */
+.capital-bar{display:flex;height:48px;border-radius:8px;overflow:hidden;margin:1.5rem 0}
+.capital-bar .bar-seg{display:flex;align-items:center;justify-content:center;color:var(--white);font-size:12px;font-weight:600;transition:flex .6s;cursor:pointer;position:relative}
+.capital-bar .bar-seg:hover{filter:brightness(1.1)}
+.bar-legend{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:.5rem;margin-top:1rem}
+.bar-legend-item{display:flex;align-items:center;gap:8px;font-size:13px}
+.bar-legend-item .dot{width:12px;height:12px;border-radius:3px;flex-shrink:0}
+
+/* FINANCIALS */
+.slider-group{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;margin-bottom:2rem;background:var(--gray-50);border-radius:12px;padding:1.5rem}
+.slider-item label{display:flex;justify-content:space-between;font-size:13px;font-weight:500;margin-bottom:6px}
+.slider-item label span{color:var(--teal);font-weight:700;font-variant-numeric:tabular-nums}
+.slider-item input[type=range]{width:100%;height:6px;-webkit-appearance:none;appearance:none;background:var(--gray-300);border-radius:3px;outline:none}
+.slider-item input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:var(--teal);cursor:pointer;border:3px solid var(--white);box-shadow:0 2px 6px rgba(0,0,0,.15)}
+.returns-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin:1.5rem 0}
+.return-card{background:var(--navy);border-radius:12px;padding:1.25rem;text-align:center;color:var(--white)}
+.return-card .r-value{font-size:1.8rem;font-weight:700;color:var(--teal);font-variant-numeric:tabular-nums}
+.return-card .r-label{font-size:11px;color:var(--gray-500);text-transform:uppercase;letter-spacing:1px;margin-top:4px}
+.chart-container{position:relative;height:320px;margin:1.5rem 0;background:var(--white);border-radius:12px;border:1px solid var(--gray-200);padding:1rem}
+
+/* EXIT SCENARIOS */
+.exit-tabs{display:flex;gap:.5rem;margin-bottom:1.5rem;flex-wrap:wrap}
+.exit-tab{padding:10px 20px;border:1px solid var(--gray-300);border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;transition:all .2s;background:var(--white)}
+.exit-tab:hover{border-color:var(--gray-400)}
+.exit-tab.active{background:var(--navy);color:var(--white);border-color:var(--navy)}
+.exit-detail{display:none;animation:fadeUp .4s forwards}
+.exit-detail.active{display:block}
+
+/* TIMELINE */
+.timeline{position:relative;padding:2rem 0}
+.timeline::before{content:'';position:absolute;left:24px;top:0;bottom:0;width:2px;background:var(--gray-200)}
+.tl-item{display:flex;gap:1.5rem;margin-bottom:2rem;position:relative}
+.tl-dot{width:50px;height:50px;border-radius:50%;background:var(--gray-200);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;z-index:1;transition:all .4s}
+.tl-item.active .tl-dot{background:var(--teal);color:var(--white)}
+.tl-content h4{font-size:15px;font-weight:600;margin-bottom:2px}
+.tl-content .tl-period{font-size:12px;color:var(--teal);font-weight:600;margin-bottom:4px}
+.tl-content p{font-size:13px;color:var(--gray-600)}
+
+/* WATERFALL */
+.waterfall-steps{display:flex;flex-direction:column;gap:0;margin:1.5rem 0}
+.wf-step{display:flex;align-items:center;gap:1rem;padding:1rem;border-left:3px solid var(--gray-200);transition:border-color .3s}
+.wf-step.active{border-left-color:var(--teal)}
+.wf-step .wf-num{width:32px;height:32px;border-radius:50%;background:var(--gray-100);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0}
+.wf-step.active .wf-num{background:var(--teal);color:var(--white)}
+.wf-step h4{font-size:14px;font-weight:600}
+.wf-step p{font-size:12px;color:var(--gray-600)}
+
+/* RISK CARDS */
+.risk-grid{display:grid;gap:.75rem;margin-top:1.5rem}
+.risk-card{border:1px solid var(--gray-200);border-radius:8px;overflow:hidden;cursor:pointer;transition:border-color .2s}
+.risk-card:hover{border-color:var(--gray-400)}
+.risk-header{display:flex;justify-content:space-between;align-items:center;padding:1rem;font-size:14px;font-weight:500}
+.risk-header .arrow{transition:transform .3s;font-size:18px;color:var(--gray-400)}
+.risk-card.open .arrow{transform:rotate(180deg)}
+.risk-body{max-height:0;overflow:hidden;transition:max-height .3s;padding:0 1rem}
+.risk-card.open .risk-body{max-height:200px;padding:0 1rem 1rem}
+.risk-body p{font-size:13px;color:var(--gray-600);border-left:3px solid var(--success);padding-left:12px}
+
+/* CTA */
+.cta-section{background:var(--navy);color:var(--white);text-align:center}
+.cta-stats{display:flex;gap:2.5rem;justify-content:center;flex-wrap:wrap;margin:2rem 0}
+.cta-stat .number{font-size:2.5rem;font-weight:700;color:var(--teal)}
+.cta-stat .label{font-size:12px;color:var(--gray-500);text-transform:uppercase;letter-spacing:1px}
+.cta-bullets{display:inline-block;text-align:left;margin:1.5rem 0}
+.cta-bullets li{font-size:14px;color:var(--gray-400);margin-bottom:8px;padding-left:8px;list-style:none;position:relative}
+.cta-bullets li::before{content:'';position:absolute;left:-12px;top:8px;width:6px;height:6px;background:var(--teal);border-radius:50%}
+.cta-contact{margin-top:2rem;padding-top:2rem;border-top:1px solid rgba(255,255,255,.1)}
+.cta-contact p{font-size:13px;color:var(--gray-500)}
+.cta-contact a{color:var(--teal);text-decoration:none}
+.date-badge{display:inline-block;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:6px 16px;font-size:11px;color:var(--gray-500);letter-spacing:1px;text-transform:uppercase;margin-top:2rem}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .side-nav{transform:translateX(-100%)}
+  .side-nav.open{transform:translateX(0)}
+  .mobile-nav{display:flex}
+  .main{margin-left:0}
+  .section-inner{padding:80px 1.5rem}
+  .hero-stats{gap:1.5rem}
+  .returns-grid{grid-template-columns:repeat(2,1fr)}
+  .tenant-grid{grid-template-columns:1fr}
+  .comp-cards{grid-template-columns:1fr}
+}
+@media(max-width:600px){
+  .returns-grid{grid-template-columns:1fr 1fr}
+  .stat-grid{grid-template-columns:1fr 1fr}
+}
+
+/* SLIDESHOW MODE */
+.slideshow-toggle{position:fixed;top:1rem;right:1rem;z-index:99;background:var(--navy);color:var(--white);border:none;padding:8px 16px;border-radius:6px;font-size:12px;cursor:pointer;display:flex;align-items:center;gap:6px;opacity:.6;transition:opacity .2s}
+.slideshow-toggle:hover{opacity:1}
 </style>
 </head>
 <body>
 
-<header><div class="wrap">
-<div class="logo">PALM <span>&amp;</span> PEAK</div>
-<nav class="nav">
-<a href="#dashboard">Dashboard</a>
-<a href="#documents">Documents</a>
-<a href="#snapshot">Deal</a>
-<a href="#status">Status</a>
-<a href="#contact">Contact</a>
+<!-- SIDEBAR NAV -->
+<nav class="side-nav" id="sideNav">
+  <div class="logo">
+    <h2>Palm & Peak</h2>
+    <p>Investment Opportunity</p>
+  </div>
+  <div class="nav-links" id="navLinks">
+    <a href="#hero" class="active">Overview</a>
+    <a href="#opportunity">The opportunity</a>
+    <a href="#asset">The asset</a>
+    <a href="#tenants">Target tenants</a>
+    <a href="#competition">Competitive landscape</a>
+    <a href="#business">Business model</a>
+    <a href="#financials">Financials</a>
+    <a href="#exits">Exit scenarios</a>
+    <a href="#timeline">Execution plan</a>
+    <a href="#structure">Deal structure</a>
+    <a href="#risks">Risk factors</a>
+    <a href="#cta">Contact</a>
+  </div>
+  <div class="nav-footer">
+    <p>July 2026</p>
+  </div>
 </nav>
-<div class="tag">Investor Data Room</div>
-</div></header>
 
-<div class="hero">
-<svg class="hero-art" viewBox="0 0 240 320" preserveAspectRatio="xMaxYMax meet" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-<!-- companion tower -->
-<path d="M38 320 V150 q0 -14 14 -14 h28 q14 0 14 14 V320" fill="none" stroke="#00A9CE" stroke-opacity=".14" stroke-width="1.5"/>
-<g stroke="#00A9CE" stroke-opacity=".08" stroke-width="1">
-<line x1="52" y1="150" x2="52" y2="320"/><line x1="66" y1="142" x2="66" y2="320"/><line x1="80" y1="150" x2="80" y2="320"/>
-</g>
-<!-- Sky Tower: slanted crown + spire -->
-<path d="M104 320 V44 L120 28 188 60 V320" fill="none" stroke="#00A9CE" stroke-opacity=".3" stroke-width="1.5"/>
-<line x1="113" y1="36" x2="113" y2="8" stroke="#00A9CE" stroke-opacity=".3" stroke-width="1.5"/>
-<g stroke="#00A9CE" stroke-opacity=".12" stroke-width="1">
-<line x1="122" y1="34" x2="122" y2="320"/>
-<line x1="138" y1="38" x2="138" y2="320"/>
-<line x1="154" y1="45" x2="154" y2="320"/>
-<line x1="170" y1="52" x2="170" y2="320"/>
-</g>
-<g stroke="#00A9CE" stroke-opacity=".07" stroke-width="1">
-<line x1="104" y1="90" x2="188" y2="90"/><line x1="104" y1="130" x2="188" y2="130"/>
-<line x1="104" y1="170" x2="188" y2="170"/><line x1="104" y1="210" x2="188" y2="210"/>
-<line x1="104" y1="250" x2="188" y2="250"/><line x1="104" y1="290" x2="188" y2="290"/>
-</g>
-</svg>
-<div class="wrap">
-<div class="loc">Al Reem Island - ADGM Free Zone - Abu Dhabi</div>
-<h1>Sky Tower<br>Data Room</h1>
-<p class="sub">Full-floor Grade A managed office acquisition. AED 48M purchase, 2,140 sqm, 4-year hold. Everything you need to evaluate the deal is on this page.</p>
-<div class="kpis">
-<div class="kpi"><b data-count="44.2" data-dec="1" data-suffix="%">44.2%</b><span>LP IRR (levered)</span></div>
-<div class="kpi"><b data-count="3.69" data-dec="2" data-suffix="x">3.69x</b><span>LP multiple</span></div>
-<div class="kpi"><b data-count="27.8" data-dec="1" data-prefix="AED " data-suffix="M">AED 27.8M</b><span>LP equity</span></div>
-<div class="kpi"><b data-count="4" data-dec="0" data-suffix=" yrs">4 yrs</b><span>Target hold</span></div>
+<!-- MOBILE NAV -->
+<div class="mobile-nav">
+  <h2>PALM & PEAK</h2>
+  <button class="hamburger" onclick="document.getElementById('sideNav').classList.toggle('open')">&#9776;</button>
 </div>
-<p class="note">Levered base case, 70% LTV. All-equity track: 28.2% IRR / 2.44x on AED 61.9M. Aggregate DSCR 2.40x (min 1.42x).</p>
-</div></div>
 
-<section id="dashboard"><div class="wrap">
-<div class="kicker">Interactive model</div>
-<h2>Play with the numbers</h2>
-<p class="lead">Start here. Adjust occupancy, desk rates and exit assumptions - returns update in real time. Works on your phone.</p>
-<a class="dash-card" href="dashboard.html">
-<div class="dc-text">
-<div class="live"><i></i>Interactive - live model</div>
-<h3>Interactive Returns Dashboard</h3>
-<p>Drag occupancy, desk rates and exit cap - IRR and multiple recalculate as you move. Levered / unlevered toggle. Mirrors the underwriting models below.</p>
-<span class="btn-ghost">Try the dashboard →</span>
-</div>
-<div class="dc-preview" aria-hidden="true">
-<div class="dc-row"><span>Occupancy</span><div class="dc-track"><div class="dc-fill anim"></div><div class="dc-knob anim"></div></div></div>
-<div class="dc-row"><span>Desk rate</span><div class="dc-track"><div class="dc-fill" style="width:55%"></div><div class="dc-knob" style="left:55%"></div></div></div>
-<div class="dc-row" style="margin-bottom:0"><span>Exit cap</span><div class="dc-track"><div class="dc-fill" style="width:40%"></div><div class="dc-knob" style="left:40%"></div></div></div>
-<div class="dc-out">
-<div class="dc-irr"><b>44.2%</b><span>LP IRR</span></div>
-<div class="dc-bars"><i style="height:10px"></i><i style="height:18px"></i><i style="height:24px"></i><i style="height:32px"></i><i style="height:44px"></i></div>
-</div>
-</div>
-</a>
-</div></section>
+<!-- SLIDESHOW TOGGLE -->
+<button class="slideshow-toggle" onclick="toggleSlideshow()" id="slideshowBtn">&#9654; Slideshow</button>
 
-<section class="alt" id="documents"><div class="wrap">
-<div class="kicker">Diligence</div>
-<h2>Documents</h2>
-<p class="lead">Current versions only. Each opens directly in Google Drive - view or download.</p>
-<div class="docs">
-<a class="doc" href="https://drive.google.com/file/d/19Cbi9VBiD0z_2HuBAEvEvy9A0fLlOFwn/view" target="_blank" rel="noopener">
-<div class="type">PDF - 2 min read</div>
-<h3>One-Pager</h3>
-<p>The deal on a single page: thesis, asset, returns, structure. Start here if you are short on time.</p>
-<span class="open">Open →</span>
-</a>
-<a class="doc" href="https://drive.google.com/file/d/1FZ8Lh3Da3DQfWYRWFropJ2RPniR4pjKl/view" target="_blank" rel="noopener">
-<div class="type">Word - full detail</div>
-<h3>Investment Memorandum</h3>
-<p>Complete memo: market, asset, business model, dual-track returns (levered and all-equity), waterfall, risks.</p>
-<span class="open">Open →</span>
-</a>
-<a class="doc" href="https://drive.google.com/file/d/1uaEHOOentOZMI36BO6AjhT7tywIGvjap/view" target="_blank" rel="noopener">
-<div class="type">Excel - underwriting</div>
-<h3>Levered 4Y Model</h3>
-<p>Full cash flow model with 70% LTV financing, DSCR, sensitivity matrix and scenario analysis.</p>
-<span class="open">Open →</span>
-</a>
-<a class="doc" href="https://drive.google.com/file/d/1m8kc1oHmJ8dYnUpDz05VbucOyrTLN_hF/view" target="_blank" rel="noopener">
-<div class="type">Excel - underwriting</div>
-<h3>All-Equity 4Y Model</h3>
-<p>Same asset and assumptions with no leverage - for investors who prefer an unlevered structure.</p>
-<span class="open">Open →</span>
-</a>
-</div>
-<p style="margin-top:16px;font-size:13px;color:var(--muted)">Prefer to browse? <a href="https://drive.google.com/drive/folders/1uKcjTk3LbRHV6raiYaxMptVGCocQUh3r" target="_blank" rel="noopener" style="color:var(--teal);font-weight:600">Open the full data room folder →</a></p>
-</div></section>
+<main class="main">
 
-<section id="snapshot"><div class="wrap">
-<div class="kicker">Key terms</div>
-<h2>Deal snapshot</h2>
-<p class="lead">Key terms at a glance. Full mechanics in the memorandum.</p>
-<div class="snapshot">
-<div class="snap"><span>Asset</span><b>Full floor, Sky Tower</b></div>
-<div class="snap"><span>Area</span><b>2,140 sqm (23,035 sqft)</b></div>
-<div class="snap"><span>Purchase price</span><b>AED 48M (15-20% below market)</b></div>
-<div class="snap"><span>Strategy</span><b>Managed office, ~200 desks</b></div>
-<div class="snap"><span>Jurisdiction</span><b>ADGM Free Zone SPV</b></div>
-<div class="snap"><span>Preferred return</span><b>8% on outstanding capital</b></div>
-<div class="snap"><span>Residual split</span><b>80% LP / 20% GP</b></div>
-<div class="snap"><span>Break-even</span><b>~49% occupancy (1.0x DSCR)</b></div>
-</div>
-</div></section>
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="section-inner" style="text-align:center">
+      <p class="hero-label">Al Reem Island - ADGM Free Zone</p>
+      <h1><span>Sky Tower</span><br>Abu Dhabi</h1>
+      <p class="hero-sub">Managed Office - Full Floor Acquisition</p>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="number" data-target="61.9" data-prefix="AED " data-suffix="M" data-decimals="1">AED 0M</div>
+          <div class="label">Total equity</div>
+        </div>
+        <div class="hero-stat">
+          <div class="number" data-target="28.2" data-suffix="%" data-decimals="1">0%</div>
+          <div class="label">LP IRR (4-year)</div>
+        </div>
+        <div class="hero-stat">
+          <div class="number" data-target="2.44" data-suffix="x" data-decimals="2">0x</div>
+          <div class="label">LP multiple</div>
+        </div>
+        <div class="hero-stat">
+          <div class="number" data-target="8" data-suffix="%">0%</div>
+          <div class="label">Preferred return</div>
+        </div>
+      </div>
+      <div class="scroll-cue">
+        <p>Scroll to explore</p>
+        <div class="scroll-arrow"></div>
+      </div>
+    </div>
+  </section>
 
-<section class="alt" id="status"><div class="wrap">
-<div class="kicker">Timeline</div>
-<h2>Where the deal stands</h2>
-<p class="lead">Updated June 2026.</p>
-<ul class="steps">
-<li class="now"><b>Capital raise</b><span>Data room open, investor conversations under way.</span></li>
-<li><b>Acquisition &amp; SPV setup</b><span>Close, register ADGM SPV, design and permitting. Months 1-3.</span></li>
-<li><b>Fit-out</b><span>Renovation, furniture, IT infrastructure. Months 3-6.</span></li>
-<li><b>Lease-up</b><span>Target 50% occupancy by Month 9. Cash flow begins.</span></li>
-<li><b>Stabilization &amp; exit</b><span>90%+ occupancy, quarterly distributions, exit at Year 4.</span></li>
-</ul>
-</div></section>
+  <!-- THE OPPORTUNITY -->
+  <section id="opportunity">
+    <div class="section-inner">
+      <div class="reveal">
+        <p class="section-label">The opportunity</p>
+        <h2 class="section-title">Every ADGM company <strong>must</strong> have a physical office</h2>
+        <p class="section-desc">Abu Dhabi Global Market is the fastest-growing financial free zone in the region - and every licensed entity is mandated to maintain a physical office. That creates a demand floor independent of economic cycles.</p>
+      </div>
 
-<div class="cta" id="contact"><div class="wrap">
-<h2>Questions? Talk to me directly.</h2>
-<p>Evgeny Gasnikov, CEO, Palm &amp; Peak</p>
-<a class="btn" href="mailto:egasnikov@gmail.com?subject=Sky%20Tower%20-%20Investor%20Question">Email Evgeny →</a>
-</div></div>
+      <div class="stat-grid reveal">
+        <div class="stat-card">
+          <div class="big teal" data-target="1900" data-prefix="" data-suffix="+">0</div>
+          <div class="sub">Registered ADGM entities</div>
+        </div>
+        <div class="stat-card">
+          <div class="big" data-target="43" data-suffix="%" >0</div>
+          <div class="sub">YoY entity growth (2024)</div>
+        </div>
+        <div class="stat-card">
+          <div class="big teal">100%</div>
+          <div class="sub">Office mandate compliance</div>
+        </div>
+        <div class="stat-card">
+          <div class="big" data-target="800" data-suffix="+">0</div>
+          <div class="sub">New entrants per year</div>
+        </div>
+      </div>
 
-<footer><div class="wrap">
-Palm &amp; Peak - Dubai, UAE &nbsp;|&nbsp; <a href="mailto:egasnikov@gmail.com">egasnikov@gmail.com</a> &nbsp;|&nbsp; Last updated June 2026<br>
-This page is a summary for information purposes only and does not constitute an offer of securities. Figures reflect the base case in the underwriting models.
-</div></footer>
+      <div class="reveal">
+        <h3 style="font-size:18px;font-weight:600;margin-bottom:1rem">Grade A supply gap</h3>
+        <div class="timeline-bar">
+          <div class="segment gap">
+            <strong>2014 - 2028</strong>
+            <small>Zero new Grade A supply in ADGM zone</small>
+          </div>
+          <div class="segment future">
+            <strong>Late 2028</strong>
+            <small>One Maryah Place (largely pre-let)</small>
+          </div>
+          <div class="segment future">
+            <strong>2030s</strong>
+            <small>Maryah East (Al Maryah North)</small>
+          </div>
+        </div>
+        <p style="font-size:13px;color:var(--gray-600);text-align:center;margin-top:8px">Last major Grade A delivery: Addax Tower (2014). Next confirmed delivery: One Maryah Place, late 2028 - expected to arrive largely pre-let.</p>
+      </div>
+
+      <div class="info-grid reveal">
+        <div class="info-box">
+          <h4>Demand growth</h4>
+          <p>1,900+ ADGM entities growing 43% YoY. Every company needs a physical office to maintain its licence.</p>
+        </div>
+        <div class="info-box">
+          <h4>Supply constraint</h4>
+          <p>No new office buildings under construction in the ADGM zone. Existing vacancy is shrinking rapidly.</p>
+        </div>
+        <div class="info-box">
+          <h4>Rising rents</h4>
+          <p>Office rents on Al Reem Island increased 25-30% over 2023-2024. Upward trend continues into 2025-2026.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE ASSET -->
+  <section id="asset" style="background:var(--gray-50)">
+    <div class="section-inner">
+      <div class="reveal">
+        <p class="section-label">The asset</p>
+        <h2 class="section-title">Full floor in one of Abu Dhabi's <strong>most iconic towers</strong></h2>
+        <p class="section-desc">2,140 sqm of Grade A office space with complete design flexibility. Purchase at 15-20% below market value.</p>
+      </div>
+
+      <div class="spec-grid reveal">
+        <div class="spec-item">
+          <div class="spec-icon">&#9962;</div>
+          <div><div class="spec-label">Building</div><div class="spec-value">Sky Tower, Al Reem Island</div></div>
+        </div>
+        <div class="spec-item">
+          <div class="spec-icon">&#8679;</div>
+          <div><div class="spec-label">Height</div><div class="spec-value">80 Floors</div></div>
+        </div>
+        <div class="spec-item">
+          <div class="spec-icon">&#9633;</div>
+          <div><div class="spec-label">Floor area</div><div class="spec-value">2,140 sqm (23,035 sqft)</div></div>
+        </div>
+        <div class="spec-item">
+          <div class="spec-icon">&#9881;</div>
+          <div><div class="spec-label">Built</div><div class="spec-value">2010</div></div>
+        </div>
+        <div class="spec-item">
+          <div class="spec-icon">&#9733;</div>
+          <div><div class="spec-label">Class</div><div class="spec-value">Grade A Office</div></div>
+        </div>
+        <div class="spec-item">
+          <div class="spec-icon">&#127970;</div>
+          <div><div class="spec-label">Jurisdiction</div><div class="spec-value">ADGM Free Zone</div></div>
+        </div>
+      </div>
+
+      <div class="advantage-list reveal">
+        <div class="advantage">
+          <div class="check">&#10003;</div>
+          <p>Located within ADGM - Abu Dhabi's sole international financial free zone</p>
+        </div>
+        <div class="advantage">
+          <div class="check">&#10003;</div>
+          <p>Full floor control - complete flexibility in space design and tenant mix</p>
+        </div>
+        <div class="advantage">
+          <div class="check">&#10003;</div>
+          <p>Purchase at AED 48M vs. market value AED 55-60M - built-in 15-20% margin of safety</p>
+        </div>
+        <div class="advantage">
+          <div class="check">&#10003;</div>
+          <p>Established island infrastructure with residential, retail and F&B amenities</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TARGET TENANTS -->
+  <section id="tenants">
+    <div class="section-inner">
+      <div class="reveal">
+        <p class="section-label">Target tenants</p>
+        <h2 class="section-title">Three segments, one <strong>common need</strong></h2>
+        <p class="section-desc">ADGM-licensed companies that need a physical office to maintain their licence. Creditworthy, growth-oriented, willing to pay a premium for move-in ready space.</p>
+      </div>
+
+      <div class="tenant-grid reveal">
+        <div class="tenant-card active" onclick="selectTenant(this)">
+          <div class="pct">50%</div>
+          <h4>Financial services</h4>
+          <p>Funds, asset managers, brokers. Required to maintain ADGM office. Creditworthy, long-term tenants with premium willingness to pay.</p>
+        </div>
+        <div class="tenant-card" onclick="selectTenant(this)">
+          <div class="pct">30%</div>
+          <h4>Technology & fintech</h4>
+          <p>Fintech, regtech, crypto companies. Fastest-growing ADGM segment. Flexible managed office format is ideal for scaling teams.</p>
+        </div>
+        <div class="tenant-card" onclick="selectTenant(this)">
+          <div class="pct">20%</div>
+          <h4>Professional services</h4>
+          <p>International and regional consulting, legal and advisory firms. Need presentable office space close to ADGM-based clients.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPETITIVE LANDSCAPE -->
+  <section id="competition" style="background:var(--gray-50)">
+    <div class="section-inner">
+      <div class="reveal">
+        <p class="section-label">Competitive landscape</p>
+        <h2 class="section-title">15-20% below Al Maryah. <strong>Only managed office in ADGM on Al Reem.</strong></h2>
+        <p class="section-desc">The only managed office provider located within the ADGM zone on Al Reem Island - a unique offering for companies that need a private office, not a coworking desk.</p>
+      </div>
+
+      <div class="comp-cards reveal">
+        <div class="comp-card ours">
+          <h4>Sky Tower (Palm & Peak)</h4>
+          <div class="comp-detail"><span>Location</span><span>Al Reem Island (ADGM)</span></div>
+          <div class="comp-detail"><span>Rate / desk</span><span style="color:var(--teal)">AED 3,500/mo</span></div>
+          <div class="comp-detail"><span>Format</span><span>Managed office</span></div>
+          <div class="comp-detail"><span>Availability</span><span>Full floor, ~330 desks</span></div>
+          <div class="comp-detail"><span>ADGM zone</span><span style="color:var(--success)">Yes</span></div>
+        </div>
+        <div class="comp-card">
+          <h4>Al Maryah competitors</h4>
+          <div class="comp-detail"><span>Location</span><span>Al Maryah Island</span></div>
+          <div class="comp-detail"><span>Rate / desk</span><span>AED 4,000-5,500/mo</span></div>
+          <div class="comp-detail"><span>Format</span><span>Serviced / coworking</span></div>
+          <div class="comp-detail"><span>Availability</span><span>Limited, fragmented</span></div>
+          <div class="comp-detail"><span>ADGM zone</span><span>Yes (original zone)</span></div>
+        </div>
+        <div class="comp-card">
+          <h4>Traditional lease</h4>
+          <div class="comp-detail"><span>Location</span><span>Various</span></div>
+          <div class="comp-detail"><span>Rate / sqm</span><span>AED 1,200-1,800/yr</span></div>
+          <div class="comp-detail"><span>Format</span><span>Shell & core</span></div>
+          <div class="comp-detail"><span>Fit-out cost</span><span>AED 500-1,000/sqm</span></div>
+          <div class="comp-detail"><span>Setup time</span><span>3-6 months</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BUSINESS MODEL -->
+  <section id="business">
+    <div class="section-inner">
+      <div class="reveal">
+        <p class="section-label">Business model</p>
+        <h2 class="section-title">AED 3,500/desk revenue vs. <strong>AED 1,500 cost</strong></h2>
+        <p class="section-desc">Managed office model generates 2-3x revenue multiple vs. traditional lease, with built-in demand from ADGM's mandatory office requirement.</p>
+      </div>
+
+      <div class="stat-grid reveal">
+        <div class="stat-card">
+          <div class="big teal">~330</div>
+          <div class="sub">Total desks</div>
+        </div>
+        <div class="stat-card">
+          <div class="big">AED 3,500</div>
+          <div class="sub">Revenue per desk / month</div>
+        </div>
+        <div class="stat-card">
+          <div class="big">~AED 1,500</div>
+          <div class="sub">Cost of occupancy / desk</div>
+        </div>
+        <div class="stat-card">
+          <div class="big teal">2.3x</div>
+          <div class="sub">Revenue multiple vs. trad. lease</div>
+        </div>
+      </div>
+
+      <div class="reveal">
+        <h3 style="font-size:16px;font-weight:600;margin-bottom:.75rem">Uses of capital - AED 61.9M</h3>
+        <div class="capital-bar">
+          <div class="bar-seg" style="flex:78;background:var(--navy)">78%</div>
+          <div class="bar-seg" style="flex:14;background:var(--teal)">14%</div>
+          <div class="bar-seg" style="flex:4;background:var(--gold)">4%</div>
+          <div class="bar-seg" style="flex:4;background:var(--gray-500)">4%</div>
+        </div>
+        <div class="bar-legend">
+          <div class="bar-legend-item"><div class="dot" style="background:var(--navy)"></div>Purchase - AED 48M</div>
+          <div class="bar-legend-item"><div class="dot" style="background:var(--teal)"></div>Renovation & setup - AED 8.7M</div>
+          <div class="bar-legend-item"><div class="dot" style="background:var(--gold)"></div>VAT deposits (recoverable) - AED 2.5M</div>
+          <div class="bar-legend-item"><div class="dot" style="background:var(--gray-500)"></div>Fees & costs - AED 2.8M</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINANCIALS -->
+  <section id="financials" style="background:var(--gray-50)">
+    <div class="section-inner">
+      <div class="reveal">
+        <p class="section-label">Interactive model</p>
+        <h2 class="section-title">Drag the sliders. <strong>Watch the returns move.</strong></h2>
+        <p class="section-desc">Adjust key assumptions and see how they impact investor returns in real time. Base case shown by default.</p>
+      </div>
+
+      <div class="slider-group reveal">
+        <div class="slider-item">
+          <label>Stabilized occupancy <span id="occVal">95%</span></label>
+          <input type="range" min="60" max="100" value="95" step="5" id="occSlider" oninput="updateModel()">
+        </div>
+        <div class="slider-item">
+          <label>Desk rate (AED/mo) <span id="rateVal">3,500</span></label>
+          <input type="range" min="2500" max="5000" value="3500" step="100" id="rateSlider" oninput="updateModel()">
+        </div>
+        <div class="slider-item">
+          <label>Annual escalation <span id="escVal">5%</span></label>
+          <input type="range" min="0" max="10" value="5" step="1" id="escSlider" oninput="updateModel()">
+        </div>
+        <div class="slider-item">
+          <label>Exit cap rate <span id="capVal">9%</span></label>
+          <input type="range" min="7" max="12" value="9" step="0.5" id="capSlider" oninput="updateModel()">
+        </div>
+      </div>
+
+      <div class="returns-grid reveal">
+        <div class="return-card">
+          <div class="r-value" id="irrDisplay">28.2%</div>
+          <div class="r-label">LP IRR</div>
+        </div>
+        <div class="return-card">
+          <div class="r-value" id="multipleDisplay">2.44x</div>
+          <div class="r-label">LP multiple</div>
+        </div>
+        <div class="return-card">
+          <div class="r-value" id="noiDisplay">AED 36.1M</div>
+          <div class="r-label">4Y cum. NOI</div>
+        </div>
+        <div class="return-card">
+          <div class="r-value" id="yieldDisplay">17.8%</div>
+          <div class="r-label">NOI yield Y2</div>
+        </div>
+      </div>
+
+      <div class="chart-container reveal">
+        <canvas id="cashflowChart"></canvas>
+      </div>
+      <p style="font-size:11px;color:var(--gray-500);text-align:center">4-year cash flow projection. Bars show annual NOI. Line shows cumulative distributions.</p>
+    </div>
+  </section>
+
+  <!-- EXIT SCENARIOS -->
+  <section id="exits">
+    <div class="section-inner">
+      <div class="reveal">
+        <p class="section-label">Exit strategy</p>
+        <h2 class="section-title">Multiple paths to <strong>liquidity</strong></h2>
+        <p class="section-desc">Three exit scenarios, each with distinct risk-return profiles. Click to explore.</p>
+      </div>
+
+      <div class="exit-tabs reveal">
+        <div class="exit-tab active" onclick="showExit(0)">4-year sale (primary)</div>
+        <div class="exit-tab" onclick="showExit(1)">Recapitalization</div>
+        <div class="exit-tab" onclick="showExit(2)">Early exit (Year 2-3)</div>
+      </div>
+
+      <div class="exit-detail active reveal" id="exit0">
+        <div class="stat-grid">
+          <div class="stat-card"><div class="big teal">28.2%</div><div class="sub">LP IRR</div></div>
+          <div class="stat-card"><div class="big">2.44x</div><div class="sub">LP multiple</div></div>
+          <div class="stat-card"><div class="big">9%</div><div class="sub">Exit cap rate</div></div>
+          <div class="stat-card"><div class="big teal">AED ~137M</div><div class="sub">Implied exit value</div></div>
+        </div>
+        <div class="info-box" style="margin-top:1rem">
+          <h4>Sale of stabilized asset</h4>
+          <p>Sell the full floor with in-place tenants and proven cash flow history. Buyer acquires a stabilized yield asset at 9-11% cap rate. This is the primary exit path at Year 4.</p>
+        </div>
+      </div>
+
+      <div class="exit-detail" id="exit1">
+        <div class="stat-grid">
+          <div class="stat-card"><div class="big teal">50-70%</div><div class="sub">Capital returned</div></div>
+          <div class="stat-card"><div class="big">Ongoing</div><div class="sub">Cash distributions</div></div>
+          <div class="stat-card"><div class="big">Retained</div><div class="sub">Ownership</div></div>
+          <div class="stat-card"><div class="big teal">Lower risk</div><div class="sub">Profile</div></div>
+        </div>
+        <div class="info-box" style="margin-top:1rem">
+          <h4>Recapitalization</h4>
+          <p>Refinance against stabilized NOI. Return 50-70% of investor capital while retaining ownership and ongoing cash distributions. Reduces risk, extends upside.</p>
+        </div>
+      </div>
+
+      <div class="exit-detail" id="exit2">
+        <div class="stat-grid">
+          <div class="stat-card"><div class="big teal">32.2%</div><div class="sub">LP IRR</div></div>
+          <div class="stat-card"><div class="big">2.19x</div><div class="sub">LP multiple</div></div>
+          <div class="stat-card"><div class="big">9%</div><div class="sub">Exit cap rate</div></div>
+          <div class="stat-card"><div class="big teal">~3 years</div><div class="sub">Hold period</div></div>
+        </div>
+        <div class="info-box" style="margin-top:1rem">
+          <h4>Opportunistic early exit</h4>
+          <p>If market conditions are favorable, exit earlier with a higher IRR but lower absolute multiple. Higher IRR due to shorter hold period, lower multiple due to less compounding.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXECUTION TIMELINE -->
+  <section id="timeline" style="background:var(--gray-50)">
+    <div class="section-inner">
+      <div class="reveal">
+        <p class="section-label">Execution plan</p>
+        <h2 class="section-title">From close to <strong>cash flow</strong> in 9 months</h2>
+      </div>
+
+      <div class="timeline reveal">
+        <div class="tl-item" data-tl>
+          <div class="tl-dot">1</div>
+          <div class="tl-content">
+            <div class="tl-period">Month 1-3</div>
+            <h4>Acquisition</h4>
+            <p>Close transaction, register SPV in ADGM, begin design & permitting. Engage architect and contractors.</p>
+          </div>
+        </div>
+        <div class="tl-item" data-tl>
+          <div class="tl-dot">2</div>
+          <div class="tl-content">
+            <div class="tl-period">Month 3-6</div>
+            <h4>Fit-out</h4>
+            <p>Renovation, furniture procurement, IT infrastructure installation, ADGM approvals and compliance.</p>
+          </div>
+        </div>
+        <div class="tl-item" data-tl>
+          <div class="tl-dot">3</div>
+          <div class="tl-content">
+            <div class="tl-period">Month 4-9</div>
+            <h4>Lease-up</h4>
+            <p>Marketing launch, broker network activation, first tenants. Target 50% occupancy by Month 9.</p>
+          </div>
+        </div>
+        <div class="tl-item" data-tl>
+          <div class="tl-dot">4</div>
+          <div class="tl-content">
+            <div class="tl-period">Month 9-24</div>
+            <h4>Stabilization</h4>
+            <p>Grow to 90%+ occupancy, optimize operations, build track record for exit valuation.</p>
+          </div>
+        </div>
+        <div class="tl-item" data-tl>
+          <div class="tl-dot">5</div>
+          <div class="tl-content">
+            <div class="tl-period">Year 3-4</div>
+            <h4>Cash flow & exit</h4>
+            <p>Distribute NOI to LPs quarterly. 5% annual escalation. Maintain 90%+ occupancy. Prepare exit at Year 4.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DEAL STRUCTURE -->
+  <section id="structure">
+    <div class="section-inner">
+      <div class="reveal">
+        <p class="section-label">Deal structure</p>
+        <h2 class="section-title">LP-friendly waterfall with <strong>8% preferred return</strong></h2>
+        <p class="section-desc">SPV in ADGM. 80/20 LP/GP split. Standard institutional waterfall protecting investor capital first.</p>
+      </div>
+
+      <div class="waterfall-steps reveal">
+        <div class="wf-step" data-wf>
+          <div class="wf-num">1</div>
+          <div>
+            <h4>Return of capital</h4>
+            <p>100% to LP until all invested capital is returned</p>
+          </div>
+        </div>
+        <div class="wf-step" data-wf>
+          <div class="wf-num">2</div>
+          <div>
+            <h4>Preferred return (8% p.a.)</h4>
+            <p>8% per annum on outstanding capital - interim cash flow pays the preference first</p>
+          </div>
+        </div>
+        <div class="wf-step" data-wf>
+          <div class="wf-num">3</div>
+          <div>
+            <h4>GP catch-up</h4>
+            <p>GP catch-up equal to 25% of the preference paid - brings the GP to 20% of profits</p>
+          </div>
+        </div>
+        <div class="wf-step" data-wf>
+          <div class="wf-num">4</div>
+          <div>
+            <h4>Residual split</h4>
+            <p>80% LP / 20% GP on all remaining distributions</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="stat-grid reveal" style="margin-top:2rem">
+        <div class="stat-card"><div class="big">ADGM</div><div class="sub">SPV jurisdiction</div></div>
+        <div class="stat-card"><div class="big">80/20</div><div class="sub">LP / GP split</div></div>
+        <div class="stat-card"><div class="big teal">8%</div><div class="sub">LP preferred return</div></div>
+        <div class="stat-card"><div class="big">4 Years</div><div class="sub">Target hold period</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RISK FACTORS -->
+  <section id="risks" style="background:var(--gray-50)">
+    <div class="section-inner">
+      <div class="reveal">
+        <p class="section-label">Risk factors</p>
+        <h2 class="section-title">Every risk has a <strong>mitigant</strong></h2>
+        <p class="section-desc">Click each risk to see how it's addressed.</p>
+      </div>
+
+      <div class="risk-grid reveal">
+        <div class="risk-card" onclick="toggleRisk(this)">
+          <div class="risk-header"><span>Occupancy ramp slower than projected</span><span class="arrow">&#9660;</span></div>
+          <div class="risk-body"><p>Conservative base case assumes 50% Y1 occupancy with gradual ramp. Break-even at ~49% occupancy. ADGM's mandatory office requirement creates a non-discretionary demand floor of 800+ new companies per year.</p></div>
+        </div>
+        <div class="risk-card" onclick="toggleRisk(this)">
+          <div class="risk-header"><span>New supply enters ADGM zone</span><span class="arrow">&#9660;</span></div>
+          <div class="risk-body"><p>One Maryah Place (late 2028) is the only confirmed Grade A delivery inside the window, and it is expected to arrive largely pre-let. Al Reem itself has zero new Grade A office in the pipeline. Our investment horizon completes as that supply lands.</p></div>
+        </div>
+        <div class="risk-card" onclick="toggleRisk(this)">
+          <div class="risk-header"><span>ADGM regulatory changes</span><span class="arrow">&#9660;</span></div>
+          <div class="risk-body"><p>ADGM is a strategic Abu Dhabi government initiative backed by sovereign wealth. The office mandate is fundamental to the zone's compliance framework. Any relaxation would undermine ADGM's regulatory credibility - extremely unlikely.</p></div>
+        </div>
+        <div class="risk-card" onclick="toggleRisk(this)">
+          <div class="risk-header"><span>Renovation cost overruns</span><span class="arrow">&#9660;</span></div>
+          <div class="risk-body"><p>Fixed-price contractor agreements. 10% contingency reserve built into the capital stack. Palm & Peak has completed multiple fit-outs in the UAE with consistent budget adherence.</p></div>
+        </div>
+        <div class="risk-card" onclick="toggleRisk(this)">
+          <div class="risk-header"><span>Exit valuation risk</span><span class="arrow">&#9660;</span></div>
+          <div class="risk-body"><p>Base case uses conservative 9% exit cap rate. Sensitivity analysis shows positive LP returns even at 12% cap. Multiple exit paths (sale, refi, early exit) provide flexibility. Cash distributions begin from Year 1, reducing dependence on exit pricing.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section" id="cta">
+    <div class="section-inner" style="text-align:center">
+      <div class="reveal">
+        <p class="section-label" style="color:var(--teal)">Investment opportunity</p>
+        <h2 style="font-size:clamp(1.8rem,3vw,2.5rem);font-weight:300;color:var(--white);margin-bottom:1rem">Sky Tower Abu Dhabi</h2>
+      </div>
+
+      <div class="cta-stats reveal">
+        <div class="cta-stat"><div class="number">AED 61.9M</div><div class="label">Total equity</div></div>
+        <div class="cta-stat"><div class="number">28.2%</div><div class="label">LP IRR (4Y)</div></div>
+        <div class="cta-stat"><div class="number">2.44x</div><div class="label">LP multiple</div></div>
+        <div class="cta-stat"><div class="number">8%</div><div class="label">Preferred return</div></div>
+      </div>
+
+      <ul class="cta-bullets reveal">
+        <li>15-20% acquisition discount to market value</li>
+        <li>Regulatory demand floor - mandatory office for ADGM companies</li>
+        <li>No competing Grade A supply until late 2028 protects pricing power</li>
+        <li>Multiple exit paths - sale, recapitalization, or early exit</li>
+      </ul>
+
+      <div class="cta-contact reveal">
+        <p>Palm & Peak</p>
+        <p><a href="mailto:egasnikov@gmail.com">egasnikov@gmail.com</a></p>
+      </div>
+
+      <div class="confidential-badge reveal">July 2026</div>
+    </div>
+  </section>
+
+</main>
 
 <script>
-(function(){
-var rm=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
-/* scroll reveal */
-var targets=[].slice.call(document.querySelectorAll('section .kicker,section h2,section .lead,.dash-card,.doc,.snapshot,.steps li,.cta h2,.cta p,.cta .btn'));
-targets.forEach(function(el,i){el.classList.add('reveal');el.style.transitionDelay=(el.classList.contains('doc')?(i%4)*70:0)+'ms'});
-if(!('IntersectionObserver' in window)){targets.forEach(function(el){el.classList.add('in')});}
-else{var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12,rootMargin:'0px 0px -40px 0px'});
-targets.forEach(function(el){io.observe(el)});
-/* failsafe: if observer never fired (e.g. unusual browser), reveal everything */
-setTimeout(function(){if(!document.querySelector('.reveal.in'))targets.forEach(function(el){el.classList.add('in')})},3000);}
-/* KPI count-up */
-var ks=[].slice.call(document.querySelectorAll('[data-count]'));
-if(!rm){ks.forEach(function(el){
-var end=parseFloat(el.dataset.count),dec=+el.dataset.dec,pre=el.dataset.prefix||'',suf=el.dataset.suffix||'',t0=null,D=1400;
-function step(t){if(!t0)t0=t;var p=Math.min((t-t0)/D,1);p=1-Math.pow(1-p,3);
-el.textContent=pre+(end*p).toFixed(dec)+suf;if(p<1)requestAnimationFrame(step);}
-requestAnimationFrame(step);});}
-})();
+// SCROLL REVEAL
+const observer = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){e.target.classList.add('visible')}
+  })
+},{threshold:0.15})
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el))
+
+// ACTIVE NAV
+const navObserver = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      document.querySelectorAll('.nav-links a').forEach(a=>a.classList.remove('active'))
+      const link = document.querySelector('.nav-links a[href="#'+e.target.id+'"]')
+      if(link) link.classList.add('active')
+    }
+  })
+},{threshold:0.3})
+document.querySelectorAll('section[id]').forEach(s=>navObserver.observe(s))
+
+// ANIMATED COUNTERS
+let countersAnimated = false
+const counterObserver = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting && !countersAnimated){
+      countersAnimated = true
+      animateCounters()
+    }
+  })
+},{threshold:0.5})
+const heroStats = document.querySelector('.hero-stats')
+if(heroStats) counterObserver.observe(heroStats)
+
+// Also animate stat cards when they come into view
+const statCardObserver = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const bigs = e.target.querySelectorAll('.big[data-target]')
+      bigs.forEach(el=>{
+        if(!el.dataset.animated){
+          el.dataset.animated = 'true'
+          animateCounter(el)
+        }
+      })
+    }
+  })
+},{threshold:0.3})
+document.querySelectorAll('.stat-grid').forEach(g=>statCardObserver.observe(g))
+
+function animateCounters(){
+  document.querySelectorAll('.hero-stats .number[data-target]').forEach(el=>animateCounter(el))
+}
+
+function animateCounter(el){
+  const target = parseFloat(el.dataset.target)
+  const decimals = parseInt(el.dataset.decimals)||0
+  const prefix = el.dataset.prefix||''
+  const suffix = el.dataset.suffix||''
+  const duration = 1500
+  const start = performance.now()
+  function update(now){
+    const progress = Math.min((now-start)/duration,1)
+    const eased = 1-Math.pow(1-progress,3)
+    const current = (target*eased).toFixed(decimals)
+    el.textContent = prefix+Number(current).toLocaleString()+suffix
+    if(progress<1) requestAnimationFrame(update)
+  }
+  requestAnimationFrame(update)
+}
+
+// TIMELINE ANIMATION
+const tlObserver = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting) e.target.classList.add('active')
+  })
+},{threshold:0.5})
+document.querySelectorAll('[data-tl]').forEach(el=>tlObserver.observe(el))
+
+// WATERFALL ANIMATION
+const wfObserver = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting) e.target.classList.add('active')
+  })
+},{threshold:0.5})
+document.querySelectorAll('[data-wf]').forEach(el=>wfObserver.observe(el))
+
+// TENANT SELECTION
+function selectTenant(card){
+  document.querySelectorAll('.tenant-card').forEach(c=>c.classList.remove('active'))
+  card.classList.add('active')
+}
+
+// RISK TOGGLE
+function toggleRisk(card){
+  card.classList.toggle('open')
+}
+
+// EXIT SCENARIOS
+function showExit(idx){
+  document.querySelectorAll('.exit-tab').forEach(t=>t.classList.remove('active'))
+  document.querySelectorAll('.exit-detail').forEach(d=>{d.classList.remove('active');d.style.display='none'})
+  document.querySelectorAll('.exit-tab')[idx].classList.add('active')
+  const detail = document.getElementById('exit'+idx)
+  detail.style.display='block'
+  setTimeout(()=>detail.classList.add('active'),10)
+}
+
+// FINANCIAL MODEL - mirrors the Palm & Peak all-equity underwriting model (base: 28.2% LP IRR / 2.44x / 4Y)
+const AM={sqft:23000,purchase:48000000,acq_rate:0.041,vat:0.05,reno_psf:350,cont_rate:0.05,fitout:7,hold:4,desk_density:70,opex_esc:0.03,broker:0.10,service_psf:18,disp:0.02,mgmt:0.02,pref:0.08,lp_share:0.80,gp_share:0.20}
+
+let cashflowChart = null
+
+function bisectIRR(cfs){let lo=-0.95,hi=15;const npv=r=>cfs.reduce((s,c,i)=>s+c/Math.pow(1+r,i),0);if(npv(lo)*npv(hi)>0)return NaN;for(let k=0;k<300;k++){const m=(lo+hi)/2,v=npv(m);if(Math.abs(v)<1e-7)return m;(npv(lo)*v<0)?hi=m:lo=m}return (lo+hi)/2}
+
+function aeModel(stab_occ,rent_mo,rent_esc,exit_cap){
+  const p=AM,MO=12,hold=p.hold
+  const cap=p.sqft/p.desk_density,occ=cap*stab_occ
+  const acq_f=p.purchase*p.acq_rate,vatp=p.purchase*p.vat,tacq=p.purchase+acq_f+vatp
+  const reno=p.sqft*p.reno_psf,cont=reno*p.cont_rate,vatc=(reno+cont)*p.vat,tcap=reno+cont+vatc
+  const init=690000,uses=tacq+tcap+init,lpeq=uses
+  const rentmo=y=>rent_mo*Math.pow(1+rent_esc,y-1),opm=y=>y===1?MO-p.fitout:MO,gross=y=>rentmo(y)*opm(y)*occ
+  const b1={pay:267500,util:145000,pan:42000,maint:40000,ins:31000},b2={pay:661260,util:358440,pan:103824,maint:98880,ins:76632}
+  function opex(y){let o,serv=p.sqft*p.service_psf*Math.pow(1+p.opex_esc,y-1),lic=50000
+    if(y===1)o=b1;else if(y===2)o=b2;else{const f=Math.pow(1+p.opex_esc,y-2);o={pay:b2.pay*f,util:b2.util*f,pan:b2.pan*f,maint:b2.maint*f,ins:b2.ins*f}}
+    return o.pay+o.util+o.pan+o.maint+o.ins+serv+lic}
+  const broker=y=>y===1?rentmo(1)*MO*occ*p.broker:(y===hold?gross(y)*p.broker:0)
+  const mgmt=y=>y===1?p.purchase*p.mgmt*(MO-p.fitout+2)/MO:p.purchase*p.mgmt
+  const noi=y=>gross(y)-opex(y)-broker(y)-mgmt(y)
+  const netlp=y=>noi(y)+(y===1?vatp+vatc:0)
+  const exit_noi=gross(hold)-opex(hold)-mgmt(hold),gexit=exit_noi/exit_cap,nsale=gexit*(1-p.disp)
+  let cfs=[];for(let y=1;y<=hold;y++)cfs.push(netlp(y))
+  const tdist=cfs.reduce((a,b)=>a+b,0)+nsale
+  const roc=lpeq;let pref=lpeq*(Math.pow(1+p.pref,hold)-1);for(let y=1;y<hold;y++)pref-=cfs[y-1]*(Math.pow(1+p.pref,hold-y)-1)
+  const catch_=pref*p.gp_share/p.lp_share,resid=tdist-roc-pref-catch_
+  const lptot=roc+pref+resid*p.lp_share,mult=lptot/lpeq
+  let icf=[-lpeq];for(let y=1;y<hold;y++)icf.push(cfs[y-1]);icf.push(lptot-cfs.slice(0,hold-1).reduce((a,b)=>a+b,0))
+  const lpirr=bisectIRR(icf)
+  const noiArr=[],cumArr=[];let cum=0
+  for(let y=1;y<=hold;y++){noiArr.push(noi(y));cum+=noi(y);cumArr.push(cum)}
+  return {lpirr,mult,lpeq,noiArr,cumArr,cumNoi:cum,gexit}
+}
+
+function updateModel(){
+  const occ = parseInt(document.getElementById('occSlider').value)
+  const rate = parseInt(document.getElementById('rateSlider').value)
+  const esc = parseInt(document.getElementById('escSlider').value) / 100
+  const cap = parseFloat(document.getElementById('capSlider').value) / 100
+
+  document.getElementById('occVal').textContent = occ + '%'
+  document.getElementById('rateVal').textContent = rate.toLocaleString()
+  document.getElementById('escVal').textContent = (esc*100).toFixed(0) + '%'
+  document.getElementById('capVal').textContent = (cap*100).toFixed(1) + '%'
+
+  const r = aeModel(occ/100, rate, esc, cap)
+
+  document.getElementById('irrDisplay').textContent = isNaN(r.lpirr) ? 'n/a' : (r.lpirr*100).toFixed(1) + '%'
+  document.getElementById('multipleDisplay').textContent = r.mult.toFixed(2) + 'x'
+  document.getElementById('noiDisplay').textContent = 'AED ' + (r.cumNoi/1000000).toFixed(1) + 'M'
+  document.getElementById('yieldDisplay').textContent = (r.noiArr[1]/r.lpeq*100).toFixed(1) + '%'
+
+  renderChart(r.noiArr, r.cumArr)
+}
+
+function calcIRR(cashflows){
+  let rate = 0.1
+  for(let i=0;i<100;i++){
+    let npv=0, dnpv=0
+    for(let t=0;t<cashflows.length;t++){
+      npv += cashflows[t]/Math.pow(1+rate,t)
+      dnpv -= t*cashflows[t]/Math.pow(1+rate,t+1)
+    }
+    if(Math.abs(dnpv)<1e-10) break
+    const newRate = rate - npv/dnpv
+    if(Math.abs(newRate-rate)<1e-7) break
+    rate = newRate
+    if(rate<-0.99) rate=-0.5
+    if(rate>10) rate=5
+  }
+  return rate
+}
+
+function renderChart(noiArr, cumArr){
+  const ctx = document.getElementById('cashflowChart').getContext('2d')
+  if(cashflowChart) cashflowChart.destroy()
+
+  cashflowChart = new Chart(ctx,{
+    type:'bar',
+    data:{
+      labels:noiArr.map((_,i)=>'Year '+(i+1)),
+      datasets:[
+        {
+          label:'Annual NOI (AED M)',
+          data:noiArr.map(v=>Math.round(v/1000000*10)/10),
+          backgroundColor:'rgba(0,169,206,0.8)',
+          borderRadius:6,
+          order:2
+        },
+        {
+          label:'Cumulative NOI (AED M)',
+          data:cumArr.map(v=>Math.round(v/1000000*10)/10),
+          type:'line',
+          borderColor:'#051C2C',
+          backgroundColor:'rgba(5,28,44,0.1)',
+          pointBackgroundColor:'#051C2C',
+          pointRadius:5,
+          fill:false,
+          tension:.3,
+          order:1
+        }
+      ]
+    },
+    options:{
+      responsive:true,
+      maintainAspectRatio:false,
+      plugins:{
+        legend:{position:'bottom',labels:{usePointStyle:true,padding:16,font:{size:12}}},
+        tooltip:{
+          backgroundColor:'#051C2C',
+          padding:12,
+          titleFont:{size:13},
+          bodyFont:{size:12},
+          callbacks:{
+            label:function(ctx){return ctx.dataset.label+': AED '+ctx.raw.toFixed(1)+'M'}
+          }
+        }
+      },
+      scales:{
+        y:{
+          beginAtZero:true,
+          grid:{color:'rgba(0,0,0,0.05)'},
+          ticks:{callback:v=>'AED '+v+'M',font:{size:11}}
+        },
+        x:{grid:{display:false},ticks:{font:{size:12}}}
+      }
+    }
+  })
+}
+
+// SLIDESHOW
+let slideshowActive = false
+let slideshowInterval = null
+function toggleSlideshow(){
+  slideshowActive = !slideshowActive
+  const btn = document.getElementById('slideshowBtn')
+  if(slideshowActive){
+    btn.textContent = '⏸ Slideshow'
+    const sections = Array.from(document.querySelectorAll('section[id]'))
+    let idx = 0
+    slideshowInterval = setInterval(()=>{
+      idx = (idx+1) % sections.length
+      sections[idx].scrollIntoView({behavior:'smooth'})
+    }, 8000)
+  } else {
+    btn.textContent = '▶ Slideshow'
+    clearInterval(slideshowInterval)
+  }
+}
+
+// MOBILE NAV CLOSE ON CLICK
+document.querySelectorAll('.nav-links a').forEach(a=>{
+  a.addEventListener('click',()=>{
+    document.getElementById('sideNav').classList.remove('open')
+  })
+})
+
+// INIT
+updateModel()
 </script>
 </body>
 </html>
