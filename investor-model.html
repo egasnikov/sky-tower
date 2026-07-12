@@ -139,7 +139,7 @@ canvas{max-height:300px}
     <div class="hint" id="hRentSqm" style="color:var(--navy);font-weight:600"></div>
     <div class="hint" id="hRentRice"></div></div>
   <div class="ctl"><div class="row"><label>CapEx / sq ft</label><span class="val" id="vCapex"></span></div>
-    <input type="range" id="iCapex" min="250" max="800" step="10" value="500">
+    <input type="range" id="iCapex" min="250" max="800" step="10" value="550">
     <div class="hint" id="hCapexSqm" style="color:var(--navy);font-weight:600"></div>
     <div class="hint" id="hCapexTot"></div></div>
   <div class="ctl"><div class="row"><label>Stabilized Occupancy</label><span class="val" id="vOcc"></span></div>
@@ -152,7 +152,7 @@ canvas{max-height:300px}
     <div class="seg" id="segYear">
       <button data-y="2" class="on">Y2</button><button data-y="3">Y3</button>
       <button data-y="4">Y4</button><button data-y="5">Y5</button>
-    </div><div class="hint">Cap-rate ladder: 10 / 12 / 10 / 9%</div></div>
+    </div><div class="hint">Cap-rate ladder: 10 / 10 / 10 / 9%</div></div>
   <div class="ctl"><div class="row"><label>Exit Cap Rate</label><span class="val" id="vCap"></span></div>
     <input type="range" id="iCap" min="7" max="13" step="0.25" value="9">
     <div class="hint">Applied to exit-year NOI (before fee)</div></div>
@@ -162,19 +162,13 @@ canvas{max-height:300px}
     <div class="hint">Operator share of NOI after mgmt fee &middot; base LP 70 / GP 30</div></div>
   <div class="ctl"><div class="row"><label>Exit Residual Split</label><span class="val" id="vRes"></span></div>
     <input type="range" id="iRes" min="0" max="40" step="1" value="30">
-    <div class="hint">GP share above pref + catch-up &middot; base 70 / 30</div></div>
-  <div class="ctl"><div class="row"><label>LP Preferred Return</label><span class="val" id="vPref"></span></div>
-    <input type="range" id="iPref" min="0" max="12" step="0.5" value="8">
-    <div class="hint">Annual, compounded to exit &middot; settled at exit</div></div>
+    <div class="hint">GP share of proceeds above returned capital &middot; base 70 / 30</div></div>
   <div class="ctl"><div class="row"><label style="cursor:pointer"><input type="checkbox" id="iTax" style="accent-color:var(--teal);margin-right:7px;vertical-align:-2px">UAE Corporate Tax (9%)</label><span class="val" id="vTax"></span></div>
     <div class="hint">9% above AED 375k annual profit and on the exit gain. Simplified basis - no depreciation shield (conservative).</div></div>
   <details class="adv"><summary>Advanced assumptions</summary>
-    <div class="ctl"><div class="row"><label>GP Catch-Up</label><span class="val" id="vCu"></span></div>
-      <input type="range" id="iCu" min="0" max="50" step="5" value="25">
-      <div class="hint">% of preferred paid &middot; base 25%</div></div>
     <div class="ctl"><div class="row"><label>Asset Management Fee</label><span class="val" id="vFee"></span></div>
-      <input type="range" id="iFee" min="0" max="4" step="0.25" value="2">
-      <div class="hint">% of gross revenue &middot; base 2.0%</div></div>
+      <input type="range" id="iFee" min="0" max="8" step="0.25" value="5">
+      <div class="hint">% of gross revenue &middot; base 5.0%</div></div>
     <div class="ctl"><div class="row"><label>Annual Rent Escalation</label><span class="val" id="vEsc"></span></div>
       <input type="range" id="iEsc" min="0" max="8" step="0.5" value="5"></div>
     <div class="ctl"><div class="row"><label>Annual OpEx Escalation</label><span class="val" id="vOesc"></span></div>
@@ -209,15 +203,13 @@ canvas{max-height:300px}
   <div class="sec"><h2>Exit Waterfall - Applied to Net Sale Proceeds</h2><div class="body">
     <div class="legend">
       <span><i style="background:#051C2C"></i>Return of Capital</span>
-      <span><i style="background:#1E5673"></i>LP Preferred</span>
-      <span><i style="background:#6B7886"></i>GP Catch-Up</span>
       <span><i style="background:#00A9CE"></i>Residual LP</span>
       <span><i style="background:#9FB6C2"></i>Residual GP</span>
     </div>
     <div class="wfbar" id="wfBar"></div>
     <table><thead><tr><th>Tier</th><th>Amount (AED)</th><th>% of Proceeds</th></tr></thead>
     <tbody id="wfRows"></tbody></table>
-    <div class="note">Preferred return accrues on invested equity, compounded annually, settled at exit. Operating profit-share distributions do not reduce the preference.</div>
+    <div class="note">Exit proceeds are split after full return of LP capital: no preferred return, no catch-up - a straight residual split at the ratio shown above.</div>
   </div></div>
 
   <div class="sec"><h2>Operating Build-Up (AED)</h2><div class="body" style="overflow-x:auto">
@@ -240,7 +232,7 @@ canvas{max-height:300px}
 
   <div class="sec"><h2>Exit Scenario Comparison - click to select</h2><div class="body">
     <div class="cards" id="scCards"></div>
-    <div class="note">Each card applies the current commercial and partnership inputs at that exit year, priced at the cap-rate ladder (10 / 12 / 10 / 9%). Selecting a card sets the exit year and ladder cap.</div>
+    <div class="note">Each card applies the current commercial and partnership inputs at that exit year, priced at the cap-rate ladder (10 / 10 / 10 / 9%). Selecting a card sets the exit year and ladder cap.</div>
   </div></div>
 
   <div class="sec"><h2>LP IRR Sensitivity - Exit Cap Rate vs Occupancy</h2><div class="body" style="overflow-x:auto">
@@ -278,21 +270,21 @@ canvas{max-height:300px}
 
 <script>
 // Sky Tower Deliverables - dashboard calculation engine
-// Core mechanics = exact port of xlsx Model v5, verified vs the workbook.
-// Dashboard base case (per Gas / investor round, Jul 2026): rent 3,200/desk,
-// CapEx 500/sq ft, UAE corporate tax 9% ON (simplified, no depreciation shield).
+// Base case matched to the Google Sheets model (Jul 2026 negotiation copy):
+// rent 3,200/desk, CapEx 550/sq ft, 5% mgmt fee, 30% profit share, exit Y2 @ 10% cap,
+// waterfall = return of capital then straight 70/30 LP/GP (no pref, no catch-up), tax off.
 const FIX = {
   sqft: 23000, sqm: 23000 * 0.092903, price: 48000000, acqPct: 0.041,
   cont: 0.05, vat: 0.05, density: 70, lease: 3,
   brokerPct: 0.10, svc: 18, licence: 50000, setup: 80000, legal: 110000,
   presales: 500000, dispFee: 0.02, coreMonthly: 105100,
   ctRate: 0.09, ctThreshold: 375000,
-  capLadder: { 2: 0.10, 3: 0.12, 4: 0.10, 5: 0.09 }
+  capLadder: { 2: 0.10, 3: 0.10, 4: 0.10, 5: 0.09 }
 };
 const BASE = {
-  rent0: 3200, occ: 0.95, fee: 0.02, pshare: 0.30, pref: 0.08, catchup: 0.25,
+  rent0: 3200, occ: 0.95, fee: 0.05, pshare: 0.30,
   resGP: 0.30, esc: 0.05, oesc: 0.03, exitYear: 2, cap: 0.10, fitout: 9,
-  capexSqft: 500, tax: false
+  capexSqft: 550, tax: false
 };
 
 function irr(cfs) {
@@ -354,11 +346,9 @@ function compute(inp) {
   const exitTax = p.tax ? FIX.ctRate * gain : 0;
   const netAT = net - exitTax;
   const roc = Math.min(netAT, eq.equity);
-  const prefAmt = Math.min(netAT - roc, eq.equity * (Math.pow(1 + p.pref, N) - 1));
-  const cu = Math.min(netAT - roc - prefAmt, prefAmt * p.catchup);
-  const resid = Math.max(0, netAT - roc - prefAmt - cu);
+  const resid = Math.max(0, netAT - roc);
   const resLP = resid * (1 - p.resGP), resGPv = resid * p.resGP;
-  const promote = cu + resGPv;
+  const promote = resGPv;
   const lpExit = netAT - promote;
   const lpCF = [-eq.equity], pjCF = [-eq.equity];
   for (let i = 0; i < N; i++) {
@@ -376,7 +366,7 @@ function compute(inp) {
   }
   return {
     p, eq, rev, opex, broker, fee, noiBF, noiAF, ctax, dist, opShare, lpNoi,
-    gross, net, gain, exitTax, netAT, roc, prefAmt, cu, resLP, resGP: resGPv,
+    gross, net, gain, exitTax, netAT, roc, resLP, resGP: resGPv,
     promote, lpExit, lpCF, pjCF,
     lpIRR: irr(lpCF), lpMult: lpDist / eq.equity, lpDist,
     lpProfit: lpDist - eq.equity,
@@ -409,16 +399,13 @@ function readControls(){
   state.cap = +$("iCap").value/100;
   state.pshare = +$("iShare").value/100;
   state.resGP = +$("iRes").value/100;
-  state.pref = +$("iPref").value/100;
-  state.catchup = +$("iCu").value/100;
   state.fee = +$("iFee").value/100;
   state.esc = +$("iEsc").value/100;
   state.oesc = +$("iOesc").value/100;
 }
 function isBase(){
   return state.rent0===BASE.rent0 && state.occ===BASE.occ && state.cap===BASE.cap &&
-    state.pshare===BASE.pshare && state.resGP===BASE.resGP && state.pref===BASE.pref &&
-    state.catchup===BASE.catchup && state.fee===BASE.fee && state.esc===BASE.esc &&
+    state.pshare===BASE.pshare && state.resGP===BASE.resGP && state.fee===BASE.fee && state.esc===BASE.esc &&
     state.oesc===BASE.oesc && state.exitYear===BASE.exitYear && state.fitout===BASE.fitout &&
     state.capexSqft===BASE.capexSqft && state.tax===BASE.tax;
 }
@@ -507,8 +494,6 @@ function render(){
   $("vCap").textContent = (state.cap*100).toFixed(2).replace(/\.?0+$/,"") + "%";
   $("vShare").textContent = "LP " + Math.round((1-state.pshare)*100) + " / GP " + Math.round(state.pshare*100);
   $("vRes").textContent = "LP " + Math.round((1-state.resGP)*100) + " / GP " + Math.round(state.resGP*100);
-  $("vPref").textContent = (state.pref*100).toFixed(1) + "%";
-  $("vCu").textContent = Math.round(state.catchup*100) + "%";
   $("vFee").textContent = (state.fee*100).toFixed(2).replace(/\.?0+$/,"") + "%";
   $("vEsc").textContent = (state.esc*100).toFixed(1) + "%";
   $("vOesc").textContent = (state.oesc*100).toFixed(1) + "%";
@@ -527,10 +512,8 @@ function render(){
   $("rPj").textContent = fmtP(r.pjIRR) + " / " + fmtX(r.pjMult);
   // waterfall
   const tiers = [["Tier 1 - Return of Capital", r.roc, "#051C2C"],
-    ["Tier 2 - LP Preferred (" + (state.pref*100).toFixed(1) + "%, " + state.exitYear + "Y)", r.prefAmt, "#1E5673"],
-    ["Tier 3 - GP Catch-Up (" + Math.round(state.catchup*100) + "% of preferred)", r.cu, "#6B7886"],
-    ["Tier 4 - Residual to LP (" + Math.round((1-state.resGP)*100) + "%)", r.resLP, "#00A9CE"],
-    ["Tier 4 - Residual to GP (" + Math.round(state.resGP*100) + "%)", r.resGP, "#9FB6C2"]];
+    ["Tier 2 - Residual to LP (" + Math.round((1-state.resGP)*100) + "%)", r.resLP, "#00A9CE"],
+    ["Tier 2 - Residual to GP (" + Math.round(state.resGP*100) + "%)", r.resGP, "#9FB6C2"]];
   $("wfBar").innerHTML = tiers.map(([n,v,c]) => {
     const w = Math.max(0, v / r.netAT * 100);
     return w < 0.5 ? "" : `<div style="width:${w}%;background:${c}" title="${n}: AED ${fmt0(v)}">${w>9?fmtM(v):""}</div>`;
@@ -543,7 +526,7 @@ function render(){
   $("wfRows").innerHTML = preRows + tiers.map(([n,v]) =>
     `<tr><td>${n}</td><td>${fmt0(v)}</td><td>${fmtP(v/r.netAT)}</td></tr>`).join("") +
     `<tr class="tot"><td>LP Exit Distribution</td><td>${fmt0(r.lpExit)}</td><td>${fmtP(r.lpExit/r.netAT)}</td></tr>` +
-    `<tr class="tot"><td>GP Promote (catch-up + residual)</td><td>${fmt0(r.promote)}</td><td>${fmtP(r.promote/r.netAT)}</td></tr>`;
+    `<tr class="tot"><td>GP Promote (residual share)</td><td>${fmt0(r.promote)}</td><td>${fmtP(r.promote/r.netAT)}</td></tr>`;
   // operating table
   const yields = r.lpNoi.map(v => v / r.eq.equity);
   const rows = [["Gross Rental Revenue", r.rev], ["Operating Expenses", r.opex.map(x=>-x)],
@@ -622,8 +605,8 @@ function render(){
   // deal terms text
   $("tSplit").textContent = (state.fee*100).toFixed(2).replace(/\.?0+$/,"") + "% mgmt fee + LP " +
     Math.round((1-state.pshare)*100) + " / GP " + Math.round(state.pshare*100) + " profit share";
-  $("tWf").textContent = "Capital, " + (state.pref*100).toFixed(1).replace(/\.0$/,"") + "% pref, catch-up " +
-    Math.round(state.catchup*100) + "% of pref, then " + Math.round((1-state.resGP)*100) + "/" + Math.round(state.resGP*100);
+  $("tWf").textContent = "Return of capital, then " + Math.round((1-state.resGP)*100) + "/" +
+    Math.round(state.resGP*100) + " LP/GP split - no pref, no catch-up";
 }
 
 function setYear(y){
@@ -633,13 +616,13 @@ function setYear(y){
   render();
 }
 document.querySelectorAll("#segYear button").forEach(b => b.onclick = () => setYear(+b.dataset.y));
-["iRent","iOcc","iFitout","iCapex","iCap","iShare","iRes","iPref","iCu","iFee","iEsc","iOesc"]
+["iRent","iOcc","iFitout","iCapex","iCap","iShare","iRes","iFee","iEsc","iOesc"]
   .forEach(id => $(id).addEventListener("input", render));
 $("iTax").addEventListener("change", render);
 $("btnReset").onclick = () => {
-  $("iRent").value = 3200; $("iOcc").value = 95; $("iFitout").value = 9; $("iCapex").value = 500;
+  $("iRent").value = 3200; $("iOcc").value = 95; $("iFitout").value = 9; $("iCapex").value = 550;
   $("iTax").checked = false; $("iShare").value = 30;
-  $("iRes").value = 30; $("iPref").value = 8; $("iCu").value = 25; $("iFee").value = 2;
+  $("iRes").value = 30; $("iFee").value = 5;
   $("iEsc").value = 5; $("iOesc").value = 3;
   setYear(2);
 };
