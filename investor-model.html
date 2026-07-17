@@ -34,7 +34,7 @@ h1{font-size:26px;letter-spacing:.5px}
 .chip{display:inline-block;border:1px solid #9FB6C2;color:#9FB6C2;font-size:10.5px;letter-spacing:1.5px;padding:4px 10px;border-radius:2px}
 .hdate{color:#9FB6C2;font-size:12px;text-align:right}
 .kpis{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 1px 6px rgba(5,28,44,.06)}
-.kpis .wrap{display:grid;grid-template-columns:repeat(8,1fr);gap:0}
+.kpis .wrap{display:grid;grid-template-columns:repeat(6,1fr);gap:0}
 .kpi{padding:12px 10px;text-align:center;border-right:1px solid var(--line)}
 .kpi:last-child{border-right:0}
 .kpi .v{font-size:17px;font-weight:700;color:var(--navy)}
@@ -105,7 +105,7 @@ canvas{max-height:300px}
 @media(max-width:980px){
   main .wrap{grid-template-columns:1fr}
   .controls{position:static;max-height:none}
-  .kpis .wrap{grid-template-columns:repeat(4,1fr)}
+  .kpis .wrap{grid-template-columns:repeat(3,1fr)}
   .grid2{grid-template-columns:1fr}
   .cards{grid-template-columns:repeat(2,1fr)}
 }
@@ -114,19 +114,17 @@ canvas{max-height:300px}
 <body>
 <header><div class="wrap">
   <div><h1>SKY TOWER, ABU DHABI</h1>
-  <div class="sub">Private Office Investment &nbsp;&middot;&nbsp; Reem Island &nbsp;&middot;&nbsp; Interactive Investment Model</div></div>
-  <div class="hdate">JULY 2026</div>
+  <div class="sub">Private Office Investment &nbsp;&middot;&nbsp; Reem Island &nbsp;&middot;&nbsp; Interactive Investment Model v5</div></div>
+  <div class="hdate">JULY 2026<br><span class="chip">CONFIDENTIAL</span></div>
 </div></header>
 
 <div class="kpis"><div class="wrap">
-  <div class="kpi"><div class="v" id="kEq"></div><div class="l">Total Equity (AED)</div><div class="d" id="dEq"></div></div>
+  <div class="kpi"><div class="v" id="kEq"></div><div class="l">LP Equity Invested (AED)</div><div class="d" id="dEq"></div></div>
   <div class="kpi"><div class="v" id="kLpIrr"></div><div class="l">LP IRR</div><div class="d" id="dLpIrr"></div></div>
   <div class="kpi"><div class="v" id="kLpMult"></div><div class="l">LP Multiple</div><div class="d" id="dLpMult"></div></div>
   <div class="kpi"><div class="v" id="kLpDist"></div><div class="l">LP Total Distributions (AED)</div><div class="d" id="dLpDist"></div></div>
-  <div class="kpi"><div class="v" id="kPjIrr"></div><div class="l">Project IRR</div><div class="d" id="dPjIrr"></div></div>
-  <div class="kpi"><div class="v" id="kGain"></div><div class="l">Capital Gain at Exit (AED)</div><div class="d" id="dGain"></div></div>
-  <div class="kpi"><div class="v" id="kNet"></div><div class="l">Net Exit After Tax (AED)</div><div class="d" id="dNet"></div></div>
-  <div class="kpi"><div class="v" id="kGp"></div><div class="l">GP Total Comp (AED)</div><div class="d" id="dGp"></div></div>
+  <div class="kpi"><div class="v" id="kLpProfit"></div><div class="l">LP Total Profit (AED)</div><div class="d" id="dLpProfit"></div></div>
+  <div class="kpi"><div class="v" id="kNoi"></div><div class="l">Project NOI &middot; Exit Year (AED)</div><div class="d" id="dNoi"></div></div>
 </div></div>
 
 <main><div class="wrap">
@@ -185,18 +183,20 @@ canvas{max-height:300px}
       <div class="big" id="rLpIrr"></div>
       <div class="rows">
         <div><span>Equity Multiple</span><span id="rLpMult"></span></div>
-        <div><span>Cash Yield on Equity (Y2, stabilized)</span><span id="rYield"></span></div>
+        <div><span>Cash Yield on Equity (Yr <span id="rYieldYr"></span>, stabilized)</span><span id="rYield"></span></div>
+        <div><span>Income from Rent (operating)</span><span id="rLpRent"></span></div>
+        <div><span>Capital Gain (at exit)</span><span id="rLpGain"></span></div>
+        <div><span>VAT Refund (return of capital, Y1)</span><span id="rLpVat"></span></div>
         <div><span>Total Distributions</span><span id="rLpDist"></span></div>
-        <div><span>Profit above Capital</span><span id="rLpProfit"></span></div>
         <div><span>Payback (interpolated)</span><span id="rPayback"></span></div>
       </div></div>
     <div class="retcard"><h3>Operator / GP</h3>
       <div class="big" id="rGpComp"></div>
       <div class="rows">
-        <div><span>Management Fees (Y1-N)</span><span id="rGpFees"></span></div>
-        <div><span>Operating Profit Share</span><span id="rGpShare"></span></div>
-        <div><span>Promote at Exit</span><span id="rGpPromote"></span></div>
-        <div><span>Project IRR / Multiple</span><span id="rPj"></span></div>
+        <div><span>Income from Rent (fees + share)</span><span id="rGpRent"></span></div>
+        <div><span>&nbsp;&nbsp;Management Fees</span><span id="rGpFees"></span></div>
+        <div><span>&nbsp;&nbsp;Operating Profit Share</span><span id="rGpShare"></span></div>
+        <div><span>Income from Sale (promote at exit)</span><span id="rGpPromote"></span></div>
       </div></div>
   </div></div>
 
@@ -209,7 +209,7 @@ canvas{max-height:300px}
     <div class="wfbar" id="wfBar"></div>
     <table><thead><tr><th>Tier</th><th>Amount (AED)</th><th>% of Proceeds</th></tr></thead>
     <tbody id="wfRows"></tbody></table>
-    <div class="note">Exit proceeds are split after full return of LP capital: no preferred return, no catch-up - a straight residual split at the ratio shown above.</div>
+    <div class="note">Return of capital at exit is shown net of the Year 1 VAT refund (AED <span id="wfVat"></span>) already returned to the LP; together they return the full LP equity of AED <span id="wfEq"></span> before any residual split. No preferred return, no catch-up - a straight residual split at the ratio shown above.</div>
   </div></div>
 
   <div class="sec"><h2>Operating Build-Up (AED)</h2><div class="body" style="overflow-x:auto">
@@ -265,7 +265,7 @@ canvas{max-height:300px}
 </div></main>
 
 <footer><div class="wrap">
-  July 2026 &middot; Prepared by the General Partner. For the intended recipient only. Illustrative projections. This tool does not constitute an offer to sell or a solicitation of an offer to purchase any securities. Actual results may differ materially. Corporate tax shown on a simplified basis. Figures in AED unless noted.
+  CONFIDENTIAL &middot; July 2026 &middot; Prepared by the General Partner. Illustrative projections based on the Sky Tower financial model v5. This tool does not constitute an offer to sell or a solicitation of an offer to purchase any securities. Actual results may differ materially. Corporate tax shown on a simplified basis. Figures in AED unless noted.
 </div></footer>
 
 <script>
@@ -345,7 +345,7 @@ function compute(inp) {
   const gain = Math.max(0, net - eq.taxBook);
   const exitTax = p.tax ? FIX.ctRate * gain : 0;
   const netAT = net - exitTax;
-  const roc = Math.min(netAT, eq.equity);
+  const roc = Math.min(netAT, eq.equity - eq.vatRecovery);
   const resid = Math.max(0, netAT - roc);
   const resLP = resid * (1 - p.resGP), resGPv = resid * p.resGP;
   const promote = resGPv;
@@ -444,22 +444,19 @@ function render(){
   readControls();
   const r = compute(state);
   // KPIs
+  const NN = state.exitYear;
   $("kEq").textContent = fmt0(r.eq.equity);
   $("kLpIrr").textContent = fmtP(r.lpIRR);
   $("kLpMult").textContent = fmtX(r.lpMult);
-  $("kPjIrr").textContent = fmtP(r.pjIRR);
-  $("kNet").textContent = fmt0(r.netAT);
   $("kLpDist").textContent = fmt0(r.lpDist);
-  $("kGain").textContent = fmt0(r.gain);
-  $("kGp").textContent = fmt0(r.gpComp);
-  delta($("dLpDist"), r.lpDist, baseR.lpDist, "m");
-  delta($("dGain"), r.gain, baseR.gain, "m");
+  $("kLpProfit").textContent = fmt0(r.lpProfit);
+  $("kNoi").textContent = fmt0(r.noiBF[NN - 1]);
   delta($("dEq"), r.eq.equity, baseR.eq.equity, "m");
   delta($("dLpIrr"), r.lpIRR, baseR.lpIRR, "pp");
   delta($("dLpMult"), r.lpMult, baseR.lpMult, "x");
-  delta($("dPjIrr"), r.pjIRR, baseR.pjIRR, "pp");
-  delta($("dNet"), r.netAT, baseR.netAT, "m");
-  delta($("dGp"), r.gpComp, baseR.gpComp, "m");
+  delta($("dLpDist"), r.lpDist, baseR.lpDist, "m");
+  delta($("dLpProfit"), r.lpProfit, baseR.lpProfit, "m");
+  $("dNoi").textContent = "Year " + NN + " · before mgmt fee";
   // control value labels
   const RICE = 3000;
   const rentSqm = state.rent0 * 12 / (FIX.density * 0.092903);
@@ -502,16 +499,20 @@ function render(){
   // returns cards
   $("rLpIrr").textContent = fmtP(r.lpIRR);
   $("rLpMult").textContent = fmtX(r.lpMult);
+  $("rLpRent").textContent = fmt0(r.lpNoi.slice(0, NN).reduce((a, b) => a + b, 0));
+  $("rLpGain").textContent = fmt0(r.resLP);
+  $("rLpVat").textContent = fmt0(r.eq.vatRecovery);
   $("rLpDist").textContent = fmt0(r.lpDist);
-  $("rLpProfit").textContent = fmt0(r.lpDist - r.eq.equity);
   $("rPayback").textContent = r.payback ? r.payback.toFixed(2) + " years" : "beyond hold";
   $("rGpComp").textContent = fmt0(r.gpComp);
+  $("rGpRent").textContent = fmt0(r.gpFees + r.gpShare);
   $("rGpFees").textContent = fmt0(r.gpFees);
   $("rGpShare").textContent = fmt0(r.gpShare);
   $("rGpPromote").textContent = fmt0(r.promote);
-  $("rPj").textContent = fmtP(r.pjIRR) + " / " + fmtX(r.pjMult);
   // waterfall
-  const tiers = [["Tier 1 - Return of Capital", r.roc, "#051C2C"],
+  $("wfVat").textContent = fmt0(r.eq.vatRecovery);
+  $("wfEq").textContent = fmt0(r.eq.equity);
+  const tiers = [["Tier 1 - Return of Capital (net of Y1 VAT refund)", r.roc, "#051C2C"],
     ["Tier 2 - Residual to LP (" + Math.round((1-state.resGP)*100) + "%)", r.resLP, "#00A9CE"],
     ["Tier 2 - Residual to GP (" + Math.round(state.resGP*100) + "%)", r.resGP, "#9FB6C2"]];
   $("wfBar").innerHTML = tiers.map(([n,v,c]) => {
@@ -550,7 +551,8 @@ function render(){
   chYield.data.datasets[1].data = yields;
   chYield.data.datasets[1].backgroundColor = yields.map((_, i) => i < N ? "#00A9CE" : "#DBE2E8");
   chYield.update("none");
-  $("rYield").textContent = fmtP(yields[1]);
+  $("rYieldYr").textContent = N;
+  $("rYield").textContent = fmtP(yields[N - 1]);
   const firstHit = yields.findIndex(v => v >= 0.07) + 1;
   $("nYield").innerHTML = "LP operating cash distribution (after the " +
     (state.fee*100).toFixed(2).replace(/\.?0+$/,"") + "% management fee, " + Math.round(state.pshare*100) +
