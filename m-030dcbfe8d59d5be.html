@@ -136,8 +136,8 @@ canvas{max-height:300px}
 <body>
 <header><div class="wrap">
   <div><h1>SKY TOWER, ABU DHABI</h1>
-  <div class="sub">Tenanted Full-Floor Acquisition &nbsp;&middot;&nbsp; Reem Island &nbsp;&middot;&nbsp; AED 35M &nbsp;&middot;&nbsp; Vacancy-Timing Model v6</div></div>
-  <div class="hdate">JULY 2026<br><span class="chip">ILLUSTRATIVE</span></div>
+  <div class="sub">Tenanted Full-Floor Acquisition &nbsp;&middot;&nbsp; Reem Island &nbsp;&middot;&nbsp; AED <span id="hdPrice">35M</span> &nbsp;&middot;&nbsp; Vacancy-Timing Model v6</div></div>
+  <div class="hdate">SEPTEMBER 2026<br><span class="chip">ILLUSTRATIVE</span></div>
 </div></header>
 
 <div class="kpis"><div class="wrap">
@@ -179,8 +179,9 @@ canvas{max-height:300px}
 <section class="galband" style="background:#F4F6F8"><div class="wrap">
   <div class="galsub" style="margin-top:0">Executive Summary</div>
   <p class="galintro" style="font-size:13.5px;max-width:960px">A full office floor in Sky Tower, Al Reem Island,
-  offered off market at <b>AED 35.0m</b> (AED 1,522 per sq ft). The floor is <b>income producing today</b>: the
-  current lease is approximately <b>AED 1.6m</b> per year, a 4.6% gross yield on price, running to
+  under off-market negotiation - modelled here at <b>AED <span id="exPrice">35.0</span>m</b> (AED <span id="exPsf">1,522</span> per
+  sq ft; the acquisition price is a live control on the left). The floor is <b>income producing today</b>: the
+  current lease is approximately <b>AED 1.6m</b> per year, a <span id="exYield">4.6%</span> gross yield on price, running to
   <b>December 2027</b>. Completion is assumed <b>September 2026</b>. The business plan is unchanged from the reference
   model: take vacant possession, complete the fit-out, and trade the floor as a premium ADGM-facing serviced office
   before selling on a stabilised yield.</p>
@@ -199,6 +200,11 @@ canvas{max-height:300px}
 <!-- ============ CONTROLS ============ -->
 <div class="panel controls">
   <div class="ptitle">Model Inputs - live</div>
+  <div class="subhdr">Acquisition price</div>
+  <div class="ctl"><div class="row"><label>Acquisition Price</label><span class="val" id="vPrice"></span></div>
+    <input type="range" id="iPrice" min="30" max="55" step="0.5" value="35">
+    <div class="hint" id="hPriceSqft" style="color:var(--navy);font-weight:600"></div>
+    <div class="hint" id="hPrice"></div></div>
   <div class="subhdr">Acquisition - vacancy scenario</div>
   <div class="ctl">
     <div class="seg" id="segScen" style="grid-template-columns:repeat(3,1fr)">
@@ -333,10 +339,15 @@ canvas{max-height:300px}
     <div class="note">Computed with the full engine at the current rent and partnership terms, 5-year hold. Teal marks the strongest cells; the outlined cell is the current occupancy / cap-rate pair.</div>
   </div></div>
 
+  <div class="sec"><h2>LP IRR Sensitivity - Acquisition Price vs Exit Year</h2><div class="body" style="overflow-x:auto">
+    <table class="sensi" id="senPrice"></table>
+    <div class="note">Computed with the full engine at the current commercial and partnership inputs; each column prices the exit at the cap-rate ladder (10 / 10 / 10 / 9%). Acquisition costs (4.1%) and 5% VAT scale with price, so every AED 1M of price adds approximately AED 1.10M of equity. Teal marks the strongest cells; the outlined cell is the current price / exit-year pair.</div>
+  </div></div>
+
   <div class="sec"><h2>Sources &amp; Uses / Deal Terms</h2><div class="body grid2">
     <table><tbody>
-      <tr><td>Purchase Price</td><td>35,000,000</td></tr>
-      <tr><td>Acquisition Costs (broker 2.1% + ADM 2.0%)</td><td>1,435,000</td></tr>
+      <tr><td>Purchase Price</td><td id="suPrice"></td></tr>
+      <tr><td>Acquisition Costs (broker 2.1% + ADM 2.0%)</td><td id="suAcq"></td></tr>
       <tr><td id="suCapexL">Renovation + 5% contingency</td><td id="suCapex"></td></tr>
       <tr><td>VAT Deposits (purchase + CapEx, recovered Y1)</td><td id="suVat"></td></tr>
       <tr><td>Initial Expenses (setup, legal, presales)</td><td>690,000</td></tr>
@@ -363,7 +374,7 @@ canvas{max-height:300px}
 </div></main>
 
 <footer><div class="wrap">
-  July 2026 &middot; Prepared by the General Partner. Illustrative projections based on the Sky Tower financial model v6 (let AED 35M floor). In-place income is stated on an approximate basis; exact lease terms are confidential and available to counterparties under a confidentiality undertaking. This tool does not constitute an offer to sell or a solicitation of an offer to purchase any securities. Actual results may differ materially. Corporate tax shown on a simplified basis. Figures in AED unless noted.
+  September 2026 &middot; Prepared by the General Partner. Illustrative projections based on the Sky Tower financial model v6 (let-floor acquisition; price under negotiation). In-place income is stated on an approximate basis; exact lease terms are confidential and available to counterparties under a confidentiality undertaking. This tool does not constitute an offer to sell or a solicitation of an offer to purchase any securities. Actual results may differ materially. Corporate tax shown on a simplified basis. Figures in AED unless noted.
 </div></footer>
 
 <script>
@@ -391,6 +402,7 @@ const SCEN = {
 const MON = ["Sep","Oct","Nov","Dec","Jan","Feb","Mar","Apr","May","Jun","Jul","Aug"];
 const mlabel = m => MON[((m % 12) + 12) % 12] + " " + (2026 + Math.floor((m + 8) / 12));
 const BASE = {
+  price: 35000000,
   rent0: 3200, occ: 0.95, fee: 0.05, pshare: 0.30,
   resGP: 0.30, esc: 0.05, oesc: 0.03, exitYear: 2, cap: 0.10, fitout: 6,
   capexSqft: 550, tax: false,
@@ -408,26 +420,28 @@ function irr(cfs) {
   return (lo + hi) / 2;
 }
 
-function equity(capexSqft) {
-  const acqCosts = FIX.price * FIX.acqPct;
-  const vatPurchase = FIX.price * FIX.vat;
+function equity(capexSqft, price) {
+  const P = price === undefined ? FIX.price : price;
+  const acqCosts = P * FIX.acqPct;
+  const vatPurchase = P * FIX.vat;
   const reno = FIX.sqft * capexSqft;
   const cont = reno * FIX.cont;
   const vatCapex = (reno + cont) * FIX.vat;
   return {
-    totalAcq: FIX.price + acqCosts, acqCosts, vatPurchase,
+    price: P,
+    totalAcq: P + acqCosts, acqCosts, vatPurchase,
     reno, cont, vatCapex, capex: reno + cont + vatCapex,
     initial: FIX.setup + FIX.legal + FIX.presales,
     vatRecovery: vatPurchase + vatCapex,
-    taxBook: FIX.price + acqCosts + reno + cont,
-    equity: FIX.price + acqCosts + vatPurchase + reno + cont + vatCapex +
+    taxBook: P + acqCosts + reno + cont,
+    equity: P + acqCosts + vatPurchase + reno + cont + vatCapex +
             FIX.setup + FIX.legal + FIX.presales
   };
 }
 
 function compute(inp) {
   const p = Object.assign({}, BASE, inp);
-  const eq = equity(p.capexSqft);
+  const eq = equity(p.capexSqft, p.price);
   // ---------- acquisition phase: holdover income until vacant possession ----------
   const sc = SCEN[p.scen];
   const last = sc.vac === null ? LEASE.end : sc.vac - 1;   // last month of rent received
@@ -532,6 +546,7 @@ const state = Object.assign({}, BASE);
 const baseR = compute({});
 
 function readControls(){
+  state.price = +$("iPrice").value * 1e6;
   state.rent0 = +$("iRent").value;
   state.occ = +$("iOcc").value/100;
   state.fitout = +$("iFitout").value;
@@ -547,7 +562,7 @@ function readControls(){
   state.pref = +$("iPref").value/100;
 }
 function isBase(){
-  return state.rent0===BASE.rent0 && state.occ===BASE.occ && state.cap===BASE.cap &&
+  return state.price===BASE.price && state.rent0===BASE.rent0 && state.occ===BASE.occ && state.cap===BASE.cap &&
     state.pshare===BASE.pshare && state.resGP===BASE.resGP && state.fee===BASE.fee && state.esc===BASE.esc &&
     state.oesc===BASE.oesc && state.exitYear===BASE.exitYear && state.fitout===BASE.fitout &&
     state.capexSqft===BASE.capexSqft && state.tax===BASE.tax &&
@@ -601,6 +616,22 @@ function render(){
   delta($("dLpDist"), r.lpDist, baseR.lpDist, "m");
   delta($("dLpProfit"), r.lpProfit, baseR.lpProfit, "m");
   $("dNoiPct").textContent = "Year " + NN + " · on cost, before fee";
+  // acquisition price control + linked text
+  const priceM = (state.price/1e6).toFixed(1).replace(/\.0$/,"");
+  $("vPrice").textContent = "AED " + priceM + "M";
+  $("hPriceSqft").innerHTML = "= AED " + fmt0(state.price/FIX.sqft) + " / sq ft &nbsp;(AED " +
+    fmt0(state.price/FIX.sqm) + " / sq m)";
+  $("hPrice").textContent = state.price === BASE.price
+    ? "Base AED 35.0M guide. Acquisition costs (4.1%) and 5% VAT scale with price."
+    : (state.price > BASE.price ? "+" : "-") + "AED " + fmtM(Math.abs(state.price - BASE.price)) +
+      " vs the AED 35.0M guide - acquisition costs (4.1%) and 5% VAT scale with price. Total equity AED " +
+      fmtM(r.totalEquity) + " at this price.";
+  $("hdPrice").textContent = priceM + "M";
+  $("exPrice").textContent = (state.price/1e6).toFixed(1);
+  $("exPsf").textContent = fmt0(state.price/FIX.sqft);
+  $("exYield").textContent = (LEASE.rent/state.price*100).toFixed(1) + "%";
+  $("suPrice").textContent = fmt0(state.price);
+  $("suAcq").textContent = fmt0(r.eq.acqCosts);
   // control value labels
   const RICE = 3000;
   const rentSqm = state.rent0 * 12 / (FIX.density * 0.092903);
@@ -685,7 +716,7 @@ function render(){
   // rent roll
   $("rrRows").innerHTML = [
     ["Current lease", "approximately AED " + fmt0(LEASE.rent) + " per year"],
-    ["Gross yield on purchase price", ((LEASE.rent / FIX.price) * 100).toFixed(2) + "%"],
+    ["Gross yield on purchase price", ((LEASE.rent / state.price) * 100).toFixed(2) + "%"],
     ["Runs to", LEASE.exp],
     ["Holdover in this case", r.H + " months, approximately AED " + fmt0(r.holdRent) + " received"],
     ["Ownership carry through holdover", "AED " + fmt0(r.holdCarry) + " service charge and licence"],
@@ -806,6 +837,29 @@ function render(){
     html += "</tr>";
   });
   $("senTable").innerHTML = html + "</tbody>";
+  // sensitivity grid - acquisition price vs exit year (cap ladder)
+  let prices = [35, 38, 40, 42, 44, 45, 46, 48, 50].map(x => x * 1e6);
+  if (!prices.includes(state.price)) prices = prices.concat([state.price]).sort((a, b) => a - b);
+  const pyrs = [2, 3, 4, 5];
+  const pcells = prices.map(pr => pyrs.map(y =>
+    compute(Object.assign({}, state, { price: pr, exitYear: y, cap: FIX.capLadder[y] })).lpIRR));
+  const pflat = pcells.flat().filter(isFinite);
+  const pmn = Math.min(...pflat), pmx = Math.max(...pflat);
+  let phtml = "<thead><tr><th>Price \\ Exit</th>" +
+    pyrs.map(y => `<th>Year ${y} (${(FIX.capLadder[y]*100).toFixed(0)}% cap)</th>`).join("") + "</tr></thead><tbody>";
+  prices.forEach((pr, i) => {
+    const isCurP = pr === state.price;
+    phtml += `<tr><td>AED ${(pr/1e6).toFixed(1).replace(/\.0$/,"")}M${isCurP ? " (current)" : pr === BASE.price ? " (guide)" : ""}</td>`;
+    pyrs.forEach((y, j) => {
+      const v = pcells[i][j];
+      const t = isFinite(v) ? (v - pmn) / (pmx - pmn || 1) : 0;
+      const bg = `rgba(0,169,206,${(0.06 + t*0.42).toFixed(2)})`;
+      const isCur = isCurP && y === state.exitYear;
+      phtml += `<td class="${isCur ? "base" : ""}" style="background:${bg}">${fmtP(v)}</td>`;
+    });
+    phtml += "</tr>";
+  });
+  $("senPrice").innerHTML = phtml + "</tbody>";
   // deal terms text
   $("tSplit").textContent = (state.fee*100).toFixed(2).replace(/\.?0+$/,"") + "% mgmt fee + LP " +
     Math.round((1-state.pshare)*100) + " / GP " + Math.round(state.pshare*100) + " profit share";
@@ -827,10 +881,11 @@ function setScen(s){
 }
 document.querySelectorAll("#segScen button").forEach(b => b.onclick = () => setScen(+b.dataset.s));
 document.querySelectorAll("#segYear button").forEach(b => b.onclick = () => setYear(+b.dataset.y));
-["iRent","iOcc","iFitout","iCapex","iCap","iShare","iRes","iFee","iEsc","iOesc","iBuy","iPref"]
+["iPrice","iRent","iOcc","iFitout","iCapex","iCap","iShare","iRes","iFee","iEsc","iOesc","iBuy","iPref"]
   .forEach(id => $(id).addEventListener("input", render));
 $("iTax").addEventListener("change", render);
 $("btnReset").onclick = () => {
+  $("iPrice").value = 35;
   $("iRent").value = 3200; $("iOcc").value = 95; $("iFitout").value = 6; $("iCapex").value = 550;
   $("iTax").checked = false; $("iShare").value = 30;
   $("iRes").value = 30; $("iFee").value = 5;
