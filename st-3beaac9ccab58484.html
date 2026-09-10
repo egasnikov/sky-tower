@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex,nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sky Tower - Leased Full Floor Underwriting</title>
+<style>
+:root{--navy:#051C2C;--navy2:#123C55;--navy3:#1E5673;--teal:#00A9CE;--g1:#6B7886;--g2:#9FB6C2;--g3:#DBE2E8;--g4:#F4F6F8;--w:#fff}
+*{box-sizing:border-box}
+body{margin:0;background:var(--w);color:var(--navy);font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:14px;line-height:1.45}
+a{color:var(--teal);text-decoration:none}a:hover{text-decoration:underline}
+.wrap{max-width:1320px;margin:0 auto;padding:0 24px 48px}
+header{background:var(--navy);color:#fff;padding:26px 0 22px}
+header .wrap{padding-bottom:0}
+.brand{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap}
+.brand h1{margin:0;font-size:24px;font-weight:600;letter-spacing:.2px}
+.brand .sub{color:var(--g2);margin-top:4px;font-size:13px}
+.chip{display:inline-block;border:1px solid var(--teal);color:var(--teal);font-size:11px;letter-spacing:.8px;padding:3px 9px;border-radius:2px;text-transform:uppercase}
+.meta{color:var(--g2);font-size:12px;text-align:right}
+.kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-top:20px}
+.kpi{background:var(--navy2);padding:14px 16px;border-top:3px solid var(--teal)}
+.kpi .l{font-size:11px;color:var(--g2);text-transform:uppercase;letter-spacing:.6px}
+.kpi .v{font-size:24px;font-weight:600;margin-top:4px}
+.kpi .d{font-size:11px;color:var(--g2);margin-top:3px}
+.kpi .d.up{color:var(--teal)}
+h2{font-size:16px;font-weight:600;margin:34px 0 12px;padding-bottom:6px;border-bottom:2px solid var(--navy)}
+h3{font-size:13px;font-weight:600;margin:16px 0 8px;color:var(--navy3);text-transform:uppercase;letter-spacing:.5px}
+p{margin:6px 0 10px;max-width:900px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:22px}
+.card{background:var(--g4);padding:16px 18px}
+.card.w{background:#fff;border:1px solid var(--g3)}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+th,td{padding:6px 8px;text-align:right;border-bottom:1px solid var(--g3);white-space:nowrap}
+th{background:var(--navy);color:#fff;font-weight:500;font-size:11.5px}
+td:first-child,th:first-child{text-align:left;white-space:normal}
+tr.tot td{font-weight:600;border-top:2px solid var(--navy);background:#fff}
+tr.sub td{color:var(--g1)}
+tr.hl td{background:#E6F6FA}
+.tblwrap{overflow-x:auto}
+.mkt td,.mkt th{text-align:left;white-space:normal}
+.ctl{display:grid;grid-template-columns:repeat(4,1fr);gap:14px 22px}
+.c{padding:10px 12px;background:#fff;border:1px solid var(--g3)}
+.c label{display:flex;justify-content:space-between;font-size:12px;font-weight:600}
+.c label span{color:var(--teal)}
+.c input[type=range]{width:100%;margin:8px 0 2px;accent-color:var(--teal)}
+.c .h{font-size:11px;color:var(--g1)}
+.seg{display:flex;gap:4px;margin-top:8px}
+.seg button{flex:1;border:1px solid var(--g3);background:#fff;padding:6px 0;font-size:12px;cursor:pointer;color:var(--navy)}
+.seg button.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+.chart{background:#fff;border:1px solid var(--g3);padding:12px}
+.chart canvas{width:100%;height:260px}
+.sens td{width:11%}
+.sens td.b{background:var(--navy);color:#fff;font-weight:600}
+.sens td.g{background:#E6F6FA}
+.sens td.lo{color:var(--g1)}
+.note{font-size:12px;color:var(--g1)}
+.flag{display:grid;grid-template-columns:150px 1fr;gap:6px 14px;font-size:12.5px}
+.flag b{color:var(--navy3)}
+.badge{display:inline-block;padding:1px 7px;font-size:10.5px;border-radius:2px;background:var(--g3);color:var(--navy);margin-left:6px}
+.badge.t{background:var(--teal);color:#fff}
+footer{margin-top:40px;padding-top:12px;border-top:1px solid var(--g3);font-size:11.5px;color:var(--g1)}
+@media(max-width:980px){.kpis{grid-template-columns:repeat(3,1fr)}.grid2,.grid3{grid-template-columns:1fr}.ctl{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.kpis{grid-template-columns:repeat(2,1fr)}.ctl{grid-template-columns:1fr}}
+@media print{.chart canvas{height:220px}header{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <div class="brand">
+    <div>
+      <span class="chip">For the intended recipient only</span>
+      <h1 style="margin-top:8px">Sky Tower - Leased Full Floor, Al Reem Island (ADGM)</h1>
+      <div class="sub">Palm &amp; Peak flex-office underwriting - 23,000 sq ft head lease at AED 6.5M / yr, RICE Sky Tower desk pricing - interactive model v1</div>
+    </div>
+    <div class="meta">September 2026<br>Engine: Leaf Tower L58 / Sky Tower Deliverables (Jul 2026)<br>All figures AED ex-VAT, LP view unless stated</div>
+  </div>
+  <div class="kpis">
+    <div class="kpi"><div class="l">Total equity</div><div class="v" id="kEq"></div><div class="d" id="dEq"></div></div>
+    <div class="kpi"><div class="l">LP IRR</div><div class="v" id="kIrr"></div><div class="d" id="dIrr"></div></div>
+    <div class="kpi"><div class="l">LP multiple</div><div class="v" id="kMult"></div><div class="d" id="dMult"></div></div>
+    <div class="kpi"><div class="l">LP total profit</div><div class="v" id="kProfit"></div><div class="d" id="dProfit"></div></div>
+    <div class="kpi"><div class="l">Payback</div><div class="v" id="kPay"></div><div class="d" id="dPay"></div></div>
+    <div class="kpi"><div class="l">Rent / revenue (Y2)</div><div class="v" id="kRR"></div><div class="d" id="dRR"></div></div>
+  </div>
+</div></header>
+
+<div class="wrap">
+
+<h2>1. Deal summary</h2>
+<div class="grid3">
+  <div class="card">
+    <h3>The floor</h3>
+    <div class="flag">
+      <b>Building</b><span>Sky Tower, Shams Abu Dhabi, Al Reem Island. Grade A / B+ mixed-use tower, offices to L40, strata title. The reference building for managed offices on Reem: RICE (L25 Premium, L34 Business), Centrum (L23).</span>
+      <b>Unit</b><span>Full office floor, 23,000 sq ft gross (2,137 sq m) taken on a head lease. Shell or stripped fit-out assumed; CapEx carried in full by the operating SPV.</span>
+      <b>Jurisdiction</b><span>ADGM (Al Reem Island integrated April 2023). ADGM / Reem exempt from the June 2026 ADREC rental freeze.</span>
+      <b>Head rent</b><span id="sRentHead"></span>
+      <b>Benchmark</b><span>Sky Tower full-floor conventional asks AED 125-231 / sq ft (1,350-2,500 / sq m); 5-7k sq ft units 139-186. Rent of AED 283 / sq ft sits at the top of the building's fitted range.</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3>Head lease (operating assumption)</h3>
+    <div class="flag">
+      <b>Rent to landlord</b><span id="sRent"></span>
+      <b>Rent-free</b><span id="sFree"></span>
+      <b>Term</b><span id="sTerm"></span>
+      <b>Deposit</b><span id="sDep"></span>
+      <b>Rent review</b><span id="sEsc"></span>
+      <b>Service charge</b><span>AED 18 / sq ft / yr on top of rent (Sky Tower standard), +3% p.a.</span>
+      <b>VAT</b><span>5% on rent, recoverable by the operating entity - excluded from the cash flows. 5% VAT on CapEx recovered in Year 1.</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3>Operating model</h3>
+    <div class="flag">
+      <b>Product</b><span>Managed / flex office, private-office capacity pricing per desk per month, RICE Sky Tower rate card as the price anchor.</span>
+      <b>Desk rate</b><span id="sRev"></span>
+      <b>Capacity</b><span id="sCap"></span>
+      <b>Occupancy</b><span id="sOcc"></span>
+      <b>Fit-out</b><span id="sFit"></span>
+      <b>Operator terms</b><span id="sOps"></span>
+      <b>Waterfall</b><span>Return of capital (net of VAT refund and deposit), then straight 70 / 30 LP / GP on any terminal value. No pref, no catch-up.</span>
+      <b>Terminal value</b><span id="sTV"></span>
+    </div>
+  </div>
+</div>
+
+<h2>2. Inputs</h2>
+<div class="ctl">
+  <div class="c"><label>Desk rate <span id="vRev"></span></label><input type="range" id="iRate" min="2500" max="5000" step="1"><div class="h" id="hRev"></div></div>
+  <div class="c"><label>Desk density <span id="vDens"></span></label><input type="range" id="iDens" min="60" max="120" step="5"><div class="h" id="hDens"></div></div>
+  <div class="c"><label>Stabilised occupancy <span id="vOcc"></span></label><input type="range" id="iOcc" min="60" max="100" step="1"><div class="h">Sky Tower standard 95%. RICE L34 fully let; L25 2 of 4 suites available. Break-even in section 3.</div></div>
+  <div class="c"><label>Rent to landlord <span id="vRent"></span></label><input type="range" id="iRent" min="3000" max="8000" step="100"><div class="h" id="hRent"></div></div>
+  <div class="c"><label>Rent-free period <span id="vFree"></span></label><input type="range" id="iFree" min="0" max="12" step="1"><div class="h">Months inside the fit-out period. Offer: 6 months.</div></div>
+  <div class="c"><label>Lease term <span id="vTerm"></span></label><div class="seg" id="segTerm"><button data-v="7">7 yrs</button><button data-v="8">8 yrs</button><button data-v="9">9 yrs</button><button data-v="10">10 yrs</button></div><div class="h">Hold = full term. No renewal modelled.</div></div>
+  <div class="c"><label>Landlord rent escalation <span id="vEsc"></span></label><input type="range" id="iEsc" min="0" max="5" step="0.5"><div class="h">0% = fixed for term. Abu Dhabi landlords typically seek 3-5% at review.</div></div>
+  <div class="c"><label>Security deposit <span id="vDep"></span></label><input type="range" id="iDep" min="0" max="12" step="1"><div class="h">Months of rent, paid Year 0, refunded at end of term.</div></div>
+  <div class="c"><label>Fit-out period <span id="vFit"></span></label><input type="range" id="iFit" min="3" max="12" step="1"><div class="h" id="hFit"></div></div>
+  <div class="c"><label>CapEx <span id="vCapex"></span></label><input type="range" id="iCapex" min="300" max="800" step="10"><div class="h" id="hCapex"></div></div>
+  <div class="c"><label>Revenue escalation <span id="vResc"></span></label><input type="range" id="iResc" min="0" max="7" step="0.5"><div class="h">Desk rate growth p.a. Sky Tower standard 5%.</div></div>
+  <div class="c"><label>Management fee <span id="vFee"></span></label><input type="range" id="iFee" min="0" max="10" step="0.5"><div class="h">% of gross revenue to operator (negotiated set: 5%).</div></div>
+  <div class="c"><label>Operator profit share <span id="vShare"></span></label><input type="range" id="iShare" min="0" max="50" step="5"><div class="h">% of NOI after fee to operator (negotiated set: 30%).</div></div>
+  <div class="c"><label>Terminal value <span id="vTV"></span></label><input type="range" id="iTV" min="0" max="5" step="0.5"><div class="h">x final-year NOI after fee - business sale at end of term. 0x = run-off.</div></div>
+  <div class="c"><label>UAE corporate tax <span id="vTax"></span></label><div class="seg" id="segTax"><button data-v="0">Off</button><button data-v="1">On (9%)</button></div><div class="h">9% above AED 375k profit, simplified.</div></div>
+  <div class="c" style="display:flex;align-items:center;justify-content:center"><button id="btnReset" style="border:1px solid var(--navy);background:#fff;color:var(--navy);padding:8px 18px;cursor:pointer;font-size:12px">Reset to base case</button></div>
+</div>
+
+<h2>3. Returns</h2>
+<div class="grid2">
+  <div class="card w">
+    <h3>Sources &amp; uses (Year 0)</h3>
+    <table>
+      <tr><td>Fit-out CapEx (<span id="suCapexL"></span>)</td><td id="suReno"></td></tr>
+      <tr class="sub"><td>Contingency 5%</td><td id="suCont"></td></tr>
+      <tr class="sub"><td>VAT on CapEx 5% (recovered Y1)</td><td id="suVat"></td></tr>
+      <tr><td>Security deposit to landlord</td><td id="suDep"></td></tr>
+      <tr><td>Set-up, legal, pre-sales</td><td id="suInit"></td></tr>
+      <tr class="tot"><td>Total equity</td><td id="suEq"></td></tr>
+    </table>
+    <h3 style="margin-top:18px">LP returns over the term</h3>
+    <table>
+      <tr><td>Income from operations (after fee and operator share)</td><td id="lpOps"></td></tr>
+      <tr><td>VAT refund (return of capital)</td><td id="lpVat"></td></tr>
+      <tr><td>Deposit refund (return of capital)</td><td id="lpDep"></td></tr>
+      <tr><td>Terminal value to LP (after GP share)</td><td id="lpTV"></td></tr>
+      <tr class="tot"><td>Total LP distributions</td><td id="lpDist"></td></tr>
+      <tr><td>LP profit</td><td id="lpProfit"></td></tr>
+      <tr><td>LP IRR / multiple</td><td id="lpIM"></td></tr>
+      <tr><td>Cash yield on equity (Y2, after fee)</td><td id="lpYield"></td></tr>
+    </table>
+  </div>
+  <div class="card w">
+    <h3>Operator (GP) economics</h3>
+    <table>
+      <tr><td>Management fees (<span id="gpFeeL"></span> of revenue)</td><td id="gpFees"></td></tr>
+      <tr><td>Profit share (<span id="gpShareL"></span> of NOI after fee)</td><td id="gpShare"></td></tr>
+      <tr><td>Share of terminal value</td><td id="gpTV"></td></tr>
+      <tr class="tot"><td>Total operator compensation</td><td id="gpComp"></td></tr>
+    </table>
+    <h3 style="margin-top:18px">Head lease exposure</h3>
+    <table>
+      <tr><td>Rent paid to landlord over term</td><td id="hlRent"></td></tr>
+      <tr><td>Gross revenue over term</td><td id="hlRev"></td></tr>
+      <tr><td>Rent as % of revenue (Y2 stabilised)</td><td id="hlRR"></td></tr>
+      <tr><td>Break-even occupancy (Y2, NOI after fee = 0)</td><td id="hlBE"></td></tr>
+      <tr><td>Break-even desk rate (Y2, occupancy held)</td><td id="hlBER"></td></tr>
+      <tr><td>Stabilised NOI after fee (Y2)</td><td id="hlNOI"></td></tr>
+    </table>
+    <p class="note" style="margin-top:12px">Flex benchmark: head rent at or under 35% of stabilised revenue for an operator-grade margin. Above 45% the floor is carrying the landlord.</p>
+  </div>
+</div>
+
+<h2>4. Annual cash flow</h2>
+<div class="tblwrap"><table id="cf"></table></div>
+<p class="note">Year 1 revenue starts after fit-out; landlord rent starts after the rent-free period. Broker = 10% of annualised revenue at opening and at each 3-year member-lease cycle. Core opex = Sky Tower F38 budget, AED <span id="nCore"></span> / month at opening for 23,000 sq ft, +3% p.a.</p>
+
+<div class="grid2" style="margin-top:18px">
+  <div class="chart"><canvas id="chRev"></canvas></div>
+  <div class="chart"><canvas id="chCum"></canvas></div>
+</div>
+
+<h2>5. Sensitivity</h2>
+<div class="grid2">
+  <div class="card w">
+    <h3>LP IRR - rent to landlord x desk rate <span class="badge" id="sensTermL"></span></h3>
+    <div class="tblwrap"><table class="sens" id="sens1"></table></div>
+    <p class="note">Rows: AED M / yr to landlord. Columns: AED / desk / month ex-VAT (RICE Sky Tower Sep 2026: Business 2,728-2,896, weighted 3,068, Premium 3,242-3,415). Highlighted cell = current inputs.</p>
+  </div>
+  <div class="card w">
+    <h3>LP IRR - desk density x desk rate</h3>
+    <div class="tblwrap"><table class="sens" id="sens5"></table></div>
+    <p class="note">Rows: gross sq ft per desk. RICE runs ~95 on its two Sky Tower floors (259 desks / ~25,000 sq ft); the Palm &amp; Peak planning standard is 70. Density is the second lever after rent.</p>
+  </div>
+</div>
+<div class="grid2" style="margin-top:22px">
+  <div class="card w">
+    <h3>LP IRR - lease term x stabilised occupancy</h3>
+    <div class="tblwrap"><table class="sens" id="sens2"></table></div>
+    <p class="note">Current rent and desk-rate inputs held. The fit-out is amortised over the lease, so every year of term matters more than a point of occupancy.</p>
+  </div>
+  <div class="card w">
+    <h3>LP IRR - rent-free x landlord escalation</h3>
+    <div class="tblwrap"><table class="sens" id="sens3"></table></div>
+    <p class="note">The two head-lease levers most likely to move in negotiation. A fixed rent for the term is worth more than an extra 6 months rent-free.</p>
+  </div>
+</div>
+<div class="grid2" style="margin-top:22px">
+  <div class="card w">
+    <h3>LP IRR - CapEx x terminal value</h3>
+    <div class="tblwrap"><table class="sens" id="sens4"></table></div>
+    <p class="note">CapEx in AED / sq ft. A landlord fit-out contribution reads as a lower CapEx row. Terminal value = business sale multiple of final-year NOI after fee.</p>
+  </div>
+  <div class="card">
+    <h3>Rent that clears the hurdle</h3>
+    <div class="tblwrap"><table id="hurdle"></table></div>
+    <p class="note">Maximum annual head rent for a 15% and a 20% LP IRR at the current desk rate, occupancy, term and CapEx, by density. Solved on the live inputs.</p>
+  </div>
+</div>
+
+<h2>6. Reading the numbers</h2>
+<div class="grid2">
+  <div class="card">
+    <h3>What the base case says</h3>
+    <p>At AED 6.5M the rent absorbs 73% of stabilised revenue. With RICE's own Sky Tower pricing (AED 3,068 / desk / month, weighted across L25 Premium and L34 Business) and RICE's own density (~95 sq ft gross per desk, 242 desks), the floor produces a stabilised NOI after fee of about AED 0.2M on AED 16.3M of equity: LP IRR negative, 0.53x, capital not recovered inside a 10-year term. Break-even occupancy is 93%. This is not a pricing problem at the margin - the rent is more than double what the revenue can carry at an operator-grade 35% rent load.</p>
+    <h3>What it takes to work</h3>
+    <p>Holding RICE pricing, the rent that delivers a 15% LP IRR is about AED 2.4M at RICE density and AED 5.3M at Palm &amp; Peak density (70 sq ft / desk, 328 desks). Alternatively, at AED 6.5M the desk rate needed for 15% is about AED 4,600 at 95 sq ft / desk or AED 3,400 at 70 - the latter is 11% above RICE weighted and inside RICE Premium territory (3,242-3,415), so the combination "dense plan + Premium pricing" is the only route to the hurdle at the asking rent, and it still leaves rent at half of revenue.</p>
+  </div>
+  <div class="card">
+    <h3>Negotiation position</h3>
+    <p>The floor is only investable as a landlord partnership. In order of preference: (1) management agreement or rev-share with the owner - Palm &amp; Peak fits out and operates, the owner takes a share of NOI instead of a fixed rent; (2) fixed rent capped at AED 4.0-4.5M (AED 175-195 / sq ft, still above the building's fitted asks of 125-231) on a 10-year fixed term with 9-12 months rent-free and a landlord fit-out contribution of AED 200-250 / sq ft; (3) walk. AED 6.5M for a shell floor in Sky Tower is a purchase yield of 14% on the AED 46M ask for the same plate - the landlord is pricing it as if it were already a serviced product.</p>
+    <h3>Reference points</h3>
+    <p>RICE bills AED 571 / sq ft on suite area in Sky Tower, about AED 4,180 / sq m on gross floor area, in a building where fitted full floors ask AED 1,350-2,500 / sq m - a 1.7-3.1x gross-to-net spread. This offer asks for AED 3,042 / sq m against the same revenue: a 1.4x spread, below any flex operator's floor. The previous Palm &amp; Peak Sky Tower memos priced revenue at AED 6,458 / sq m gross (about 4,750 / desk at RICE density) - 55% above where RICE actually trades in the building today; that gap is the reason the acquisition case worked and this lease case does not.</p>
+  </div>
+</div>
+
+<h2>7. Market context (Reem / Maryah, Sep 2026)</h2>
+<div class="tblwrap"><table class="mkt">
+  <tr><th>Building</th><th>Location</th><th>Product</th><th>Asking rent AED / sq ft</th><th>Asking rent AED / sq m</th><th>Note</th></tr>
+  <tr class="hl"><td>Sky Tower - this offer</td><td>Reem (Shams)</td><td>Full floor, 23,000 sq ft, head lease</td><td>283</td><td>3,042</td><td>AED 6.5M / yr, 6 months rent-free</td></tr>
+  <tr><td>Sky Tower (offices to L40)</td><td>Reem (Shams)</td><td>Strata Grade A / B+, 12-13k sq ft plates</td><td>125-231; 5-7k sq ft units 139-186</td><td>1,350-2,500</td><td>RICE L25 / L34 serviced 530-598 ex-VAT on suite area; F38 for sale at AED 46M (~1,740 / sq ft)</td></tr>
+  <tr><td>ADGM Square (Al Sila, Al Sarab, Al Maqam, Al Khatem)</td><td>Al Maryah</td><td>Grade A, LEED Gold, single owner</td><td>186-348; full floors 197-242</td><td>2,000-3,750</td><td>Anchor tenants ADIA, ADNOC, JP Morgan, Blackstone; Al Maryah full floor offered at 3,000 / sq m (Sep 2026)</td></tr>
+  <tr><td>Leaf Tower L58</td><td>Reem (Tamouh)</td><td>Rooftop full floor, resi tower</td><td>279</td><td>3,000</td><td>26,910 sq ft, unlet since ~2023; Palm &amp; Peak underwriting 10 Sep 2026</td></tr>
+  <tr><td>Radiant Square</td><td>Reem (City of Lights)</td><td>Shell floor to let / RICE serviced pre-lease</td><td>154 shell; 663-820 serviced ex-VAT</td><td>1,650 shell; 7,140-8,830 serviced</td><td>RICE Radiant F5 4,171 / desk, F10 4,469 / desk (opening Oct 2026)</td></tr>
+  <tr><td>Addax Port / Addax Park / Omega</td><td>Reem (City of Lights)</td><td>Grade A shell, part-strata</td><td>56-96</td><td>600-1,030</td><td>Full floors 18-47k sq ft available</td></tr>
+</table></div>
+<p class="note">Market: CBRE Q2 2026 Abu Dhabi office occupancy ~96%, rents +16% YoY; ADGM 2,800-3,500 / sq m (+30%). Supply: One Maryah Place (~98k sq m) late 2028 is the only confirmed in-window delivery on Maryah; Reem ~0 new Grade A in window; Radiant Bridges Q2 2029. Sources: RICE Offices rate card Sep 2026 (Palm &amp; Peak transcription, 8 Sep 2026), Property Finder, Bayut, Cushman &amp; Wakefield, Palm &amp; Peak Sky Tower Deliverables (Jul 2026).</p>
+
+<footer>Palm &amp; Peak Real Estate - Sky Tower leased full-floor underwriting v1, September 2026. Interactive model; base case on load reproduces the engine output verified in node. Operating assumptions ported from the Leaf Tower L58 / Sky Tower Deliverables engine. Desk pricing and density from the RICE Offices Sky Tower rate card (Sep 2026). Not an offer; for internal review only.</footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script>// Sky Tower - leased full-floor calculation engine (Sep 2026)
+// Ported from the Leaf Tower L58 / Sky Tower Deliverables engine (Jul 2026 negotiation copy):
+// same opex structure, 5% mgmt fee, 30% operator profit share, 5% revenue escalation,
+// 3% opex escalation, 9-month fit-out, CapEx 550/sq ft + 5% contingency + 5% VAT (recovered Y1),
+// waterfall = return of capital then straight 70/30 LP/GP, tax off.
+// Differences vs Leaf: revenue is priced per desk per month (RICE Sky Tower rate card, Sep 2026)
+// with a desk-density input; head rent entered as an annual AED figure.
+const FIX = {
+  sqft: 23000, sqm: 23000 * 0.092903,               // 2,137 sq m
+  cont: 0.05, vat: 0.05, lease: 3, brokerPct: 0.10,
+  svc: 18, licence: 50000, setup: 80000, legal: 110000, presales: 500000,
+  coreMonthly: 105100,                               // Sky Tower F38 core opex budget, 23,000 sq ft
+  ctRate: 0.09, ctThreshold: 375000, maxYears: 10
+};
+
+const BASE = {
+  deskRate: 3068,      // AED / desk / month ex-VAT - RICE Sky Tower weighted (F25 Premium + F34 Business), Sep 2026 rate card
+  sqftDesk: 95,        // gross sq ft per desk - RICE Sky Tower plan: 259 desks on ~25,000 sq ft (2 floors)
+  occ: 0.95,
+  rent: 6500000,       // AED / yr to landlord
+  rentFree: 6,         // months, inside the fit-out period
+  rentEsc: 0.00,       // landlord rent escalation p.a. (0 = fixed for term)
+  deposit: 3,          // months of rent, refunded at end of term
+  term: 10,            // 7-10 years
+  fee: 0.05, pshare: 0.30, resGP: 0.30,
+  esc: 0.05, oesc: 0.03, fitout: 9,
+  capexSqft: 550, tvMult: 0, tax: false
+};
+
+function irr(cfs) {
+  const npv = r => cfs.reduce((s, c, i) => s + c / Math.pow(1 + r, i), 0);
+  let lo = -0.99, hi = 10;
+  if (npv(lo) * npv(hi) > 0) return NaN;
+  for (let k = 0; k < 200; k++) {
+    const mid = (lo + hi) / 2;
+    if ((npv(lo) > 0) !== (npv(mid) > 0)) hi = mid; else lo = mid;
+  }
+  return (lo + hi) / 2;
+}
+
+function equity(p) {
+  const reno = FIX.sqft * p.capexSqft;
+  const cont = reno * FIX.cont;
+  const vatCapex = (reno + cont) * FIX.vat;
+  const annualRent = p.rent;
+  const deposit = annualRent / 12 * p.deposit;
+  const initial = FIX.setup + FIX.legal + FIX.presales;
+  return {
+    reno, cont, vatCapex, capex: reno + cont + vatCapex,
+    deposit, annualRent, initial,
+    vatRecovery: vatCapex,
+    equity: reno + cont + vatCapex + deposit + initial
+  };
+}
+
+function compute(inp) {
+  const p = Object.assign({}, BASE, inp);
+  const eq = equity(p);
+  const desks = Math.floor(FIX.sqft / p.sqftDesk);
+  const revAnnual100 = desks * p.deskRate * 12;      // AED / yr at 100% occupancy, year-1 rate
+  const N = p.term;
+  const months = [];
+  for (let i = 0; i < N; i++) months[i] = i === 0 ? 12 - p.fitout : 12;
+  const rentMonths = [];
+  for (let i = 0; i < N; i++) rentMonths[i] = i === 0 ? Math.max(0, 12 - p.rentFree) : 12;
+  const rev = [], opex = [], rentL = [], broker = [], fee = [], noiBF = [], noiAF = [],
+        ctax = [], dist = [], opShare = [], lpNoi = [];
+  for (let i = 0; i < N; i++) {
+    rev[i] = revAnnual100 * Math.pow(1 + p.esc, i) * p.occ * months[i] / 12;
+    const core = i === 0 ? FIX.coreMonthly * months[0]
+                         : FIX.coreMonthly * 12 * Math.pow(1 + p.oesc, i);
+    opex[i] = core + FIX.svc * FIX.sqft * Math.pow(1 + p.oesc, i) + FIX.licence;
+    rentL[i] = eq.annualRent * Math.pow(1 + p.rentEsc, i) * rentMonths[i] / 12;
+    broker[i] = i === 0 ? (months[0] > 0 ? rev[0] / months[0] * 12 * FIX.brokerPct : 0)
+                        : ((i % FIX.lease) === 0 ? rev[i] * FIX.brokerPct : 0);
+    noiBF[i] = rev[i] - opex[i] - rentL[i] - broker[i];
+    fee[i] = rev[i] * p.fee;
+    noiAF[i] = noiBF[i] - fee[i];
+    ctax[i] = p.tax ? FIX.ctRate * Math.max(0, noiAF[i] - FIX.ctThreshold) : 0;
+    dist[i] = noiAF[i] - ctax[i];
+    opShare[i] = Math.max(0, dist[i]) * p.pshare;
+    lpNoi[i] = dist[i] - opShare[i];
+  }
+  const tv = Math.max(0, noiAF[N - 1]) * p.tvMult;
+  const exitTax = p.tax ? FIX.ctRate * tv : 0;
+  const netAT = tv - exitTax;
+  const hurdle = eq.equity - eq.vatRecovery - eq.deposit;
+  const roc = Math.min(netAT, hurdle);
+  const resid = Math.max(0, netAT - roc);
+  const resLP = resid * (1 - p.resGP), resGPv = resid * p.resGP;
+  const promote = resGPv;
+  const lpExit = netAT - promote;
+  const lpCF = [-eq.equity], pjCF = [-eq.equity];
+  for (let i = 0; i < N; i++) {
+    const vr = i === 0 ? eq.vatRecovery : 0;
+    const dep = i + 1 === N ? eq.deposit : 0;
+    lpCF.push(lpNoi[i] + vr + dep + (i + 1 === N ? lpExit : 0));
+    pjCF.push(dist[i] + vr + dep + (i + 1 === N ? netAT : 0));
+  }
+  const lpDist = lpCF.slice(1).reduce((a, b) => a + b, 0);
+  const gpFees = fee.slice(0, N).reduce((a, b) => a + b, 0);
+  const gpShare = opShare.slice(0, N).reduce((a, b) => a + b, 0);
+  let payback = null, cum = lpCF[0];
+  for (let i = 1; i < lpCF.length; i++) {
+    const prev = cum; cum += lpCF[i];
+    if (cum >= 0 && payback === null) payback = (i - 1) + (-prev) / lpCF[i];
+  }
+  const stabRev = rev[1], stabRent = rentL[1];
+  const totalRent = rentL.reduce((a, b) => a + b, 0);
+  const totalRev = rev.reduce((a, b) => a + b, 0);
+  // desk rate at which Y2 NOI after fee = 0 (occupancy held)
+  const beRate = (opex[1] + rentL[1]) / (desks * 12 * (1 + p.esc) * p.occ * (1 - p.fee));
+  return {
+    p, eq, desks, revAnnual100, rev, opex, rentL, broker, fee, noiBF, noiAF, ctax, dist, opShare, lpNoi,
+    tv, exitTax, netAT, roc, resLP, resGP: resGPv, promote, lpExit, lpCF, pjCF,
+    lpIRR: irr(lpCF), lpMult: lpDist / eq.equity, lpDist, lpProfit: lpDist - eq.equity,
+    pjIRR: irr(pjCF), pjMult: pjCF.slice(1).reduce((a, b) => a + b, 0) / eq.equity,
+    gpFees, gpShare, gpComp: gpFees + gpShare + promote, payback,
+    taxTotal: ctax.reduce((a, b) => a + b, 0) + exitTax,
+    rentToRev: stabRent / stabRev, totalRent, totalRev,
+    breakeven: (opex[1] + rentL[1]) / ((rev[1] / p.occ) * (1 - p.fee)),
+    beRate,
+    cashYield: noiAF[1] / eq.equity,
+    // sq m equivalents
+    revSqmGross: revAnnual100 / FIX.sqm, rentSqm: eq.annualRent / FIX.sqm, rentSqft: eq.annualRent / FIX.sqft
+  };
+}
+if (typeof module !== "undefined") module.exports = { compute, BASE, FIX, equity, irr };
+</script>
+<script>
+"use strict";
+const $ = id => document.getElementById(id);
+const fmt0 = x => isFinite(x) ? (Math.round(x) === 0 ? 0 : Math.round(x)).toLocaleString("en-US") : "n/a";
+const fmtM = x => isFinite(x) ? (x/1e6).toLocaleString("en-US",{minimumFractionDigits:1,maximumFractionDigits:1}) + "M" : "n/a";
+const fmtP = x => isFinite(x) ? (x*100).toFixed(1) + "%" : "n/a";
+const fmtX = x => isFinite(x) ? x.toFixed(2) + "x" : "n/a";
+const SQM = 0.092903;
+const state = Object.assign({}, BASE);
+const baseR = compute({});
+
+function setControls(){
+  $("iRate").value = state.deskRate; $("iDens").value = state.sqftDesk; $("iOcc").value = Math.round(state.occ*100); $("iRent").value = state.rent/1000;
+  $("iFree").value = state.rentFree; $("iEsc").value = state.rentEsc*100; $("iDep").value = state.deposit;
+  $("iFit").value = state.fitout; $("iCapex").value = state.capexSqft; $("iResc").value = state.esc*100;
+  $("iFee").value = state.fee*100; $("iShare").value = state.pshare*100; $("iTV").value = state.tvMult;
+  seg("segTerm", state.term); seg("segTax", state.tax?1:0);
+}
+function readControls(){
+  state.deskRate = +$("iRate").value; state.sqftDesk = +$("iDens").value; state.occ = +$("iOcc").value/100; state.rent = +$("iRent").value*1000;
+  state.rentFree = +$("iFree").value; state.rentEsc = +$("iEsc").value/100; state.deposit = +$("iDep").value;
+  state.fitout = +$("iFit").value; state.capexSqft = +$("iCapex").value; state.esc = +$("iResc").value/100;
+  state.fee = +$("iFee").value/100; state.pshare = +$("iShare").value/100; state.tvMult = +$("iTV").value;
+}
+function seg(id, v){ [...$(id).querySelectorAll("button")].forEach(b => b.classList.toggle("on", +b.dataset.v === +v)); }
+function delta(el, cur, base, kind){
+  const d = cur - base;
+  if (!isFinite(d) || Math.abs(d) < (kind==="pp" ? 5e-4 : kind==="x" ? 5e-3 : kind==="y" ? 0.05 : 5e4)){ el.textContent = "at base"; el.className = "d"; return; }
+  const s = d > 0 ? "+" : "-"; el.className = "d up";
+  if (kind==="pp") el.textContent = s + Math.abs(d*100).toFixed(1) + "pp vs base";
+  else if (kind==="x") el.textContent = s + Math.abs(d).toFixed(2) + "x vs base";
+  else if (kind==="y") el.textContent = s + Math.abs(d).toFixed(1) + " yrs vs base";
+  else el.textContent = s + "AED " + fmtM(Math.abs(d)) + " vs base";
+}
+function solveRent(target, extra){
+  let lo = 0, hi = 12e6;
+  for (let k = 0; k < 60; k++){ const m = (lo+hi)/2; const r = compute(Object.assign({}, state, extra, {rent: m})).lpIRR; if (!isFinite(r) || r < target) hi = m; else lo = m; }
+  return (lo+hi)/2;
+}
+
+let chRev, chCum;
+function makeCharts(){
+  const common = {responsive:true, maintainAspectRatio:false, animation:false,
+    plugins:{legend:{labels:{boxWidth:12,font:{size:11},color:"#6B7886"}}},
+    scales:{x:{grid:{display:false},ticks:{color:"#6B7886",font:{size:11}}},
+            y:{grid:{color:"#DBE2E8"},ticks:{color:"#6B7886",font:{size:11},callback:v=>(v/1e6).toFixed(0)+"M"}}}};
+  chRev = new Chart($("chRev"),{type:"bar",data:{labels:[],datasets:[
+    {label:"Gross revenue",data:[],backgroundColor:"#051C2C"},
+    {label:"Rent to landlord",data:[],backgroundColor:"#9FB6C2"},
+    {label:"NOI after fee",data:[],backgroundColor:"#00A9CE"}]},options:common});
+  chCum = new Chart($("chCum"),{type:"line",data:{labels:[],datasets:[
+    {label:"Cumulative LP cash flow",data:[],borderColor:"#00A9CE",backgroundColor:"rgba(0,169,206,.12)",fill:true,tension:.25,pointRadius:3,pointBackgroundColor:"#051C2C"}]},
+    options:common});
+}
+
+function sensTable(id, rows, cols, rowL, colL, fn, curR, curC, fmtRow, fmtCol){
+  let h = "<tr><th>" + rowL + " \\ " + colL + "</th>" + cols.map(c => "<th>" + fmtCol(c) + "</th>").join("") + "</tr>";
+  rows.forEach(r => {
+    h += "<tr><td class=\"b\">" + fmtRow(r) + "</td>" + cols.map(c => {
+      const v = fn(r, c); const cur = Math.abs(r-curR) < 1e-6 && Math.abs(c-curC) < 1e-6;
+      return "<td class=\"" + (cur ? "g" : (v < 0.10 ? "lo" : "")) + "\">" + (isFinite(v) ? (v*100).toFixed(1) + "%" : "n/a") + "</td>";
+    }).join("") + "</tr>";
+  });
+  $(id).innerHTML = h;
+}
+
+function render(){
+  readControls();
+  const r = compute(state);
+  const N = state.term;
+  $("kEq").textContent = fmt0(r.eq.equity);
+  $("kIrr").textContent = fmtP(r.lpIRR);
+  $("kMult").textContent = fmtX(r.lpMult);
+  $("kProfit").textContent = fmt0(r.lpProfit);
+  $("kPay").textContent = r.payback === null ? "> term" : r.payback.toFixed(1) + " yrs";
+  $("kRR").textContent = fmtP(r.rentToRev);
+  delta($("dEq"), r.eq.equity, baseR.eq.equity, "m");
+  delta($("dIrr"), r.lpIRR, baseR.lpIRR, "pp");
+  delta($("dMult"), r.lpMult, baseR.lpMult, "x");
+  delta($("dProfit"), r.lpProfit, baseR.lpProfit, "m");
+  if (r.payback === null) { $("dPay").textContent = "not recovered in term"; $("dPay").className = "d"; } else if (baseR.payback === null) { $("dPay").textContent = "base: not recovered"; $("dPay").className = "d up"; } else delta($("dPay"), r.payback, baseR.payback, "y");
+  $("dRR").textContent = r.rentToRev <= 0.35 ? "inside operator band (<=35%)" : r.rentToRev <= 0.45 ? "above 35% operator band" : "above 45% - landlord carries the margin";
+  $("dRR").className = "d";
+
+  // summary panel
+  $("sRentHead").textContent = "AED " + fmt0(state.rent) + " / yr = AED " + fmt0(r.rentSqft) + " / sq ft = AED " + fmt0(r.rentSqm) + " / sq m, 6 months rent-free offered.";
+  $("sRent").textContent = "AED " + fmt0(state.rent) + " / yr (AED " + fmt0(r.rentSqft) + " / sq ft, " + fmt0(r.rentSqm) + " / sq m). Offer: AED 6,500,000.";
+  $("sFree").textContent = state.rentFree + " months from handover, within the " + state.fitout + "-month fit-out.";
+  $("sTerm").textContent = N + " years, held to expiry.";
+  $("sDep").textContent = state.deposit + " months' rent = AED " + fmt0(r.eq.deposit) + ", refunded at expiry.";
+  $("sEsc").textContent = state.rentEsc === 0 ? "Fixed for the term (0% escalation)." : (state.rentEsc*100).toFixed(1) + "% p.a. escalation on the head rent.";
+  $("sRev").textContent = "AED " + fmt0(state.deskRate) + " / desk / month ex-VAT, +" + (state.esc*100).toFixed(1) + "% p.a. RICE Sky Tower Sep 2026: weighted 3,068 (Business L34 2,728-2,896; Premium L25 3,242-3,415).";
+  $("sCap").textContent = r.desks + " desks at " + state.sqftDesk + " sq ft gross / desk = AED " + fmtM(r.revAnnual100) + " / yr at 100% (AED " + fmt0(r.revSqmGross) + " / sq m gross).";
+  $("sOcc").textContent = Math.round(state.occ*100) + "% stabilised from Year 2; Year 1 = " + (12 - state.fitout) + " revenue months.";
+  $("sFit").textContent = state.fitout + " months at AED " + fmt0(state.capexSqft) + " / sq ft + 5% contingency = AED " + fmtM(r.eq.reno + r.eq.cont) + ".";
+  $("sOps").textContent = (state.fee*100).toFixed(1) + "% management fee on gross revenue; " + Math.round(state.pshare*100) + "% operator share of NOI after fee (LP " + Math.round((1-state.pshare)*100) + "%).";
+  $("sTV").textContent = state.tvMult === 0 ? "None - run-off at expiry (conservative)." : state.tvMult.toFixed(1) + "x final-year NOI after fee = AED " + fmtM(r.tv) + " business sale at expiry.";
+
+  // control labels
+  $("vRev").textContent = "AED " + fmt0(state.deskRate) + " / desk / mo";
+  $("hRev").textContent = "RICE Sky Tower Sep 2026 weighted 3,068 ex-VAT. Premium L25 3,242-3,415. = AED " + fmt0(r.revSqmGross) + " / sq m gross / yr at current density.";
+  $("vDens").textContent = state.sqftDesk + " sq ft / desk";
+  $("hDens").textContent = r.desks + " desks on 23,000 sq ft. RICE Sky Tower plan ~95 (259 desks / 2 floors); Palm & Peak standard 70.";
+  $("vOcc").textContent = Math.round(state.occ*100) + "%";
+  $("vRent").textContent = "AED " + fmtM(state.rent);
+  $("hRent").textContent = "= AED " + fmt0(r.rentSqft) + " / sq ft (" + fmt0(r.rentSqm) + " / sq m). Offer 6.5M. Building fitted asks 125-231 / sq ft.";
+  $("vFree").textContent = state.rentFree + " mo";
+  $("vTerm").textContent = N + " yrs";
+  $("vEsc").textContent = (state.rentEsc*100).toFixed(1) + "%";
+  $("vDep").textContent = state.deposit + " mo";
+  $("vFit").textContent = state.fitout + " mo";
+  $("hFit").textContent = "First revenue in month " + (state.fitout+1) + " - " + (12-state.fitout) + " revenue months in Y1.";
+  $("vCapex").textContent = "AED " + fmt0(state.capexSqft) + " / sq ft";
+  $("hCapex").textContent = "= AED " + fmt0(state.capexSqft/SQM) + " / sq m; budget AED " + fmtM(r.eq.reno + r.eq.cont) + " incl. contingency.";
+  $("vResc").textContent = (state.esc*100).toFixed(1) + "%";
+  $("vFee").textContent = (state.fee*100).toFixed(1) + "%";
+  $("vShare").textContent = Math.round(state.pshare*100) + "%";
+  $("vTV").textContent = state.tvMult.toFixed(1) + "x";
+  $("vTax").textContent = state.tax ? "on" : "off";
+
+  // S&U + LP + GP
+  $("suCapexL").textContent = "AED " + fmt0(state.capexSqft) + " / sq ft x " + fmt0(FIX.sqft) + " sq ft";
+  $("suReno").textContent = fmt0(r.eq.reno); $("suCont").textContent = fmt0(r.eq.cont); $("suVat").textContent = fmt0(r.eq.vatCapex);
+  $("suDep").textContent = fmt0(r.eq.deposit); $("suInit").textContent = fmt0(r.eq.initial); $("suEq").textContent = fmt0(r.eq.equity);
+  const lpOps = r.lpNoi.reduce((a,b)=>a+b,0);
+  $("lpOps").textContent = fmt0(lpOps); $("lpVat").textContent = fmt0(r.eq.vatRecovery); $("lpDep").textContent = fmt0(r.eq.deposit);
+  $("lpTV").textContent = fmt0(r.lpExit); $("lpDist").textContent = fmt0(r.lpDist); $("lpProfit").textContent = fmt0(r.lpProfit);
+  $("lpIM").textContent = fmtP(r.lpIRR) + " / " + fmtX(r.lpMult); $("lpYield").textContent = fmtP(r.cashYield);
+  $("gpFeeL").textContent = (state.fee*100).toFixed(1) + "%"; $("gpShareL").textContent = Math.round(state.pshare*100) + "%";
+  $("gpFees").textContent = fmt0(r.gpFees); $("gpShare").textContent = fmt0(r.gpShare); $("gpTV").textContent = fmt0(r.promote); $("gpComp").textContent = fmt0(r.gpComp);
+  $("hlRent").textContent = fmt0(r.totalRent); $("hlRev").textContent = fmt0(r.totalRev); $("hlRR").textContent = fmtP(r.rentToRev);
+  $("hlBE").textContent = fmtP(r.breakeven); $("hlBER").textContent = "AED " + fmt0(r.beRate) + " / desk / mo"; $("hlNOI").textContent = fmt0(r.noiAF[1]);
+  $("nCore").textContent = fmt0(FIX.coreMonthly);
+
+  // cash flow table
+  const yrs = []; for (let i = 1; i <= N; i++) yrs.push("Y" + i);
+  const row = (label, arr, cls) => "<tr" + (cls ? " class=\"" + cls + "\"" : "") + "><td>" + label + "</td>" + arr.map(v => "<td>" + fmt0(v) + "</td>").join("") + "<td>" + fmt0(arr.reduce((a,b)=>a+b,0)) + "</td></tr>";
+  let h = "<tr><th>AED</th>" + yrs.map(y => "<th>" + y + "</th>").join("") + "<th>Total</th></tr>";
+  h += row("Gross revenue", r.rev);
+  h += row("Core opex + service charge + licence", r.opex.map(v => -v), "sub");
+  h += row("Rent to landlord", r.rentL.map(v => -v), "sub");
+  h += row("Member leasing brokerage", r.broker.map(v => -v), "sub");
+  h += row("NOI before management fee", r.noiBF, "tot");
+  h += row("Management fee", r.fee.map(v => -v), "sub");
+  h += row("NOI after fee", r.noiAF, "tot");
+  if (state.tax) h += row("Corporate tax", r.ctax.map(v => -v), "sub");
+  h += row("Operator profit share", r.opShare.map(v => -v), "sub");
+  h += row("LP operating distribution", r.lpNoi, "tot");
+  const vr = r.lpNoi.map((_, i) => i === 0 ? r.eq.vatRecovery : 0);
+  const dp = r.lpNoi.map((_, i) => i + 1 === N ? r.eq.deposit : 0);
+  const tv = r.lpNoi.map((_, i) => i + 1 === N ? r.lpExit : 0);
+  h += row("VAT refund", vr, "sub"); h += row("Deposit refund", dp, "sub");
+  if (state.tvMult > 0) h += row("Terminal value to LP", tv, "sub");
+  h += row("LP cash flow", r.lpCF.slice(1), "tot");
+  let cum = -r.eq.equity; const cumArr = r.lpCF.slice(1).map(v => cum += v);
+  h += "<tr class=\"hl\"><td>Cumulative LP cash flow (after AED " + fmt0(r.eq.equity) + " equity)</td>" + cumArr.map(v => "<td>" + fmt0(v) + "</td>").join("") + "<td></td></tr>";
+  h += "<tr><td>Occupancy</td>" + r.rev.map((_, i) => "<td>" + Math.round(state.occ*100) + "%</td>").join("") + "<td></td></tr>";
+  h += "<tr><td>Rent / revenue</td>" + r.rev.map((v, i) => "<td>" + (v > 0 ? Math.round(r.rentL[i]/v*100) + "%" : "n/a") + "</td>").join("") + "<td>" + Math.round(r.totalRent/r.totalRev*100) + "%</td></tr>";
+  $("cf").innerHTML = h;
+
+  // charts
+  chRev.data.labels = yrs; chRev.data.datasets[0].data = r.rev; chRev.data.datasets[1].data = r.rentL; chRev.data.datasets[2].data = r.noiAF; chRev.update();
+  chCum.data.labels = ["Y0"].concat(yrs); let c2 = 0; chCum.data.datasets[0].data = r.lpCF.map(v => c2 += v); chCum.update();
+
+  // sensitivities
+  $("sensTermL").textContent = N + "-year term";
+  const rents = [4.0e6, 4.5e6, 5.0e6, 5.5e6, 6.0e6, 6.5e6, 7.0e6], rates = [2750, 3068, 3330, 3500, 3750, 4000];
+  sensTable("sens1", rents, rates, "Rent", "Desk rate", (a, b) => compute(Object.assign({}, state, {rent: a, deskRate: b})).lpIRR, state.rent, state.deskRate, v => fmtM(v), v => fmt0(v));
+  const dens = [70, 75, 80, 85, 90, 95, 100];
+  sensTable("sens5", dens, rates, "Density", "Desk rate", (a, b) => compute(Object.assign({}, state, {sqftDesk: a, deskRate: b})).lpIRR, state.sqftDesk, state.deskRate, v => v + " sq ft", v => fmt0(v));
+  const terms = [7, 8, 9, 10], occs = [0.75, 0.80, 0.85, 0.90, 0.95, 1.00];
+  sensTable("sens2", terms, occs, "Term", "Occupancy", (a, b) => compute(Object.assign({}, state, {term: a, occ: b})).lpIRR, N, state.occ, v => v + " yrs", v => Math.round(v*100) + "%");
+  const frees = [0, 3, 6, 9, 12], escs = [0, 0.02, 0.03, 0.04, 0.05];
+  sensTable("sens3", frees, escs, "Rent-free", "Escalation", (a, b) => compute(Object.assign({}, state, {rentFree: a, rentEsc: b})).lpIRR, state.rentFree, state.rentEsc, v => v + " mo", v => Math.round(v*100) + "%");
+  const capexs = [300, 400, 450, 500, 550, 650], tvs = [0, 1, 2, 3, 4];
+  sensTable("sens4", capexs, tvs, "CapEx", "TV", (a, b) => compute(Object.assign({}, state, {capexSqft: a, tvMult: b})).lpIRR, state.capexSqft, state.tvMult, v => fmt0(v), v => v + "x");
+
+  // hurdle rent table
+  let hh = "<tr><th>Density</th><th>Desks</th><th>Rent for 15% LP IRR</th><th>AED / sq ft</th><th>Rent for 20% LP IRR</th><th>AED / sq ft</th></tr>";
+  [70, 80, 95].forEach(d => {
+    const r15 = solveRent(0.15, {sqftDesk: d}), r20 = solveRent(0.20, {sqftDesk: d});
+    hh += "<tr" + (d === state.sqftDesk ? " class=\"hl\"" : "") + "><td>" + d + " sq ft / desk</td><td>" + Math.floor(FIX.sqft/d) + "</td><td>" + fmt0(r15) + "</td><td>" + fmt0(r15/FIX.sqft) + "</td><td>" + fmt0(r20) + "</td><td>" + fmt0(r20/FIX.sqft) + "</td></tr>";
+  });
+  hh += "<tr class=\"tot\"><td>Offer</td><td></td><td colspan=\"2\">AED " + fmt0(state.rent) + " = " + fmt0(r.rentSqft) + " / sq ft</td><td colspan=\"2\">LP IRR " + fmtP(r.lpIRR) + "</td></tr>";
+  $("hurdle").innerHTML = hh;
+}
+
+document.querySelectorAll("input[type=range]").forEach(el => el.addEventListener("input", render));
+$("segTerm").addEventListener("click", e => { if (e.target.dataset.v){ state.term = +e.target.dataset.v; seg("segTerm", state.term); render(); } });
+$("segTax").addEventListener("click", e => { if (e.target.dataset.v !== undefined){ state.tax = e.target.dataset.v === "1"; seg("segTax", state.tax?1:0); render(); } });
+$("btnReset").addEventListener("click", () => { Object.assign(state, BASE); setControls(); render(); });
+makeCharts(); setControls(); render();
+</script>
+</body>
+</html>
