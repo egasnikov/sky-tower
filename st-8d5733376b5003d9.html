@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Sky Tower, Al Reem Island - Full-Floor Head-Lease Model</title>
+<style>
+:root{
+  --navy:#051C2C; --navy2:#123C55; --teal:#00A9CE; --tint:#DCEFF6;
+  --ink:#1A1F26; --muted:#6B7886; --line:#DBE2E8; --bg:#F4F6F8; --band:#E8EDF1;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Segoe UI",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif;color:var(--ink);background:#fff;font-size:14px}
+.wrap{max-width:1280px;margin:0 auto;padding:0 20px}
+header{background:var(--navy);color:#fff;padding:22px 0 18px;border-bottom:3px solid var(--teal)}
+header .wrap{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:10px}
+h1{font-size:26px;letter-spacing:.5px}
+.sub{color:#9FB6C2;font-size:12.5px;margin-top:4px}
+.chip{display:inline-block;border:1px solid #9FB6C2;color:#9FB6C2;font-size:10.5px;letter-spacing:1.5px;padding:4px 10px;border-radius:2px}
+.hdate{color:#9FB6C2;font-size:12px;text-align:right}
+.kpis{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 1px 6px rgba(5,28,44,.06)}
+.kpis .wrap{display:grid;grid-template-columns:repeat(6,1fr);gap:0}
+.kpi{padding:12px 10px;text-align:center;border-right:1px solid var(--line)}
+.kpi:last-child{border-right:0}
+.kpi .v{font-size:17px;font-weight:700;color:var(--navy)}
+.kpi .l{font-size:9.5px;letter-spacing:1px;color:var(--muted);text-transform:uppercase;margin-top:2px}
+.kpi .d{font-size:10.5px;margin-top:2px;color:var(--muted);min-height:14px}
+.galband{padding:22px 0;border-bottom:1px solid var(--line)}
+.galsub{font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--teal);font-weight:700;margin-bottom:8px}
+.galintro{font-size:13.5px;line-height:1.55;max-width:980px;color:var(--ink)}
+.galnote{font-size:11.5px;color:var(--muted);margin-top:10px}
+main .wrap{display:grid;grid-template-columns:310px 1fr;gap:26px;padding:26px 20px 60px;align-items:start}
+.panel{background:#fff;border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.controls{position:sticky;top:76px;max-height:calc(100vh - 96px);overflow-y:auto}
+.ptitle{background:var(--navy);color:#fff;font-size:11px;letter-spacing:1.2px;padding:9px 14px;text-transform:uppercase;border-bottom:2px solid var(--teal)}
+.ctl{padding:11px 14px;border-bottom:1px solid var(--bg)}
+.ctl .row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}
+.ctl label{font-size:12.5px;color:var(--navy);font-weight:600}
+.ctl .val{font-size:13px;font-weight:700;color:var(--teal);font-variant-numeric:tabular-nums}
+.ctl .hint{font-size:10.5px;color:var(--muted);margin-top:4px}
+input[type=range]{width:100%;-webkit-appearance:none;height:4px;border-radius:2px;background:var(--line);outline:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--teal);border:2px solid #fff;box-shadow:0 0 0 1px var(--teal);cursor:pointer}
+input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:var(--teal);border:2px solid #fff;box-shadow:0 0 0 1px var(--teal);cursor:pointer}
+.seg{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:4px}
+.seg button{padding:7px 0;border:1px solid var(--line);background:#fff;color:var(--navy);font-weight:600;font-size:13px;border-radius:4px;cursor:pointer}
+.seg button.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+.subhdr{background:var(--band);color:var(--navy);font-size:10px;letter-spacing:1.2px;padding:6px 14px;text-transform:uppercase;font-weight:700}
+.reset{display:block;width:calc(100% - 28px);margin:12px 14px;padding:9px;border:1px solid var(--navy);background:#fff;color:var(--navy);font-weight:600;border-radius:4px;cursor:pointer;font-size:12.5px}
+.reset:hover{background:var(--navy);color:#fff}
+.sec{margin-bottom:26px}
+.sec h2{background:var(--navy);color:#fff;font-size:12px;letter-spacing:1.4px;padding:9px 14px;text-transform:uppercase;border-bottom:2px solid var(--teal);border-radius:6px 6px 0 0}
+.sec .body{border:1px solid var(--line);border-top:0;border-radius:0 0 6px 6px;padding:16px;background:#fff}
+table{width:100%;border-collapse:collapse;font-size:12.6px}
+th{font-size:10.5px;letter-spacing:.8px;text-transform:uppercase;color:#fff;background:var(--navy2);padding:7px 9px;text-align:right;font-weight:600}
+th:first-child{text-align:left}
+td{padding:6px 9px;text-align:right;border-bottom:1px solid var(--bg);font-variant-numeric:tabular-nums;white-space:nowrap}
+td:first-child{text-align:left;color:var(--navy);white-space:normal}
+tr.tot td{border-top:1.5px solid var(--navy);border-bottom:1.5px solid var(--navy);font-weight:700;background:var(--band)}
+tr.hl td{background:var(--tint);font-weight:700;color:var(--navy)}
+tr.mut td{color:var(--muted);font-size:12px}
+.tscroll{overflow-x:auto}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:26px}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.card{border:1px solid var(--line);border-radius:6px;padding:12px;text-align:center}
+.card.on{border-color:var(--teal);box-shadow:0 0 0 1px var(--teal);background:var(--tint)}
+.card .y{font-size:11px;letter-spacing:1px;color:var(--muted);text-transform:uppercase}
+.card .irr{font-size:22px;font-weight:700;color:var(--navy);margin:4px 0 2px}
+.card small{display:block;color:var(--muted);font-size:11px;margin-top:2px}
+.retcard{border:1px solid var(--line);border-radius:6px;padding:14px}
+.retcard h3{font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--teal);margin-bottom:8px}
+.retcard .big{font-size:26px;font-weight:700;color:var(--navy)}
+.retcard .rows div{display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--bg);font-size:12.5px}
+.retcard .rows div span:last-child{font-weight:600;font-variant-numeric:tabular-nums}
+.sensi td{text-align:center;font-weight:600}
+.sensi td.base{outline:2px solid var(--teal);outline-offset:-2px}
+.sensi td.neg{color:var(--muted)}
+.sensi th{text-align:center}
+.sensi td:first-child{text-align:left;font-weight:700;white-space:nowrap}
+main .wrap>div{min-width:0}.grid2>div{min-width:0}
+#sDesk{font-size:12px}#sDesk td,#sDesk th{padding:6px 6px}
+.note{font-size:11.5px;color:var(--muted);margin-top:10px;line-height:1.5}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--muted);margin-bottom:8px}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px}
+.reco{border-left:4px solid var(--teal);background:var(--tint);padding:14px 16px;border-radius:0 6px 6px 0;font-size:13.5px;line-height:1.55}
+.reco b{color:var(--navy)}
+.pill{display:inline-block;background:var(--navy);color:#fff;font-size:10.5px;letter-spacing:.8px;padding:2px 8px;border-radius:3px;margin-left:6px}
+.conv{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:10px 0 14px}
+.conv .card .irr{font-size:20px}
+footer{border-top:1px solid var(--line);padding:18px 0 40px;font-size:11.5px;color:var(--muted);line-height:1.6}
+@media (max-width:980px){main .wrap{grid-template-columns:1fr}.controls{position:static;max-height:none}.kpis .wrap{grid-template-columns:repeat(3,1fr)}.grid2{grid-template-columns:1fr}.cards,.conv{grid-template-columns:1fr 1fr}}
+@media print{.controls{display:none}main .wrap{grid-template-columns:1fr}.kpis{position:static}}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <div><h1>SKY TOWER, AL REEM ISLAND (ADGM)</h1>
+  <div class="sub">Full-Floor Head Lease &nbsp;&middot;&nbsp; 23,000 sq ft lettable &nbsp;&middot;&nbsp; AED 6.5M p.a., 6 months rent-free, 5% escalation &nbsp;&middot;&nbsp; Serviced-Floor Operating Model v3.4</div></div>
+  <div class="hdate">SEPTEMBER 2026<br><span class="chip">ILLUSTRATIVE</span></div>
+</div></header>
+
+<div class="kpis"><div class="wrap">
+  <div class="kpi"><div class="v" id="kEq"></div><div class="l">Investor Equity (AED)</div><div class="d" id="dEq"></div></div>
+  <div class="kpi"><div class="v" id="kIrr"></div><div class="l">Investor IRR</div><div class="d" id="dIrr"></div></div>
+  <div class="kpi"><div class="v" id="kMult"></div><div class="l">Investor Multiple</div><div class="d" id="dMult"></div></div>
+  <div class="kpi"><div class="v" id="kDist"></div><div class="l">Investor Distributions (AED)</div><div class="d" id="dDist"></div></div>
+  <div class="kpi"><div class="v" id="kProj"></div><div class="l">Project IRR &middot; pre-split</div><div class="d" id="dProj"></div></div>
+  <div class="kpi"><div class="v" id="kMargin"></div><div class="l">Stabilised NOI Margin</div><div class="d" id="dMargin"></div></div>
+</div></div>
+
+<section class="galband" style="background:#F4F6F8"><div class="wrap">
+  <div class="galsub">Executive Summary</div>
+  <p class="galintro" id="exSum"></p>
+  <p class="galintro" id="exSum2" style="margin-top:10px"></p>
+  <div class="cards" id="exCards" style="margin-top:14px"></div>
+  <p class="galnote">All figures recompute live from the controls on the left. Base case loads on open; press Reset to return to it.</p>
+</div></section>
+
+<main><div class="wrap">
+<div class="panel controls">
+  <div class="ptitle">Model Inputs - live</div>
+  <div class="subhdr">Head lease</div>
+  <div class="ctl"><div class="row"><label>Head Rent / yr</label><span class="val" id="vHr"></span></div>
+    <input type="range" id="iHr" min="3000000" max="8000000" step="100000" value="6500000">
+    <div class="hint" id="hHr"></div></div>
+  <div class="ctl"><div class="row"><label>Rent-Free Period</label><span class="val" id="vFree"></span></div>
+    <input type="range" id="iFree" min="0" max="12" step="1" value="6">
+    <div class="hint" id="hFree"></div></div>
+  <div class="ctl"><div class="row"><label>Lease Term</label><span class="val" id="vTerm"></span></div>
+    <div class="seg" id="segTerm" style="grid-template-columns:repeat(3,1fr)"><button data-v="5">5 yrs</button><button data-v="7">7 yrs</button><button data-v="10" class="on">10 yrs</button></div>
+    <div class="hint">Held to expiry; no renewal modelled.</div></div>
+  <div class="ctl"><div class="row"><label>Head Rent Escalation</label><span class="val" id="vHesc"></span></div>
+    <input type="range" id="iHesc" min="0" max="5" step="0.5" value="5">
+    <div class="hint">Annual uplift on the head rent from lease year 2. Base 5% (landlord ask); 0% = fixed for the term.</div></div>
+  <div class="ctl"><div class="row"><label>Service Charge / sq ft / yr</label><span class="val" id="vSc"></span></div>
+    <input type="range" id="iSc" min="0" max="35" step="1" value="18">
+    <div class="hint" id="hSc"></div></div>
+  <div class="ctl"><div class="row"><label>Security Deposit</label><span class="val" id="vDep"></span></div>
+    <input type="range" id="iDep" min="0" max="50" step="1" value="25">
+    <div class="hint" id="hDep"></div></div>
+  <div class="subhdr">Fit-out</div>
+  <div class="ctl"><div class="row"><label>Fit-out Cost / sq ft</label><span class="val" id="vCapex"></span></div>
+    <input type="range" id="iCapex" min="200" max="800" step="10" value="550">
+    <div class="hint" id="hCapex"></div></div>
+  <div class="ctl"><div class="row"><label>Fit-out Period</label><span class="val" id="vFit"></span></div>
+    <input type="range" id="iFit" min="3" max="12" step="1" value="9">
+    <div class="hint" id="hFit"></div></div>
+  <div class="subhdr">Commercial levers</div>
+  <div class="ctl"><div class="row"><label>Rent / Desk / Month (Y1)</label><span class="val" id="vRent"></span></div>
+    <input type="range" id="iRent" min="2500" max="5000" step="10" value="3500">
+    <div class="hint" id="hRentSqm" style="color:var(--navy);font-weight:600"></div>
+    <div class="hint" id="hRentSuite"></div></div>
+  <div class="ctl"><div class="row"><label>Suite sq ft per Desk</label><span class="val" id="vDens"></span></div>
+    <input type="range" id="iDens" min="60" max="120" step="5" value="70">
+    <div class="hint" id="hDens"></div></div>
+  <div class="ctl"><div class="row"><label>Stabilised Occupancy</label><span class="val" id="vOcc"></span></div>
+    <input type="range" id="iOcc" min="60" max="100" step="1" value="95">
+    <div class="hint">Ramp opens at 60% and climbs 5 pts a month to stabilisation. Break-even <span id="vBE"></span></div></div>
+  <div class="ctl"><div class="row"><label>Desk Rent Escalation</label><span class="val" id="vEsc"></span></div>
+    <input type="range" id="iEsc" min="0" max="8" step="1" value="5">
+    <div class="hint">Applied each trading year. Sky Tower standard 5%.</div></div>
+  <div class="subhdr">Operator terms</div>
+  <div class="ctl"><div class="row"><label>Investor Share of NOI</label><span class="val" id="vSplit"></span></div>
+    <input type="range" id="iSplit" min="50" max="100" step="5" value="70">
+    <div class="hint" id="hSplit"></div></div>
+  <div class="ctl"><div class="row"><label>Management Fee (of revenue)</label><span class="val" id="vFee"></span></div>
+    <input type="range" id="iFee" min="0" max="8" step="0.5" value="5">
+    <div class="hint">Charged monthly on collected revenue, before the NOI split. Sky Tower negotiated set: 5%.</div></div>
+  <div class="subhdr">Optional exit</div>
+  <div class="ctl"><div class="row"><label>Sale of Operating Business</label><span class="val" id="vExit"></span></div>
+    <input type="range" id="iExit" min="0" max="6" step="0.5" value="0">
+    <div class="hint" id="hExit"></div></div>
+  <div class="ctl"><div class="row"><label>Sale Year</label><span class="val" id="vExitY"></span></div>
+    <input type="range" id="iExitY" min="3" max="9" step="1" value="5">
+    <div class="hint">Base case: no sale - returns are income only. Remaining lease term at sale is shown in the hint above.</div></div>
+  <button class="reset" id="btnReset">Reset to base case</button>
+</div>
+
+<div>
+<section class="sec"><h2>Returns Summary</h2><div class="body">
+  <div class="grid2">
+    <div class="retcard"><h3>Investor (funds fit-out, deposit and working capital)</h3>
+      <div class="big" id="rIrr"></div>
+      <div class="rows">
+        <div><span>Equity invested</span><span id="rEq"></span></div>
+        <div><span>Total distributions</span><span id="rDist"></span></div>
+        <div><span>Total profit</span><span id="rProfit"></span></div>
+        <div><span>Equity multiple</span><span id="rMult"></span></div>
+        <div><span>Payback (interpolated)</span><span id="rPay"></span></div>
+        <div><span>Average cash yield on equity, stabilised years</span><span id="rYield"></span></div>
+      </div></div>
+    <div class="retcard"><h3>Operator</h3>
+      <div class="big" id="rGp"></div>
+      <div class="rows">
+        <div><span>Management fee, total term</span><span id="rGpFee"></span></div>
+        <div><span>Share of NOI, total term</span><span id="rGpOp"></span></div>
+        <div><span>Operator share of total profit</span><span id="rGpPct"></span></div>
+        <div><span>Project IRR before operator terms</span><span id="rProjIrr"></span></div>
+        <div><span>Project multiple before operator terms</span><span id="rProjMult"></span></div>
+        <div><span>Head rent as % of stabilised revenue</span><span id="rRentPct"></span></div>
+      </div></div>
+  </div>
+  <p class="note" id="retNote"></p>
+</div></section>
+
+<section class="sec"><h2>Sources &amp; Uses / Deal Terms</h2><div class="body">
+  <div class="grid2">
+    <div class="tscroll"><table id="tUses"></table></div>
+    <div class="tscroll"><table id="tTerms"></table></div>
+  </div>
+</div></section>
+
+<section class="sec"><h2>Operating Build-Up (AED, lease years)</h2><div class="body">
+  <div class="tscroll"><table id="tOps"></table></div>
+  <p class="note">Lease year 1 carries the fit-out period (head rent after the rent-free months, service charge and pre-opening payroll with no revenue) and the occupancy ramp. Leasing commissions of 10% of contracted annual rent fall in the trading years when member leases originate or renew (3-year cycle). Core operating costs (payroll, utilities, pantry, maintenance, insurance) are the Sky Tower Floor 38 budget for this floor size and escalate 3% a year.</p>
+</div></section>
+
+<section class="sec grid2" style="display:grid">
+  <div><h2 style="border-radius:6px 6px 0 0">Revenue, Head Rent &amp; NOI by Year</h2><div class="body"><div class="legend"><span><i style="background:#051C2C"></i>Revenue</span><span><i style="background:#9FB6C2"></i>Head rent + service charge</span><span><i style="background:#00A9CE"></i>NOI after fee</span></div><div id="chRev"></div></div></div>
+  <div><h2 style="border-radius:6px 6px 0 0">Investor Cumulative Cash Flow</h2><div class="body"><div class="legend"><span><i style="background:#00A9CE"></i>Cumulative net cash to investor</span><span><i style="background:#DBE2E8"></i>Annual distribution</span></div><div id="chCum"></div></div></div>
+</section>
+
+<section class="sec"><h2>Investor Cash Flow &amp; Operator Compensation (AED)</h2><div class="body">
+  <div class="tscroll"><table id="tCf"></table></div>
+</div></section>
+
+<section class="sec"><h2>Sensitivity - Investor IRR</h2><div class="body">
+  <div class="galsub">Desk rate - single-variable sensitivity (all other inputs as set)</div>
+  <div class="tscroll"><table class="sensi" id="sDesk"></table></div>
+  <div class="grid2" style="margin-top:20px">
+    <div><div class="galsub">Desk rate vs stabilised occupancy</div><div class="tscroll"><table class="sensi" id="sRentOcc"></table></div></div>
+    <div><div class="galsub">Head rent vs desk rate</div><div class="tscroll"><table class="sensi" id="sHrRent"></table></div></div>
+  </div>
+  <div class="grid2" style="margin-top:20px">
+    <div><div class="galsub">Desk density vs desk rate</div><div class="tscroll"><table class="sensi" id="sDensRate"></table></div></div>
+    <div><div class="galsub">Rent-free vs head rent escalation</div><div class="tscroll"><table class="sensi" id="sFreeEsc"></table></div></div>
+  </div>
+  <div class="grid2" style="margin-top:20px">
+    <div><div class="galsub">Investor share of NOI vs fit-out cost</div><div class="tscroll"><table class="sensi" id="sSplitCapex"></table></div></div>
+    <div><div class="galsub">Break-evens and scenarios</div><div class="tscroll"><table id="tBreak"></table></div></div>
+  </div>
+  <p class="note">Base case outlined in teal. Muted grey marks cells below an 8% investor IRR. Scenarios: Bear = desk rate minus AED 300, 85% occupancy, 3% escalation; Bull = desk rate plus AED 300, 97% occupancy, 6% escalation; other inputs as set on the left.</p>
+</div></section>
+
+<section class="sec"><h2>Pricing - What to Charge on Sky Tower</h2><div class="body">
+  <div class="galsub">Pricing conventions for the same product - suite area is the lettable area</div>
+  <div class="conv">
+    <div class="card on"><div class="y">Per desk / month</div><div class="irr" id="pDesk"></div><small id="pDeskS"></small></div>
+    <div class="card"><div class="y">Per sqm suite (lettable) / yr</div><div class="irr" id="pSuite"></div><small id="pSuiteS"></small></div>
+    <div class="card"><div class="y">Per sq ft suite (lettable) / yr</div><div class="irr" id="pSuiteSf"></div><small>Broker convention for Sky Tower</small></div>
+    <div class="card"><div class="y">RICE Sky Tower, same basis</div><div class="irr">AED 571 / sq ft</div><small>6,146 / sqm suite, 3,068 / desk weighted, Sep 2026 ex-VAT</small><span id="pGross" hidden></span></div>
+  </div>
+  <div class="ctl" style="border:1px solid var(--line);border-radius:6px;margin-bottom:14px"><div class="row"><label>Suite share of the 23,000 sq ft lettable area</label><span class="val" id="vEff"></span></div>
+    <input type="range" id="iEff" min="60" max="100" step="1" value="100">
+    <div class="hint">Base 100%: the 23,000 sq ft is suite area - all of it is rented out as private suites, and reception, meeting rooms and corridors sit outside the lettable figure. Lower it only if part of the lettable area is given up to shared space.</div></div>
+
+  <div class="reco" id="recoBox"></div>
+
+  <div style="margin-top:18px">
+    <div><div class="galsub">Reem and ADGM operator ladder (RICE rate card Sep 2026; others Aug-Sep 2026)</div><div class="tscroll"><table id="tLadder"></table></div>
+      <p class="note">RICE per-sqm figures are its own published suite areas (ex-VAT). Per-sqm equivalents for TEC and Regus use a 5 sqm per person internal density for fully serviced private offices. Coworking hot desks are not comparable to a private suite and are shown for completeness only.</p></div>
+    <div style="margin-top:18px"><div class="galsub">What the tenant pays if they do it themselves (AED / sqm / yr)</div><div class="tscroll"><table id="tDiy"></table></div>
+      <p class="note">Conventional fitted space in Sky Tower: full floors ask AED 125-231 / sq ft (1,350-2,500 / sqm), 5-7k sq ft units 139-186 / sq ft (Property Finder and Bayut, Sep 2026). The DIY stack uses the top of the range - the quality a serviced tenant compares against - and the same fit-out basis as this model, amortised over 5 years.</p></div>
+  </div>
+</div></section>
+
+</div>
+</div></main>
+
+<footer><div class="wrap">
+  <b style="color:var(--navy)">Method and assumptions.</b> Monthly engine, 23,000 sq ft lettable area (2,137 sqm), all of it rentable suite area. Head lease at AED 6.5M in year 1 (AED 283/sq ft, AED 3,042/sqm), 6 months rent-free from handover, 5% annual escalation on the head rent; desk rate also escalates 5% a year; service charge from day one; security deposit returned at term end. Fit-out AED 550/sq ft plus 5% contingency, 9 months; 5% VAT on fit-out funded at closing and recovered in lease year 1. Set-up, legal and launch marketing AED 690,000. Two months of pre-opening payroll. Trading opens at 60% of capacity desks, rising 5 points a month to stabilisation; 1% credit loss. Capacity 70 sq ft of suite area per desk (Sky Tower planning standard). Core operating costs AED 105,100 a month at 2026 prices (Sky Tower Floor 38 budget: payroll, utilities, pantry, maintenance, insurance and admin), 3% escalation; ADGM licence AED 50,000 a year. Leasing commission 10% of contracted annual rent on origination and each 3-year renewal. Operator: 5% management fee on collected revenue, then a 70/30 investor/operator split of each year's positive NOI after fee (no loss carry-forward); the investor funds any negative year through a working-capital reserve sized at closing. Returns are pre-tax and unlevered; no residual value is assumed at lease expiry unless the optional business-sale control is switched on.<br><br>
+  <b style="color:var(--navy)">Sources.</b> Desk pricing: RICE Offices rate card, September 2026 (Sky Tower L25 Premium and L34 Business, 11 suites, ex-VAT), RICE Radiant pre-lease rate card; Centrum Sky Tower, The Executive Centre, Regus, Cloud Spaces public rate cards and Office Hub listings (Aug-Sep 2026). Market rents: Property Finder and Bayut Sky Tower office listings (Sep 2026); Cushman &amp; Wakefield Abu Dhabi Mid-Year 2026; Savills Abu Dhabi Q2 2026. Cost basis: Sky Tower Floor 38 operating budget and Deliverables model, July 2026. September 2026. For the intended recipient only.
+</div></footer>
+
+<script>
+try{history.replaceState(null,'',location.pathname+location.search);}catch(e){}
+const SQFT=10.7639;
+const BASE={hr:6500000,free:6,term:10,hesc:5,sc:18,dep:25,capex:550,fit:9,rent:3500,dens:70,occ:95,esc:5,split:70,fee:5,exit:0,exitY:5,eff:100};
+const FIX={sqft:23000,cont:0.05,vat:0.05,setup:80000,legal:110000,marketing:500000,preopen:2,rampStart:0.60,rampStep:0.05,credit:0.01,
+  coreMonth:105100,payrollShare:53500/105100,opexEsc:0.03,licence:50000,comm:0.10,leaseYears:3};
+FIX.area=FIX.sqft/SQFT;
+let S=Object.assign({},BASE);
+
+function engine(p){
+  const areaSqft=FIX.sqft, desks=FIX.sqft/p.dens;
+  const headRent=p.hr;
+  const capex=areaSqft*p.capex, cont=capex*FIX.cont, vatCapex=(capex+cont)*FIX.vat;
+  const initial=FIX.setup+FIX.legal+FIX.marketing, deposit=headRent*p.dep/100;
+  const upfront=capex+cont+vatCapex+initial+deposit;
+  const coreMonth=FIX.coreMonth, scMonth=p.sc*areaSqft/12, licMonth=FIX.licence/12;
+  const months=p.term*12, rows=[];
+  const feeR=p.fee/100, split=p.split/100, stab=p.occ/100, esc=p.esc/100, hesc=p.hesc/100;
+  for(let m=1;m<=months;m++){
+    const ly=Math.floor((m-1)/12);
+    const r={m,ly,rev:0,rent:m<=p.free?0:headRent*Math.pow(1+hesc,ly)/12,sc:scMonth,lic:licMonth,core:0,comm:0,fee:0,occ:0,drate:0};
+    if(m>p.fit){
+      const tm=m-p.fit-1, ty=Math.floor(tm/12);
+      const occ=Math.min(stab,FIX.rampStart+FIX.rampStep*tm);
+      const drate=p.rent*Math.pow(1+esc,ty);
+      r.occ=occ; r.drate=drate;
+      r.rev=desks*occ*drate*(1-FIX.credit);
+      r.core=coreMonth*Math.pow(1+FIX.opexEsc,ty);
+      r.fee=r.rev*feeR;
+      if(ty%FIX.leaseYears===0) r.comm=FIX.comm*desks*stab*drate;
+    } else if(m>p.fit-FIX.preopen){ r.core=coreMonth*FIX.payrollShare; }
+    r.opex=r.rent+r.sc+r.lic+r.core;
+    r.noi_bf=r.rev-r.opex-r.comm;
+    r.noi_af=r.noi_bf-r.fee;
+    rows.push(r);
+  }
+  const years=[];
+  for(let y=0;y<p.term;y++){
+    const rs=rows.slice(y*12,(y+1)*12), t={};
+    ['rev','rent','sc','lic','core','comm','fee','opex','noi_bf','noi_af'].forEach(k=>t[k]=rs.reduce((a,x)=>a+x[k],0));
+    const tr=rs.filter(x=>x.occ>0); t.occ=tr.length?tr.reduce((a,x)=>a+x.occ,0)/tr.length:0;
+    t.drate=tr.length?tr[tr.length-1].drate:0;
+    t.lp_op=split*Math.max(t.noi_af,0); t.gp_op=(1-split)*Math.max(t.noi_af,0);
+    years.push(t);
+  }
+  const wc=years.reduce((a,t)=>a+(t.noi_af<0?-t.noi_af:0),0);
+  const equity=upfront+wc;
+  let exitVal=0, exitY=0;
+  if(p.exit>0 && p.exitY<p.term){ exitY=p.exitY; exitVal=p.exit*years[exitY-1].noi_bf; }
+  const horizon=exitY||p.term;
+  const lp=[-equity], proj=[-equity];
+  for(let y=1;y<=horizon;y++){
+    let c=years[y-1].lp_op, pc=Math.max(years[y-1].noi_af+years[y-1].fee,0);
+    if(y===1){c+=vatCapex; pc+=vatCapex;}
+    if(y===horizon){c+=deposit; pc+=deposit;}
+    if(exitY && y===exitY){c+=exitVal*split; pc+=exitVal;}
+    lp.push(c); proj.push(pc);
+  }
+  const dist=lp.slice(1).reduce((a,b)=>a+b,0);
+  const irr=IRR(lp), pirr=IRR(proj);
+  let cum=lp[0], payback=null;
+  for(let y=1;y<lp.length;y++){const prev=cum; cum+=lp[y]; if(cum>=0&&payback===null){payback=(y-1)+(lp[y]?-prev/lp[y]:0);}}
+  const gpFee=years.slice(0,horizon).reduce((a,t)=>a+t.fee,0), gpOp=years.slice(0,horizon).reduce((a,t)=>a+t.gp_op,0)+(exitY?exitVal*(1-split):0);
+  const pdist=proj.slice(1).reduce((a,b)=>a+b,0);
+  const sy3=Math.min(2,years.length-1), sy=years[sy3];
+  const stabRev=sy.rev, stabMargin=sy.noi_af/sy.rev, rentPct=(sy.rent+sy.sc)/sy.rev;
+  const yrRows=rows.slice(sy3*12,sy3*12+12);
+  const fixedY=yrRows.reduce((a,x)=>a+x.opex,0);
+  const revAt=(occ,rate)=>yrRows.reduce((a,x)=>a+desks*occ*(x.drate?x.drate/p.rent*rate:0)*(1-FIX.credit),0);
+  const revFull=revAt(1,p.rent);
+  const beOcc=fixedY/(revFull*(1-feeR));
+  const beRate=fixedY/(revAt(stab,1)*(1-feeR));
+  const stabYears=years.slice(1,horizon); const avgYield=stabYears.length?stabYears.reduce((a,t)=>a+t.lp_op,0)/stabYears.length/equity:0;
+  return {desks,areaSqft,headRent,capex,cont,vatCapex,initial,deposit,upfront,wc,equity,years,lp,proj,dist,profit:dist-equity,mult:dist/equity,irr,pirr,pmult:pdist/equity,
+    payback,gpFee,gpOp,gpTotal:gpFee+gpOp,coreMonth,stabRev,stabMargin,rentPct,beOcc,beRate,avgYield,exitVal,exitY,horizon};
+}
+function IRR(cf){let lo=-0.99,hi=5;const f=r=>cf.reduce((a,c,i)=>a+c/Math.pow(1+r,i),0);if(f(lo)*f(hi)>0)return null;for(let i=0;i<200;i++){const mid=(lo+hi)/2;if(f(lo)*f(mid)<=0)hi=mid;else lo=mid;}return (lo+hi)/2;}
+if(typeof module!=="undefined"){module.exports={engine,BASE,FIX};}
+
+const fmt=n=>Math.round(n).toLocaleString('en-US');
+const fm=n=>'AED '+(Math.abs(n)>=1e6?(n/1e6).toFixed(2)+'M':fmt(n));
+const pct=(x,d=1)=>x===null||x===undefined||isNaN(x)?'n/a':(x*100).toFixed(d)+'%';
+const $=id=>document.getElementById(id);
+const neg=n=>{n=Math.round(n)||0;return n<0?'('+fmt(-n)+')':fmt(n);};
+
+function render(){
+  const R=engine(S), p=S;
+  const suiteArea=FIX.area*p.eff/100;
+  const annualDesk=p.rent*12*R.desks;
+  const perGross=annualDesk/FIX.area, perSuite=annualDesk/suiteArea;
+  const hrSqm=p.hr/FIX.area, hrSqft=p.hr/FIX.sqft;
+  // controls
+  $('vHr').textContent=fm(p.hr); $('hHr').textContent='AED '+fmt(hrSqft)+'/sq ft = AED '+fmt(hrSqm)+'/sqm. Offer: AED 6.5M. Sky Tower fitted full-floor asks AED 125-231/sq ft.';
+  $('vFree').textContent=p.free+' months'; $('hFree').textContent='Rent waived for the first '+p.free+' months from handover; service charge still payable. Concession worth '+fm(p.hr*p.free/12)+'. Offer: 6 months.';
+  $('vTerm').textContent=p.term+' years';
+  $('vHesc').textContent=p.hesc.toFixed(1)+'% / yr';
+  $('vSc').textContent='AED '+p.sc; $('hSc').textContent='AED '+fmt(p.sc*R.areaSqft)+' a year on top of rent (Sky Tower standard 18). Set to 0 if the landlord quotes inclusive.';
+  $('vDep').textContent=p.dep+'% of Y1 rent'; $('hDep').textContent='AED '+fmt(R.deposit)+' ('+(p.dep*12/100).toFixed(1)+' months) funded at signing, returned at lease expiry.';
+  $('vCapex').textContent='AED '+p.capex; $('hCapex').textContent='AED '+fmt(p.capex*SQFT)+'/sqm - total '+fm(R.capex+R.cont)+' incl. 5% contingency, plus '+fm(R.vatCapex)+' VAT recovered in year 1.';
+  $('vFit').textContent=p.fit+' months'; $('hFit').textContent='Head rent during fit-out after rent-free: '+fm(R.headRent*Math.max(0,p.fit-p.free)/12)+' - carried by the investor as working capital.';
+  $('vRent').textContent='AED '+fmt(p.rent); $('hRentSqm').textContent='= AED '+fmt(perSuite)+'/sqm/yr on suite (lettable) area, AED '+fmt(perSuite/SQFT)+'/sq ft';
+  $('hRentSuite').textContent='RICE Sky Tower Sep 2026 ex-VAT: weighted 3,068; Business L34 2,728-2,896; Premium L25 3,242-3,415. Jul 2026 negotiation copy used 3,200.';
+  $('vDens').textContent=p.dens+' sq ft'; $('hDens').textContent=fmt(R.desks)+' capacity desks on 23,000 sq ft of suites. Sky Tower planning standard 70 sq ft (6.5 sqm); RICE runs ~95 on its floor plates (65 inside suites at 68% efficiency).';
+  $('vOcc').textContent=p.occ+'%'; $('vBE').textContent=pct(R.beOcc,0)+' occupancy at AED '+fmt(p.rent)+'/desk (stabilised year).';
+  $('vEsc').textContent=p.esc+'% / yr';
+  $('vSplit').textContent=p.split+' / '+(100-p.split); $('hSplit').textContent='Investor '+p.split+'% / operator '+(100-p.split)+'% of each year\'s positive NOI after fee. No loss carry-forward. Sky Tower negotiated set: 70 / 30.';
+  $('vFee').textContent=p.fee.toFixed(1)+'%';
+  $('vExit').textContent=p.exit>0?p.exit.toFixed(1)+'x NOI':'none';
+  $('vExitY').textContent='end of year '+p.exitY;
+  const remain=p.term-p.exitY;
+  $('hExit').textContent=p.exit>0?(p.exitY<p.term?'Sale for '+fm(R.exitVal)+' at end of year '+p.exitY+' ('+remain+' years of lease left), split '+p.split+'/'+(100-p.split)+'.':'Sale year must be before lease expiry - no value assumed at term end.'):'Sale of the serviced-office business to another operator (with lease assignment) at a multiple of that year\'s NOI before fee. Off in the base case.';
+  $('vEff').textContent=p.eff+'% - '+fmt(suiteArea)+' sqm ('+fmt(suiteArea*SQFT)+' sq ft) of suites';
+  // KPIs
+  $('kEq').textContent=fm(R.equity); $('dEq').textContent='incl. '+fm(R.wc)+' working capital';
+  $('kIrr').textContent=pct(R.irr); $('dIrr').textContent=R.horizon+'-year hold, pre-tax';
+  $('kMult').textContent=R.mult.toFixed(2)+'x'; $('dMult').textContent='profit '+fm(R.profit);
+  $('kDist').textContent=fm(R.dist); $('dDist').textContent='payback '+(R.payback===null?'beyond term':R.payback.toFixed(1)+' years');
+  $('kProj').textContent=pct(R.pirr); $('dProj').textContent=R.pmult.toFixed(2)+'x before fee and split';
+  $('kMargin').textContent=pct(R.stabMargin); $('dMargin').textContent='NOI after fee, lease year 3';
+  // exec summary
+  const y3=R.years[Math.min(2,R.years.length-1)];
+  $('exSum').innerHTML='A full office floor of <b>23,000 sq ft lettable area</b> (2,137 sqm) in Sky Tower, Al Reem Island, offered on a head lease at <b>'+fm(R.headRent)+'</b> a year (AED '+fmt(hrSqft)+'/sq ft, AED '+fmt(hrSqm)+'/sqm), '+p.term+'-year term, '+p.free+' months rent-free, '+(p.hesc>0?p.hesc.toFixed(1)+'% escalation':'rent fixed for the term')+'. The plan is to fit the floor out as a premium serviced office and sell it at <b>AED '+fmt(p.rent)+' per desk a month</b> - a premium over the RICE Sky Tower rate of 3,068 - which is <b>AED '+fmt(perSuite)+' per sqm a year on suite area</b> (AED '+fmt(perSuite/SQFT)+'/sq ft; the lettable area is all suites). At '+p.occ+'% stabilised occupancy the floor produces revenue of <b>'+fm(R.stabRev)+'</b> and NOI after fee of <b>'+fm(y3.noi_af)+'</b> in lease year 3, a '+pct(R.stabMargin,0)+' margin; head rent and service charge absorb '+pct(R.rentPct,0)+' of revenue.';
+  $('exSum2').innerHTML='The investor funds the fit-out, deposit and working capital of <b>'+fm(R.equity)+'</b> and receives '+p.split+'% of NOI after a '+p.fee.toFixed(1)+'% management fee: <b>'+pct(R.irr)+' IRR / '+R.mult.toFixed(2)+'x</b> over '+R.horizon+' years with '+(R.exitY?'a business sale in year '+R.exitY:'no residual value at lease expiry')+'. The project itself, before operator terms, returns <b>'+pct(R.pirr)+' / '+R.pmult.toFixed(2)+'x</b>. The operator earns '+fm(R.gpTotal)+' over the term ('+pct(R.gpTotal/(R.gpTotal+R.profit),0)+' of total profit). '+(R.irr!==null&&R.irr<0.12?'Below a 12% hurdle: a lease deal has no exit upside, so the investor return depends on the head rent, the desk rate and the term - see the sensitivity tables.':'Clears a 12% hurdle on income alone.');
+  $('exCards').innerHTML=[
+    ['Stabilised revenue (Y3)',fm(y3.rev),fmt(R.desks)+' desks x '+p.occ+'% x AED '+fmt(y3.drate)],
+    ['Head rent + service charge (Y3)',fm(y3.rent+y3.sc),pct((y3.rent+y3.sc)/y3.rev,0)+' of revenue'],
+    ['NOI after fee (Y3)',fm(y3.noi_af),'investor '+fm(y3.lp_op)+' / operator '+fm(y3.gp_op)]
+  ].map(c=>'<div class="card"><div class="y">'+c[0]+'</div><div class="irr">'+c[1]+'</div><small>'+c[2]+'</small></div>').join('');
+  // returns cards
+  $('rIrr').textContent=pct(R.irr)+' IRR'; $('rEq').textContent=fm(R.equity); $('rDist').textContent=fm(R.dist); $('rProfit').textContent=fm(R.profit);
+  $('rMult').textContent=R.mult.toFixed(2)+'x'; $('rPay').textContent=R.payback===null?'beyond term':R.payback.toFixed(1)+' years'; $('rYield').textContent=pct(R.avgYield);
+  $('rGp').textContent=fm(R.gpTotal); $('rGpFee').textContent=fm(R.gpFee); $('rGpOp').textContent=fm(R.gpOp); $('rGpPct').textContent=pct(R.gpTotal/(R.gpTotal+R.profit),0);
+  $('rProjIrr').textContent=pct(R.pirr); $('rProjMult').textContent=R.pmult.toFixed(2)+'x'; $('rRentPct').textContent=pct(R.rentPct,0);
+  $('retNote').textContent='The investor return is income only: with a head lease there is no asset to sell at the end, so the fit-out is a wasting investment recovered from operating cash flow within the term. Every AED of head rent above what the desk rate can carry, every month of fit-out rent and every point of operator share comes straight out of the investor IRR.';
+  // uses
+  $('tUses').innerHTML='<tr><th>Uses at closing</th><th>AED</th><th>%</th></tr>'+[
+    ['Fit-out ('+p.capex+'/sq ft x '+fmt(R.areaSqft)+' sq ft)',R.capex],['Contingency 5%',R.cont],['VAT on fit-out (recovered Y1)',R.vatCapex],['Set-up, legal, launch marketing',R.initial],['Security deposit ('+p.dep+'% of Y1 rent)',R.deposit],['Working-capital reserve (fit-out rent, pre-opening, ramp)',R.wc]
+  ].map(u=>'<tr><td>'+u[0]+'</td><td>'+fmt(u[1])+'</td><td>'+pct(u[1]/R.equity,1)+'</td></tr>').join('')+'<tr class="tot"><td>Total investor equity</td><td>'+fmt(R.equity)+'</td><td>100%</td></tr>';
+  $('tTerms').innerHTML='<tr><th>Deal terms</th><th>Value</th></tr>'+[
+    ['Building','Sky Tower, Shams Abu Dhabi, Al Reem Island (ADGM)'],['Area','23,000 sq ft lettable = suite area ('+fmt(FIX.area)+' sqm)'],['Head rent Y1','AED '+fmt(R.headRent)+' (AED '+fmt(hrSqft)+'/sq ft, '+fmt(hrSqm)+'/sqm)'],['Rent-free / term / escalation',p.free+' months / '+p.term+' years / '+(p.hesc>0?p.hesc.toFixed(1)+'%':'fixed')],['Capacity desks',fmt(R.desks)+' at '+p.dens+' sq ft of suite area each'],['Desk rate Y1 / escalation','AED '+fmt(p.rent)+' (RICE Sky Tower weighted 3,068) / '+p.esc+'%'],['Occupancy ramp','60% opening, +5 pts a month to '+p.occ+'%'],['Core operating cost','AED '+fmt(R.coreMonth)+' a month (Floor 38 budget, 2026)'],['Operator terms',p.fee.toFixed(1)+'% of revenue + '+(100-p.split)+'% of NOI'],['Residual value',R.exitY?p.exit.toFixed(1)+'x NOI sale, year '+R.exitY:'none at lease expiry']
+  ].map(u=>'<tr><td>'+u[0]+'</td><td>'+u[1]+'</td></tr>').join('');
+  // ops table
+  const yrs=R.years;
+  const hdr='<tr><th>Lease year</th>'+yrs.map((t,i)=>'<th>Y'+(i+1)+'</th>').join('')+'<th>Total</th></tr>';
+  const line=(label,key,cls='',sign=1)=>'<tr class="'+cls+'"><td>'+label+'</td>'+yrs.map(t=>'<td>'+neg(sign*t[key])+'</td>').join('')+'<td>'+neg(sign*yrs.reduce((a,t)=>a+t[key],0))+'</td></tr>';
+  $('tOps').innerHTML=hdr+
+    '<tr class="mut"><td>Average trading occupancy</td>'+yrs.map(t=>'<td>'+(t.occ?pct(t.occ,0):'fit-out')+'</td>').join('')+'<td></td></tr>'+
+    '<tr class="mut"><td>Desk rate (AED / month)</td>'+yrs.map(t=>'<td>'+(t.drate?fmt(t.drate):'-')+'</td>').join('')+'<td></td></tr>'+
+    line('Revenue (net of 1% credit loss)','rev','hl')+line('Head rent','rent','',-1)+line('Service charge','sc','',-1)+line('Licence','lic','',-1)+line('Core operating costs','core','',-1)+line('Leasing commissions','comm','',-1)+
+    line('NOI before management fee','noi_bf','tot')+line('Management fee','fee','',-1)+line('NOI after fee','noi_af','tot')+line('Investor share','lp_op','hl')+line('Operator share','gp_op');
+  // cash flow table
+  let cum=0;
+  let cf='<tr><th>AED</th>'+R.lp.map((c,i)=>'<th>Y'+i+'</th>').join('')+'<th>Total</th></tr>';
+  cf+='<tr><td>Investor cash flow</td>'+R.lp.map(c=>'<td>'+neg(c)+'</td>').join('')+'<td>'+neg(R.profit)+'</td></tr>';
+  cf+='<tr class="hl"><td>Cumulative</td>'+R.lp.map(c=>{cum+=c;return '<td>'+neg(cum)+'</td>';}).join('')+'<td></td></tr>';
+  cf+='<tr><td>Project cash flow (before operator terms)</td>'+R.proj.map(c=>'<td>'+neg(c)+'</td>').join('')+'<td>'+neg(R.proj.reduce((a,b)=>a+b,0))+'</td></tr>';
+  cf+='<tr class="mut"><td>Operator fee</td><td></td>'+yrs.slice(0,R.horizon).map(t=>'<td>'+fmt(t.fee)+'</td>').join('')+'<td>'+fmt(R.gpFee)+'</td></tr>';
+  cf+='<tr class="mut"><td>Operator NOI share</td><td></td>'+yrs.slice(0,R.horizon).map((t,i)=>'<td>'+fmt(t.gp_op+((R.exitY&&i+1===R.exitY)?R.exitVal*(1-p.split/100):0))+'</td>').join('')+'<td>'+fmt(R.gpOp)+'</td></tr>';
+  cf+='<tr class="tot"><td>Operator total</td><td></td>'+yrs.slice(0,R.horizon).map((t,i)=>'<td>'+fmt(t.fee+t.gp_op+((R.exitY&&i+1===R.exitY)?R.exitVal*(1-p.split/100):0))+'</td>').join('')+'<td>'+fmt(R.gpTotal)+'</td></tr>';
+  $('tCf').innerHTML=cf;
+  // charts
+  drawBars(yrs); drawCum(R.lp);
+  // sensitivities
+  const dset=[-500,-300,-100,0,100,300,500,800].map(d=>p.rent+d);
+  let dh='<tr><th>AED, desk rate / month</th>'+dset.map(r=>'<th>'+fmt(r)+'</th>').join('')+'</tr>';
+  const dres=dset.map(r=>engine(Object.assign({},p,{rent:r})));
+  const drow=(label,f,cls)=>'<tr'+(cls?' class="'+cls+'"':'')+'><td>'+label+'</td>'+dres.map((R2,i)=>'<td class="'+(dset[i]===p.rent?'base':'')+'">'+f(R2,dset[i])+'</td>').join('')+'</tr>';
+  dh+=drow('Per sqm suite (lettable) / yr',(R2,r)=>fmt(r*12*R.desks/suiteArea),'mut');
+  dh+=drow('Per sq ft suite (lettable) / yr',(R2,r)=>fmt(r*12*R.desks/suiteArea/SQFT),'mut');
+  dh+=drow('Stabilised revenue Y3',R2=>fm(R2.years[Math.min(2,R2.years.length-1)].rev).replace('AED ',''));
+  dh+=drow('NOI after fee Y3',R2=>fm(R2.years[Math.min(2,R2.years.length-1)].noi_af).replace('AED ',''));
+  dh+=drow('NOI margin Y3',R2=>pct(R2.stabMargin,0));
+  dh+=drow('Investor equity',R2=>fm(R2.equity).replace('AED ',''));
+  dh+=drow('Investor IRR',R2=>(R2.irr===null?'n/a':(Math.round(R2.irr*1000)/10||0).toFixed(1)+'%'),'hl');
+  dh+=drow('Investor multiple',R2=>R2.mult.toFixed(2)+'x');
+  dh+=drow('Payback (years)',R2=>R2.payback===null?'beyond term':R2.payback.toFixed(1));
+  dh+=drow('Project IRR pre-split',R2=>pct(R2.pirr));
+  dh+=drow('Operator total, term',R2=>fm(R2.gpTotal).replace('AED ',''));
+  $('sDesk').innerHTML=dh;
+  const rates=[-500,-250,0,250,500].map(d=>p.rent+d), occs=[80,85,90,95,100];
+  let h='<tr><th>Occ \\ Rate</th>'+rates.map(r=>'<th>'+fmt(r)+'</th>').join('')+'</tr>';
+  occs.forEach(o=>{h+='<tr><td>'+o+'%</td>'+rates.map(r=>{const v=engine(Object.assign({},p,{rent:r,occ:o})).irr;return cell(v,r===p.rent&&o===p.occ);}).join('')+'</tr>';});
+  $('sRentOcc').innerHTML=h;
+  const hrs=[4000000,4500000,5000000,5500000,6000000,6500000,7000000]; if(!hrs.includes(p.hr)){hrs.push(p.hr);hrs.sort((a,b)=>a-b);}
+  h='<tr><th>Head rent \\ Rate</th>'+rates.map(r=>'<th>'+fmt(r)+'</th>').join('')+'</tr>';
+  hrs.forEach(x=>{h+='<tr><td>'+fm(x)+' ('+fmt(x/FIX.sqft)+'/sq ft)</td>'+rates.map(r=>cell(engine(Object.assign({},p,{rent:r,hr:x})).irr,r===p.rent&&x===p.hr)).join('')+'</tr>';});
+  $('sHrRent').innerHTML=h;
+  const dens=[65,70,75,80,85,95]; if(!dens.includes(p.dens)){dens.push(p.dens);dens.sort((a,b)=>a-b);}
+  h='<tr><th>Sq ft / desk \\ Rate</th>'+rates.map(r=>'<th>'+fmt(r)+'</th>').join('')+'</tr>';
+  dens.forEach(d=>{h+='<tr><td>'+d+' sq ft ('+Math.round(FIX.sqft/d)+' desks)</td>'+rates.map(r=>cell(engine(Object.assign({},p,{rent:r,dens:d})).irr,r===p.rent&&d===p.dens)).join('')+'</tr>';});
+  $('sDensRate').innerHTML=h;
+  const frees=[0,3,6,9,12], hescs=[0,2,3,4,5];
+  h='<tr><th>Rent-free \\ Escalation</th>'+hescs.map(e=>'<th>'+e+'%</th>').join('')+'</tr>';
+  frees.forEach(f=>{h+='<tr><td>'+f+' months</td>'+hescs.map(e=>cell(engine(Object.assign({},p,{free:f,hesc:e})).irr,f===p.free&&e===p.hesc)).join('')+'</tr>';});
+  $('sFreeEsc').innerHTML=h;
+  const splits=[60,70,80,90,100], cps=[350,450,550,650,750];
+  h='<tr><th>Split \\ Fit-out</th>'+cps.map(c=>'<th>'+c+'/sq ft</th>').join('')+'</tr>';
+  splits.forEach(s=>{h+='<tr><td>'+s+' / '+(100-s)+'</td>'+cps.map(c=>cell(engine(Object.assign({},p,{split:s,capex:c})).irr,s===p.split&&c===p.capex)).join('')+'</tr>';});
+  $('sSplitCapex').innerHTML=h;
+  const bear=engine(Object.assign({},p,{rent:p.rent-300,occ:85,esc:3})), bull=engine(Object.assign({},p,{rent:p.rent+300,occ:97,esc:6}));
+  const solveRate=t=>{let lo=p.rent*0.5,hi=p.rent*3;for(let i=0;i<60;i++){const mid=(lo+hi)/2;const v=engine(Object.assign({},p,{rent:mid})).irr;if(v!==null&&v>=t)hi=mid;else lo=mid;}return hi;};
+  const solveHr=t=>{let lo=0,hi=12e6;for(let i=0;i<60;i++){const mid=(lo+hi)/2;const v=engine(Object.assign({},p,{hr:mid})).irr;if(v!==null&&v>=t)lo=mid;else hi=mid;}return lo;};
+  const irr8=solveRate(0.08), irr15=solveRate(0.15), hr15=solveHr(0.15), hr20=solveHr(0.20);
+  $('tBreak').innerHTML='<tr><th>Measure</th><th>Value</th></tr>'+[
+    ['Break-even occupancy (NOI after fee = 0, year 3)',pct(R.beOcc,0)],['Break-even desk rate at '+p.occ+'% occupancy','AED '+fmt(R.beRate)],
+    ['Desk rate for an 8% investor IRR','AED '+fmt(irr8)+' (AED '+fmt(irr8*12*R.desks/suiteArea)+'/sqm suite)'],['Desk rate for a 15% investor IRR','AED '+fmt(irr15)+' (AED '+fmt(irr15*12*R.desks/suiteArea)+'/sqm suite)'],
+    ['Head rent for a 15% investor IRR at AED '+fmt(p.rent)+'/desk',fm(hr15)+' (AED '+fmt(hr15/FIX.sqft)+'/sq ft)'],['Head rent for a 20% investor IRR',fm(hr20)+' (AED '+fmt(hr20/FIX.sqft)+'/sq ft)'],
+    ['Bear: rate -300, 85% occ, 3% esc',pct(bear.irr)+' / '+bear.mult.toFixed(2)+'x'],['Base',pct(R.irr)+' / '+R.mult.toFixed(2)+'x'],['Bull: rate +300, 97% occ, 6% esc',pct(bull.irr)+' / '+bull.mult.toFixed(2)+'x']
+  ].map(u=>'<tr'+(u[0]==='Base'?' class="hl"':'')+'><td>'+u[0]+'</td><td>'+u[1]+'</td></tr>').join('');
+  // pricing
+  $('pDesk').textContent='AED '+fmt(p.rent); $('pDeskS').textContent=fmt(R.desks)+' desks at '+p.dens+' sq ft of suite area each - RICE Sky Tower weighted 3,068';
+  $('pGross').textContent='AED '+fmt(perGross); $('pSuite').textContent='AED '+fmt(perSuite); $('pSuiteS').textContent='All-inclusive on '+fmt(suiteArea)+' sqm ('+fmt(suiteArea*SQFT)+' sq ft) of private suites';
+  $('pSuiteSf').textContent='AED '+fmt(perSuite/SQFT);
+  const riceSuiteSqm=571*SQFT;
+  $('recoBox').innerHTML='<b>Read-across.</b> The 23,000 sq ft is suite area: every square foot is rented out as private suites, so the per-desk, per-sqm and per-sq ft figures describe the same revenue and there is no gross-to-suite conversion. At AED '+fmt(p.rent)+' per desk and '+p.dens+' sq ft of suite per desk the floor bills <b>AED '+fmt(perSuite)+' per sqm a year</b> (AED '+fmt(perSuite/SQFT)+'/sq ft) against RICE\'s published Sky Tower average of AED '+fmt(riceSuiteSqm)+'/sqm (571/sq ft) on its suites - '+(perSuite>riceSuiteSqm?'a premium of '+pct(perSuite/riceSuiteSqm-1,0):'a discount of '+pct(1-perSuite/riceSuiteSqm,0))+'. Per desk the premium over RICE weighted (3,068) is '+pct(p.rent/3068-1,0)+', which puts the product '+(p.rent>3415?'above':'inside')+' the RICE Premium band (3,242-3,415). <b>Quote per desk against RICE</b>, where the product is directly comparable, and give brokers the AED '+fmt(perSuite/SQFT)+'/sq ft figure. The head rent of AED '+fmt(hrSqft)+'/sq ft is '+pct(hrSqft/(perSuite/SQFT),0)+' of revenue per sq ft; a flex operator needs that ratio at or under 35-40% to earn an operating margin.<span class="pill">DESK IS THE QUOTE BASIS IN SKY TOWER</span>';
+  const ladder=[
+    ['RICE Offices, Sky Tower L25 (Premium)','Private suites 1,367-1,572 sq ft, 19-23 desks','3,242-3,415 / desk',598*SQFT,'Sep 2026 rate card ex-VAT; 2 of 4 suites available'],
+    ['RICE Offices, Sky Tower L34 (Business)','Private suites 1,356-1,851 sq ft, 21-34 desks','2,728-2,896 / desk',543*SQFT,'Fully leased; roll-offs Oct 2026 - Aug 2029'],
+    ['The operator, Sky Tower full floor (this model)','Private suites, 23,000 sq ft of suite area','<b>'+fmt(p.rent)+' / desk</b>',perSuite,'<b>'+p.dens+' sq ft of suite per desk</b>'],
+    ['RICE Offices, Radiant Square F5 / F10 (Reem)','Private suites, opening Oct 2026','4,171-4,469 / desk',721*SQFT,'Pre-lease pricing; newer building'],
+    ['Centrum, Sky Tower L23','4-person office AED 5,000; coworking 1,500','1,250 / person',null,'Budget tier in the same building'],
+    ['The Executive Centre, Al Sila Tower (ADGM)','Private office, 4 people AED 18,000','4,500 / person',4500*12/5,'Al Maryah; dedicated desk from 6,000'],
+    ['Regus, Al Maqam Tower (ADGM)','Private office, 4 to 50 people','7,248 / person',7248*12/5,'Al Maryah; highest in ADGM'],
+    ['Cloud Spaces, Al Sarab Tower (ADGM)','Premium suite from 14 sqm; dedicated desk 3,450','10,350 / suite',10350*12/14,'Al Maryah']
+  ];
+  $('tLadder').innerHTML='<tr><th>Operator</th><th>Product</th><th>AED / month</th><th>AED / sqm suite / yr</th><th>Note</th></tr>'+ladder.map(l=>'<tr'+(l[0].indexOf('The operator')===0?' class="hl"':'')+'><td style="white-space:nowrap">'+l[0]+'</td><td style="text-align:left;white-space:normal">'+l[1]+'</td><td>'+l[2]+'</td><td>'+(l[3]?fmt(l[3]):'n/a')+'</td><td style="text-align:left;white-space:normal;color:var(--muted)">'+l[4]+'</td></tr>').join('');
+  const diyRent=2500, diySc=p.sc*SQFT, diyFit=p.capex*SQFT/5, diyOps=900;
+  const diy=diyRent+diySc+diyFit+diyOps;
+  $('tDiy').innerHTML='<tr><th>Cost line</th><th>AED / sqm / yr</th><th>Basis</th></tr>'+[
+    ['Conventional fitted rent, Sky Tower',diyRent,'Top of AED 1,350-2,500 fitted full-floor asks'],['Service charge',diySc,'AED '+p.sc+'/sq ft'],['Own fit-out, amortised over 5 years',diyFit,'AED '+p.capex+'/sq ft, no residual'],['Reception, IT, furniture, pantry, cleaning, admin',diyOps,'Operator cost base scaled to the floor']
+  ].map(u=>'<tr><td style="white-space:nowrap">'+u[0]+'</td><td>'+fmt(u[1])+'</td><td style="text-align:left;white-space:normal;color:var(--muted)">'+u[2]+'</td></tr>').join('')+'<tr class="tot"><td>Tenant all-in DIY cost</td><td>'+fmt(diy)+'</td><td></td></tr><tr class="hl"><td>Operator all-inclusive on suite area</td><td>'+fmt(perSuite)+'</td><td style="text-align:left">'+(perSuite>=diy?'premium of '+pct(perSuite/diy-1,0)+' for flexibility and zero capex':'below the tenant\'s own cost by '+pct(1-perSuite/diy,0))+'</td></tr>';
+}
+function cell(v,base){const t=v===null?'n/a':(Math.round(v*1000)/10||0).toFixed(1)+'%';return '<td class="'+(base?'base ':'')+((v===null||v<0.08)?'neg':'')+'">'+t+'</td>';}
+
+function drawBars(yrs){
+  const W=560,H=250,pl=52,pb=28,pt=12,pr=8;const n=yrs.length;
+  const mx=Math.max(...yrs.map(t=>Math.max(t.rev,t.rent+t.sc,t.noi_af)))*1.1;
+  const y=v=>pt+(H-pt-pb)*(1-v/mx);const gw=(W-pl-pr)/n;
+  let s='<svg viewBox="0 0 '+W+' '+H+'" width="100%" style="font-family:inherit;font-size:10px">';
+  for(let i=0;i<=4;i++){const v=mx*i/4;s+='<line x1="'+pl+'" x2="'+(W-pr)+'" y1="'+y(v)+'" y2="'+y(v)+'" stroke="#DBE2E8"/><text x="'+(pl-6)+'" y="'+(y(v)+3)+'" text-anchor="end" fill="#6B7886">'+(v/1e6).toFixed(0)+'M</text>';}
+  yrs.forEach((t,i)=>{const x0=pl+gw*i+gw*0.12,bw=gw*0.76/3;
+    [[t.rev,'#051C2C'],[t.rent+t.sc,'#9FB6C2'],[t.noi_af,'#00A9CE']].forEach((b,j)=>{const v=Math.max(b[0],0);s+='<rect x="'+(x0+bw*j)+'" y="'+y(v)+'" width="'+(bw-2)+'" height="'+(y(0)-y(v))+'" fill="'+b[1]+'"/>';if(b[0]<0){s+='<rect x="'+(x0+bw*j)+'" y="'+y(0)+'" width="'+(bw-2)+'" height="4" fill="#6B7886"/>';}});
+    s+='<text x="'+(pl+gw*i+gw/2)+'" y="'+(H-8)+'" text-anchor="middle" fill="#6B7886">Y'+(i+1)+'</text>';});
+  s+='</svg>';$('chRev').innerHTML=s;
+}
+function drawCum(lp){
+  const W=560,H=250,pl=52,pb=28,pt=12,pr=8;const n=lp.length;let cum=0;const cums=lp.map(c=>cum+=c);
+  const mn=Math.min(...cums,0),mx=Math.max(...cums,...lp)*1.1;const y=v=>pt+(H-pt-pb)*(1-(v-mn)/(mx-mn));const gw=(W-pl-pr)/n;
+  let s='<svg viewBox="0 0 '+W+' '+H+'" width="100%" style="font-family:inherit;font-size:10px">';
+  for(let i=0;i<=4;i++){const v=mn+(mx-mn)*i/4;s+='<line x1="'+pl+'" x2="'+(W-pr)+'" y1="'+y(v)+'" y2="'+y(v)+'" stroke="#DBE2E8"/><text x="'+(pl-6)+'" y="'+(y(v)+3)+'" text-anchor="end" fill="#6B7886">'+(v/1e6).toFixed(0)+'M</text>';}
+  s+='<line x1="'+pl+'" x2="'+(W-pr)+'" y1="'+y(0)+'" y2="'+y(0)+'" stroke="#051C2C" stroke-width="1"/>';
+  lp.forEach((c,i)=>{if(i>0){const v=Math.max(c,0);s+='<rect x="'+(pl+gw*i+gw*0.25)+'" y="'+y(v)+'" width="'+(gw*0.5)+'" height="'+(y(0)-y(v))+'" fill="#DBE2E8"/>';}
+    s+='<text x="'+(pl+gw*i+gw/2)+'" y="'+(H-8)+'" text-anchor="middle" fill="#6B7886">Y'+i+'</text>';});
+  const pts=cums.map((c,i)=>(pl+gw*i+gw/2)+','+y(c)).join(' ');
+  s+='<polyline points="'+pts+'" fill="none" stroke="#00A9CE" stroke-width="2.5"/>';
+  cums.forEach((c,i)=>{s+='<circle cx="'+(pl+gw*i+gw/2)+'" cy="'+y(c)+'" r="3.5" fill="#00A9CE"/>';});
+  s+='</svg>';$('chCum').innerHTML=s;
+}
+
+// wiring
+if(typeof document!=="undefined"){
+const sliders={iHr:'hr',iFree:'free',iHesc:'hesc',iSc:'sc',iDep:'dep',iCapex:'capex',iFit:'fit',iRent:'rent',iDens:'dens',iOcc:'occ',iEsc:'esc',iSplit:'split',iFee:'fee',iExit:'exit',iExitY:'exitY',iEff:'eff'};
+Object.keys(sliders).forEach(id=>{$(id).addEventListener('input',e=>{S[sliders[id]]=parseFloat(e.target.value);render();});});
+document.querySelectorAll('#segTerm button').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('#segTerm button').forEach(x=>x.classList.remove('on'));b.classList.add('on');S.term=parseInt(b.dataset.v);$('iExitY').max=S.term-1;if(S.exitY>=S.term){S.exitY=S.term-1;$('iExitY').value=S.exitY;}render();}));
+$('btnReset').addEventListener('click',()=>{S=Object.assign({},BASE);Object.keys(sliders).forEach(id=>$(id).value=S[sliders[id]]);document.querySelectorAll('#segTerm button').forEach(x=>x.classList.toggle('on',parseInt(x.dataset.v)===S.term));$('iExitY').max=S.term-1;render();});
+$('iExitY').max=S.term-1;
+render();
+window.__engine=engine; window.__state=()=>S;
+}
+</script>
+</body>
+</html>
