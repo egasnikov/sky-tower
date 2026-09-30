@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow, noarchive">
 <meta name="referrer" content="no-referrer">
-<title>Sky Tower, Abu Dhabi - Tenanted Floor Acquisition Model</title>
+<title>Sky Tower, Abu Dhabi - Vacant Floor Acquisition Model</title>
 <script>/*!
  * Chart.js v4.4.1
  * https://www.chartjs.org
@@ -136,7 +136,7 @@ canvas{max-height:300px}
 <body>
 <header><div class="wrap">
   <div><h1>SKY TOWER, ABU DHABI</h1>
-  <div class="sub">Tenanted Full-Floor Acquisition &nbsp;&middot;&nbsp; Reem Island &nbsp;&middot;&nbsp; AED <span id="hdPrice">35M</span> &nbsp;&middot;&nbsp; Vacancy-Timing Model v6</div></div>
+  <div class="sub">Vacant Full-Floor Acquisition &nbsp;&middot;&nbsp; Reem Island &nbsp;&middot;&nbsp; AED <span id="hdPrice">48M</span> &nbsp;&middot;&nbsp; Model v7</div></div>
   <div class="hdate">SEPTEMBER 2026<br><span class="chip">ILLUSTRATIVE</span></div>
 </div></header>
 
@@ -179,21 +179,12 @@ canvas{max-height:300px}
 <section class="galband" style="background:#F4F6F8"><div class="wrap">
   <div class="galsub" style="margin-top:0">Executive Summary</div>
   <p class="galintro" style="font-size:13.5px;max-width:960px">A full office floor in Sky Tower, Al Reem Island,
-  under off-market negotiation - modelled here at <b>AED <span id="exPrice">35.0</span>m</b> (AED <span id="exPsf">1,522</span> per
-  sq ft; the acquisition price is a live control on the left). The floor is <b>income producing today</b>: the
-  current lease is approximately <b>AED 1.6m</b> per year, a <span id="exYield">4.6%</span> gross yield on price, running to
-  <b>December 2027</b>. Completion is assumed <b>September 2026</b>. The business plan is unchanged from the reference
-  model: take vacant possession, complete the fit-out, and trade the floor as a premium ADGM-facing serviced office
-  before selling on a stabilised yield.</p>
-  <p class="galintro" style="font-size:13.5px;max-width:960px;margin-top:10px">The floor is bought <b>subject to the
-  existing lease</b>. Once we take possession the intention is to <b>negotiate an early surrender against
-  compensation</b>, so the fit-out can start sooner and revenue begins earlier. That negotiation is not in our sole
-  control, so the model prices <b>both outcomes</b> rather than assuming one: an early surrender, at three months and
-  at six months from completion, each carrying a compensation payment to the occupier; and the lease simply
-  <b>running to its contractual end</b> in December 2027, which costs nothing but starts revenue later. The
-  compensation assumption is a live control on the left, and it is the entire cost of the two accelerated cases.</p>
-  <div class="cards" id="exCards" style="grid-template-columns:repeat(3,1fr);margin-top:14px"></div>
-  <p class="galnote" id="exNote" style="font-style:normal;font-size:11.5px;margin-top:12px"></p>
+  under off-market negotiation - modelled here at <b>AED <span id="exPrice">48.0</span>m</b> (AED <span id="exPsf">2,087</span> per
+  sq ft; the acquisition price is a live control on the left). The floor is <b>delivered vacant</b> and ready for fit-out
+  <b>immediately on completion</b> in <b>September 2026</b>.</p>
+  <p class="galintro" style="font-size:13.5px;max-width:960px;margin-top:10px">The business plan: complete a premium
+  fit-out, trade the floor as an ADGM-facing serviced office, and sell on a stabilised yield in Year 2 to 5. Revenue
+  starts as soon as the fit-out and lease-up are done (base 6 months).</p>
 </div></section>
 
 <main><div class="wrap">
@@ -202,18 +193,9 @@ canvas{max-height:300px}
   <div class="ptitle">Model Inputs - live</div>
   <div class="subhdr">Acquisition price</div>
   <div class="ctl"><div class="row"><label>Acquisition Price</label><span class="val" id="vPrice"></span></div>
-    <input type="range" id="iPrice" min="30" max="55" step="0.5" value="46">
+    <input type="range" id="iPrice" min="30" max="55" step="0.5" value="48">
     <div class="hint" id="hPriceSqft" style="color:var(--navy);font-weight:600"></div>
     <div class="hint" id="hPrice"></div></div>
-  <div class="subhdr">Acquisition - vacancy scenario</div>
-  <div class="ctl">
-    <div class="seg" id="segScen" style="grid-template-columns:repeat(3,1fr)">
-      <button data-s="1" class="on">Case 1</button><button data-s="2">Case 2</button><button data-s="3">Case 3</button>
-    </div>
-    <div class="hint" id="hScen"></div></div>
-  <div class="ctl"><div class="row"><label>Surrender Compensation</label><span class="val" id="vBuy"></span></div>
-    <input type="range" id="iBuy" min="0" max="200" step="5" value="100">
-    <div class="hint" id="hBuy"></div></div>
   <div class="subhdr">Commercial levers</div>
   <div class="ctl"><div class="row"><label>Rent / Desk / Month (Y1)</label><span class="val" id="vRent"></span></div>
     <input type="range" id="iRent" min="2500" max="4500" step="50" value="3200">
@@ -286,16 +268,13 @@ canvas{max-height:300px}
       </div></div>
   </div></div>
 
-  <div class="sec"><h2>Acquisition Timeline and Income In Place</h2><div class="body">
+  <div class="sec"><h2>Acquisition Timeline</h2><div class="body">
     <div class="legend">
-      <span><i style="background:#123C55"></i>Holdover - existing lease pays rent</span>
       <span><i style="background:#4E7E96"></i>Fit-out - no revenue</span>
       <span><i style="background:#00A9CE"></i>Serviced office trading</span>
     </div>
     <div id="tlHost"></div>
-    <table style="margin-top:14px"><thead><tr><th>Income in place at completion</th><th>Detail</th></tr></thead>
-      <tbody id="rrRows"></tbody></table>
-    <div class="note" id="rrNote"></div>
+    <div class="note">Fit-out starts in month 0, on completion; serviced office trading follows immediately after.</div>
   </div></div>
 
   <div class="sec"><h2>Exit Waterfall - Applied to Net Sale Proceeds</h2><div class="body">
@@ -351,15 +330,12 @@ canvas{max-height:300px}
       <tr><td id="suCapexL">Renovation + 5% contingency</td><td id="suCapex"></td></tr>
       <tr><td>VAT Deposits (purchase + CapEx, recovered Y1)</td><td id="suVat"></td></tr>
       <tr><td>Initial Expenses (setup, legal, presales)</td><td>690,000</td></tr>
-      <tr><td id="suBuyL">Surrender Compensation</td><td id="suBuy"></td></tr>
       <tr class="tot"><td>Total Equity Required</td><td id="suEq"></td></tr>
-      <tr class="mut"><td>Holdover Rent Received (offset)</td><td id="suHold"></td></tr>
     </tbody></table>
     <table><tbody>
       <tr><td>Asset</td><td>Full floor, 23,000 sq ft / 2,137 sq m</td></tr>
       <tr><td>Completion</td><td>September 2026</td></tr>
-      <tr><td>Vacancy case</td><td id="tScen"></td></tr>
-      <tr><td>Income in place</td><td>approximately AED 1,600,000 / yr to Dec 2027</td></tr>
+      <tr><td>Condition</td><td>Vacant, ready for fit-out on completion</td></tr>
       <tr><td>Capacity</td><td>329 desks at 70 sq ft / desk</td></tr>
       <tr><td>Structure</td><td>All-equity SPV, no debt</td></tr>
       <tr><td>Implied Rent (Y1)</td><td id="tRent"></td></tr>
@@ -374,7 +350,7 @@ canvas{max-height:300px}
 </div></main>
 
 <footer><div class="wrap">
-  September 2026 &middot; Prepared by the General Partner. Illustrative projections based on the Sky Tower financial model v6 (let-floor acquisition; price under negotiation). In-place income is stated on an approximate basis; exact lease terms are confidential and available to counterparties under a confidentiality undertaking. This tool does not constitute an offer to sell or a solicitation of an offer to purchase any securities. Actual results may differ materially. Corporate tax shown on a simplified basis. Figures in AED unless noted.
+  September 2026 &middot; Prepared by the General Partner. Illustrative projections based on the Sky Tower financial model v7 (vacant-floor acquisition; price under negotiation). This tool does not constitute an offer to sell or a solicitation of an offer to purchase any securities. Actual results may differ materially. Corporate tax shown on a simplified basis. Figures in AED unless noted.
 </div></footer>
 
 <script>
@@ -402,7 +378,7 @@ const SCEN = {
 const MON = ["Sep","Oct","Nov","Dec","Jan","Feb","Mar","Apr","May","Jun","Jul","Aug"];
 const mlabel = m => MON[((m % 12) + 12) % 12] + " " + (2026 + Math.floor((m + 8) / 12));
 const BASE = {
-  price: 46000000,
+  price: 48000000,
   rent0: 3200, occ: 0.95, fee: 0.05, pshare: 0.30,
   resGP: 0.30, esc: 0.05, oesc: 0.03, exitYear: 2, cap: 0.10, fitout: 6,
   capexSqft: 550, tax: false,
@@ -442,19 +418,9 @@ function equity(capexSqft, price) {
 function compute(inp) {
   const p = Object.assign({}, BASE, inp);
   const eq = equity(p.capexSqft, p.price);
-  // ---------- acquisition phase: holdover income until vacant possession ----------
+  // ---------- acquisition: floor vacant at completion, fit-out from month 0 ----------
   const sc = SCEN[p.scen];
-  const last = sc.vac === null ? LEASE.end : sc.vac - 1;   // last month of rent received
-  const H = last + 1;                                 // months from completion to vacant floor
-  const buyout = sc.vac === null ? 0
-    : (LEASE.end - last) * LEASE.rent / 12 * p.buyMult;
-  const carryMo = (FIX.svc * FIX.sqft + FIX.licence) / 12;
-  const holdCF = []; let holdRent = 0, holdCarry = 0;
-  for (let m = 0; m < H; m++) {
-    const inc = m <= last ? LEASE.rent / 12 : 0;
-    holdRent += inc; holdCarry += carryMo;
-    holdCF.push(inc - carryMo);
-  }
+  const last = -1, H = 0, buyout = 0, holdRent = 0, holdCarry = 0, holdCF = [];
   const totalEquity = eq.equity + buyout;
   const desks = FIX.sqft / FIX.density;
   const occDesks = desks * p.occ;
@@ -536,7 +502,7 @@ if (typeof module !== "undefined") module.exports = { compute, BASE, FIX, LEASE,
 </script>
 <script>
 "use strict";
-const $ = id => document.getElementById(id);
+const $ = id => document.getElementById(id) || {style:{},dataset:{},addEventListener(){},querySelector(){return this;}};
 const fmt0 = x => isFinite(x) ? Math.round(x).toLocaleString("en-US") : "n/a";
 const fmtM = x => isFinite(x) ? (x/1e6).toLocaleString("en-US",{minimumFractionDigits:1,maximumFractionDigits:1}) + "M" : "n/a";
 const fmtP = x => isFinite(x) ? (x*100).toFixed(1) + "%" : "n/a";
@@ -558,7 +524,6 @@ function readControls(){
   state.fee = +$("iFee").value/100;
   state.esc = +$("iEsc").value/100;
   state.oesc = +$("iOesc").value/100;
-  state.buyMult = +$("iBuy").value/100;
   state.pref = +$("iPref").value/100;
 }
 function isBase(){
@@ -666,7 +631,7 @@ function render(){
   $("vFitout").textContent = state.fitout + " mo";
   $("hFitout").textContent = state.fitout === 0
     ? "Revenue from month 1 of trading - full first year"
-    : "Fit-out runs from vacant possession; first rent in month " + (state.fitout + 1) +
+    : "Fit-out starts on completion; first rent in month " + (state.fitout + 1) +
       " of the trading period - " + (12 - state.fitout) + " revenue months in Year 1 (base 6 mo fit-out)";
   $("vYear").textContent = "Year " + state.exitYear;
   $("vCap").textContent = (state.cap*100).toFixed(2).replace(/\.?0+$/,"") + "%";
@@ -704,16 +669,12 @@ function render(){
     "so paying to accelerate is worth more than it costs across the whole range tested. All three cases converge on " +
     "the same stabilised business; only the start date and the cost of getting there differ. The compensation " +
     "multiple is the most negotiable number in the model and is set on the left.";
-  // timeline
-  $("tlHost").innerHTML = [1,2,3].map(s => {
-    const x = compute(Object.assign({}, state, { scen: s }));
-    const tot = x.totalM, hold = x.H, fit = state.fitout, trade = tot - hold - fit;
+  // timeline (vacant floor)
+  { const tot = r.totalM, fit = state.fitout, trade = tot - fit;
     const seg = (w, c, txt) => `<div style="width:${w/tot*100}%;background:${c}">${w/tot>0.07?txt:""}</div>`;
-    return `<div style="margin:4px 0 10px"><div style="font-size:11px;font-weight:700;color:#051C2C;margin-bottom:4px">Case ${s} - ${x.scName}${s===state.scen?"  (selected)":""}</div>
-      <div class="wfbar" style="height:34px">${seg(hold,"#123C55",hold+" mo holdover")}${seg(fit,"#4E7E96",fit+" mo fit-out")}${seg(trade,"#00A9CE",trade+" mo trading")}</div>
+    $("tlHost").innerHTML = `<div style="margin:4px 0 10px"><div class="wfbar" style="height:34px">${seg(fit,"#4E7E96",fit+" mo fit-out")}${seg(trade,"#00A9CE",trade+" mo trading")}</div>
       <div style="display:flex;justify-content:space-between;font-size:10.5px;color:#6B7886;margin-top:4px">
-      <span>${mlabel(0)}</span><span>vacant ${mlabel(x.H)}</span><span>first rent ${mlabel(x.H+fit)}</span><span>exit ${mlabel(tot-1)}</span></div></div>`;
-  }).join("");
+      <span>completion ${mlabel(0)}</span><span>first rent ${mlabel(fit)}</span><span>exit ${mlabel(tot-1)}</span></div></div>`; }
   // rent roll
   $("rrRows").innerHTML = [
     ["Current lease", "approximately AED " + fmt0(LEASE.rent) + " per year"],
@@ -850,7 +811,7 @@ function render(){
     pyrs.map(y => `<th>Year ${y} (${(FIX.capLadder[y]*100).toFixed(0)}% cap)</th>`).join("") + "</tr></thead><tbody>";
   prices.forEach((pr, i) => {
     const isCurP = pr === state.price;
-    phtml += `<tr><td>AED ${(pr/1e6).toFixed(1).replace(/\.0$/,"")}M${isCurP ? " (current)" : pr === BASE.price ? " (base)" : ""}</td>`;
+    phtml += `<tr><td>AED ${(pr/1e6).toFixed(1).replace(/\.0$/,"")}M${isCurP ? (pr === BASE.price ? " (base, current)" : " (current)") : pr === BASE.price ? " (base)" : ""}</td>`;
     pyrs.forEach((y, j) => {
       const v = pcells[i][j];
       const t = isFinite(v) ? (v - pmn) / (pmx - pmn || 1) : 0;
@@ -882,11 +843,11 @@ function setScen(s){
 }
 document.querySelectorAll("#segScen button").forEach(b => b.onclick = () => setScen(+b.dataset.s));
 document.querySelectorAll("#segYear button").forEach(b => b.onclick = () => setYear(+b.dataset.y));
-["iPrice","iRent","iOcc","iFitout","iCapex","iCap","iShare","iRes","iFee","iEsc","iOesc","iBuy","iPref"]
+["iPrice","iRent","iOcc","iFitout","iCapex","iCap","iShare","iRes","iFee","iEsc","iOesc","iPref"]
   .forEach(id => $(id).addEventListener("input", render));
 $("iTax").addEventListener("change", render);
 $("btnReset").onclick = () => {
-  $("iPrice").value = 46;
+  $("iPrice").value = 48;
   $("iRent").value = 3200; $("iOcc").value = 95; $("iFitout").value = 6; $("iCapex").value = 550;
   $("iTax").checked = false; $("iShare").value = 30;
   $("iRes").value = 30; $("iFee").value = 5;
