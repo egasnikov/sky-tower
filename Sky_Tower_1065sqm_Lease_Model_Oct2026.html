@@ -126,6 +126,9 @@ footer{border-top:1px solid var(--line);padding:18px 0 40px;font-size:11.5px;col
   <div class="ctl"><div class="row"><label>Legal &amp; Set-up (one-off)</label><span class="val" id="vKey"></span></div>
     <input type="range" id="iKey" min="0" max="400000" step="10000" value="120000">
     <div class="hint" id="hKey"></div></div>
+  <div class="ctl"><div class="row"><label>Broker Commission</label><span class="val" id="vBrok"></span></div>
+    <input type="range" id="iBrok" min="0" max="15" step="0.5" value="10">
+    <div class="hint" id="hBrok"></div></div>
   <div class="ctl"><div class="row"><label>Rent-Free Period</label><span class="val" id="vFree"></span></div>
     <input type="range" id="iFree" min="0" max="12" step="1" value="3">
     <div class="hint" id="hFree"></div></div>
@@ -182,7 +185,7 @@ footer{border-top:1px solid var(--line);padding:18px 0 40px;font-size:11.5px;col
 <div>
 <section class="sec"><h2>Returns Summary</h2><div class="body">
   <div class="grid2">
-    <div class="retcard"><h3>Investor (funds fit-out, legal set-up, deposit and working capital)</h3>
+    <div class="retcard"><h3>Investor (funds fit-out, legal set-up, broker fee, deposit and working capital)</h3>
       <div class="big" id="rIrr"></div>
       <div class="rows">
         <div><span>Equity invested</span><span id="rEq"></span></div>
@@ -275,14 +278,14 @@ footer{border-top:1px solid var(--line);padding:18px 0 40px;font-size:11.5px;col
 </div></main>
 
 <footer><div class="wrap">
-  <b style="color:var(--navy)">Method and assumptions.</b> Monthly engine, two units on the same floor of 750 sqm and 315 sqm (1,065 sqm, 11,464 sq ft), all of it rentable suite area and run as one serviced-office operation. Direct 10-year head lease from the landlord at AED 2,000/sqm in year 1 (AED 2.13M), 3 months rent-free from handover, 5% annual escalation on the head rent; desk rate also escalates 5% a year; service charge from day one; security deposit returned at term end. No compensation to any outgoing tenant. Fit-out AED 550/sq ft plus 5% contingency, 9 months; 5% VAT on fit-out funded at closing and recovered in lease year 1. Legal and company set-up AED 120,000; launch marketing AED 250,000 (Sky Tower full-floor budget scaled to the area). Two months of pre-opening payroll. Trading opens at 60% of capacity desks, rising 5 points a month to stabilisation; 1% credit loss. Capacity 70 sq ft of suite area per desk. Core operating costs are the Sky Tower Floor 38 budget (AED 105,100 a month for 23,000 sq ft) scaled pro rata to 1,065 sqm, 3% escalation; ADGM licence AED 50,000 a year. Leasing commission 10% of contracted annual rent on origination and each 3-year renewal. Operator: 5% management fee on collected revenue, then a 70/30 investor/operator split of each year's positive NOI after fee (no loss carry-forward); the investor funds any negative year through a working-capital reserve sized at closing. Returns are pre-tax and unlevered; no residual value at lease expiry unless the optional business-sale control is switched on.<br><br>
+  <b style="color:var(--navy)">Method and assumptions.</b> Monthly engine, two units on the same floor of 750 sqm and 315 sqm (1,065 sqm, 11,464 sq ft), all of it rentable suite area and run as one serviced-office operation. Direct 10-year head lease from the landlord at AED 2,000/sqm in year 1 (AED 2.13M), 3 months rent-free from handover, 5% annual escalation on the head rent; desk rate also escalates 5% a year; service charge from day one; security deposit returned at term end. No compensation to any outgoing tenant. Fit-out AED 550/sq ft plus 5% contingency, 9 months; 5% VAT on fit-out funded at closing and recovered in lease year 1. Legal and company set-up AED 120,000; broker commission on the head lease 10% of first-year head rent (AED 213,000), paid at signing; launch marketing AED 250,000 (Sky Tower full-floor budget scaled to the area). Two months of pre-opening payroll. Trading opens at 60% of capacity desks, rising 5 points a month to stabilisation; 1% credit loss. Capacity 70 sq ft of suite area per desk. Core operating costs are the Sky Tower Floor 38 budget (AED 105,100 a month for 23,000 sq ft) scaled pro rata to 1,065 sqm, 3% escalation; ADGM licence AED 50,000 a year. Leasing commission 10% of contracted annual rent on origination and each 3-year renewal. Operator: 5% management fee on collected revenue, then a 70/30 investor/operator split of each year's positive NOI after fee (no loss carry-forward); the investor funds any negative year through a working-capital reserve sized at closing. Returns are pre-tax and unlevered; no residual value at lease expiry unless the optional business-sale control is switched on.<br><br>
   <b style="color:var(--navy)">Sources.</b> Desk pricing: RICE Offices rate card, September 2026 (Sky Tower L25 Premium and L34 Business, 11 suites, ex-VAT), RICE Radiant pre-lease rate card; Centrum Sky Tower, The Executive Centre, Regus, Cloud Spaces public rate cards and Office Hub listings (Aug-Sep 2026). Market rents: Property Finder and Bayut Sky Tower office listings (Sep 2026); Cushman &amp; Wakefield Abu Dhabi Mid-Year 2026; Savills Abu Dhabi Q2 2026. Cost basis: Sky Tower Floor 38 operating budget and Deliverables model, July 2026. October 2026. For the intended recipient only.
 </div></footer>
 
 <script>
 try{history.replaceState(null,'',location.pathname+location.search);}catch(e){}
 const SQFT=10.7639;
-const BASE={hr:2000,key:120000,free:3,term:10,hesc:5,sc:18,dep:25,capex:550,fit:9,rent:3500,dens:70,occ:95,esc:5,split:70,fee:5,exit:0,exitY:5,eff:100};
+const BASE={hr:2000,key:120000,brok:10,free:3,term:10,hesc:5,sc:18,dep:25,capex:550,fit:9,rent:3500,dens:70,occ:95,esc:5,split:70,fee:5,exit:0,exitY:5,eff:100};
 const FIX={sqm:1065,u1:750,u2:315,cont:0.05,vat:0.05,setup:0,legal:0,marketing:250000,preopen:2,rampStart:0.60,rampStep:0.05,credit:0.01,
   coreMonth:Math.round(105100*1065*10.7639/23000/100)*100,payrollShare:53500/105100,opexEsc:0.03,licence:50000,comm:0.10,leaseYears:3};
 FIX.area=FIX.sqm; FIX.sqft=FIX.sqm*SQFT;
@@ -294,7 +297,8 @@ function engine(p){
   const capex=areaSqft*p.capex, cont=capex*FIX.cont, vatCapex=(capex+cont)*FIX.vat;
   const initial=FIX.setup+FIX.legal+FIX.marketing, deposit=headRent*p.dep/100;
   const key=p.key;                                // one-off legal and company set-up
-  const upfront=capex+cont+vatCapex+initial+deposit+key;
+  const brok=headRent*p.brok/100;                 // one-off broker fee on first-year head rent
+  const upfront=capex+cont+vatCapex+initial+deposit+key+brok;
   const coreMonth=FIX.coreMonth, scMonth=p.sc*areaSqft/12, licMonth=FIX.licence/12;
   const months=p.term*12, rows=[];
   const feeR=p.fee/100, split=p.split/100, stab=p.occ/100, esc=p.esc/100, hesc=p.hesc/100;
@@ -353,7 +357,7 @@ function engine(p){
   const beOcc=fixedY/(revFull*(1-feeR));
   const beRate=fixedY/(revAt(stab,1)*(1-feeR));
   const stabYears=years.slice(1,horizon); const avgYield=stabYears.length?stabYears.reduce((a,t)=>a+t.lp_op,0)/stabYears.length/equity:0;
-  return {desks,areaSqft,headRent,capex,cont,vatCapex,initial,deposit,key,upfront,wc,equity,years,lp,proj,dist,profit:dist-equity,mult:dist/equity,irr,pirr,pmult:pdist/equity,
+  return {desks,areaSqft,headRent,capex,cont,vatCapex,initial,deposit,key,brok,upfront,wc,equity,years,lp,proj,dist,profit:dist-equity,mult:dist/equity,irr,pirr,pmult:pdist/equity,
     payback,gpFee,gpOp,gpTotal:gpFee+gpOp,coreMonth,stabRev,stabMargin,rentPct,beOcc,beRate,avgYield,exitVal,exitY,horizon};
 }
 function IRR(cf){let lo=-0.99,hi=5;const f=r=>cf.reduce((a,c,i)=>a+c/Math.pow(1+r,i),0);if(f(lo)*f(hi)>0)return null;for(let i=0;i<200;i++){const mid=(lo+hi)/2;if(f(lo)*f(mid)<=0)hi=mid;else lo=mid;}return (lo+hi)/2;}
@@ -374,6 +378,7 @@ function render(){
   // controls
   $('vHr').textContent='AED '+fmt(p.hr); $('hHr').textContent='= '+fm(R.headRent)+' a year (AED '+fmt(hrSqft)+'/sq ft). Base 2,000/sqm as quoted for the 750 + 315 sqm units; Sky Tower fitted asks 1,350-2,500/sqm.';
   $('vKey').textContent=fm(p.key); $('hKey').textContent='Lease documentation, SPV / ADGM company set-up and permits, paid at signing. Base AED 120,000; funded by the investor as part of equity. Launch marketing of '+fm(FIX.marketing)+' is carried separately.';
+  $('vBrok').textContent=p.brok.toFixed(1)+'% = '+fm(R.brok); $('hBrok').textContent='Paid at signing to the broker on the head lease: '+p.brok.toFixed(1)+'% of first-year head rent ('+fm(R.headRent)+'). Funded by the investor as part of equity.';
   $('vFree').textContent=p.free+' months'; $('hFree').textContent='Rent waived for the first '+p.free+' months from handover; service charge still payable. Concession worth '+fm(R.headRent*p.free/12)+'. Base: 3 months.';
   $('vTerm').textContent=p.term+' years';
   $('vHesc').textContent=p.hesc.toFixed(1)+'% / yr';
@@ -402,8 +407,8 @@ function render(){
   $('kMargin').textContent=pct(R.stabMargin); $('dMargin').textContent='NOI after fee, lease year 3';
   // exec summary
   const y3=R.years[Math.min(2,R.years.length-1)];
-  $('exSum').innerHTML='Two office units on the same floor of Sky Tower, Al Reem Island - <b>750 sqm + 315 sqm = 1,065 sqm</b> ('+fmt(FIX.sqft)+' sq ft) - leased directly from the landlord: head rent <b>'+fm(R.headRent)+'</b> a year (AED '+fmt(hrSqm)+'/sqm, AED '+fmt(hrSqft)+'/sq ft), one-off legal and set-up of <b>'+fm(p.key)+'</b>, '+p.term+'-year term, '+p.free+' months rent-free, '+(p.hesc>0?p.hesc.toFixed(1)+'% escalation':'rent fixed for the term')+'. The plan is to fit the floor out as a premium serviced office and sell it at <b>AED '+fmt(p.rent)+' per desk a month</b> - a premium over the RICE Sky Tower rate of 3,068 - which is <b>AED '+fmt(perSuite)+' per sqm a year on suite area</b> (AED '+fmt(perSuite/SQFT)+'/sq ft; the lettable area is all suites). At '+p.occ+'% stabilised occupancy the floor produces revenue of <b>'+fm(R.stabRev)+'</b> and NOI after fee of <b>'+fm(y3.noi_af)+'</b> in lease year 3, a '+pct(R.stabMargin,0)+' margin; head rent and service charge absorb '+pct(R.rentPct,0)+' of revenue.';
-  $('exSum2').innerHTML='The investor funds the fit-out, legal set-up, deposit and working capital of <b>'+fm(R.equity)+'</b> and receives '+p.split+'% of NOI after a '+p.fee.toFixed(1)+'% management fee: <b>'+pct(R.irr)+' IRR / '+R.mult.toFixed(2)+'x</b> over '+R.horizon+' years with '+(R.exitY?'a business sale in year '+R.exitY:'no residual value at lease expiry')+'. The project itself, before operator terms, returns <b>'+pct(R.pirr)+' / '+R.pmult.toFixed(2)+'x</b>. The operator earns '+fm(R.gpTotal)+' over the term ('+pct(R.gpTotal/(R.gpTotal+R.profit),0)+' of total profit). '+(R.irr!==null&&R.irr<0.12?'Below a 12% hurdle: a lease deal has no exit upside, so the investor return depends on the head rent, the desk rate and the term - see the sensitivity tables.':'Clears a 12% hurdle on income alone.');
+  $('exSum').innerHTML='Two office units on the same floor of Sky Tower, Al Reem Island - <b>750 sqm + 315 sqm = 1,065 sqm</b> ('+fmt(FIX.sqft)+' sq ft) - leased directly from the landlord: head rent <b>'+fm(R.headRent)+'</b> a year (AED '+fmt(hrSqm)+'/sqm, AED '+fmt(hrSqft)+'/sq ft), one-off legal and set-up of <b>'+fm(p.key)+'</b> and broker commission of <b>'+fm(R.brok)+'</b>, '+p.term+'-year term, '+p.free+' months rent-free, '+(p.hesc>0?p.hesc.toFixed(1)+'% escalation':'rent fixed for the term')+'. The plan is to fit the floor out as a premium serviced office and sell it at <b>AED '+fmt(p.rent)+' per desk a month</b> - a premium over the RICE Sky Tower rate of 3,068 - which is <b>AED '+fmt(perSuite)+' per sqm a year on suite area</b> (AED '+fmt(perSuite/SQFT)+'/sq ft; the lettable area is all suites). At '+p.occ+'% stabilised occupancy the floor produces revenue of <b>'+fm(R.stabRev)+'</b> and NOI after fee of <b>'+fm(y3.noi_af)+'</b> in lease year 3, a '+pct(R.stabMargin,0)+' margin; head rent and service charge absorb '+pct(R.rentPct,0)+' of revenue.';
+  $('exSum2').innerHTML='The investor funds the fit-out, legal set-up, broker commission, deposit and working capital of <b>'+fm(R.equity)+'</b> and receives '+p.split+'% of NOI after a '+p.fee.toFixed(1)+'% management fee: <b>'+pct(R.irr)+' IRR / '+R.mult.toFixed(2)+'x</b> over '+R.horizon+' years with '+(R.exitY?'a business sale in year '+R.exitY:'no residual value at lease expiry')+'. The project itself, before operator terms, returns <b>'+pct(R.pirr)+' / '+R.pmult.toFixed(2)+'x</b>. The operator earns '+fm(R.gpTotal)+' over the term ('+pct(R.gpTotal/(R.gpTotal+R.profit),0)+' of total profit). '+(R.irr!==null&&R.irr<0.12?'Below a 12% hurdle: a lease deal has no exit upside, so the investor return depends on the head rent, the desk rate and the term - see the sensitivity tables.':'Clears a 12% hurdle on income alone.');
   $('exCards').innerHTML=[
     ['Stabilised revenue (Y3)',fm(y3.rev),fmt(R.desks)+' desks x '+p.occ+'% x AED '+fmt(y3.drate)],
     ['Head rent + service charge (Y3)',fm(y3.rent+y3.sc),pct((y3.rent+y3.sc)/y3.rev,0)+' of revenue'],
@@ -417,10 +422,10 @@ function render(){
   $('retNote').textContent='The investor return is income only: with a head lease there is no asset to sell at the end, so the fit-out is a wasting investment recovered from operating cash flow within the term. Every AED of head rent above what the desk rate can carry, every month of fit-out rent and every point of operator share comes straight out of the investor IRR.';
   // uses
   $('tUses').innerHTML='<tr><th>Uses at closing</th><th>AED</th><th>%</th></tr>'+[
-    ['Fit-out ('+p.capex+'/sq ft x '+fmt(R.areaSqft)+' sq ft)',R.capex],['Contingency 5%',R.cont],['VAT on fit-out (recovered Y1)',R.vatCapex],['Launch marketing',R.initial],['Legal and company set-up',R.key],['Security deposit ('+p.dep+'% of Y1 rent)',R.deposit],['Working-capital reserve (fit-out rent, pre-opening, ramp)',R.wc]
+    ['Fit-out ('+p.capex+'/sq ft x '+fmt(R.areaSqft)+' sq ft)',R.capex],['Contingency 5%',R.cont],['VAT on fit-out (recovered Y1)',R.vatCapex],['Launch marketing',R.initial],['Legal and company set-up',R.key],['Broker commission ('+p.brok+'% of Y1 head rent)',R.brok],['Security deposit ('+p.dep+'% of Y1 rent)',R.deposit],['Working-capital reserve (fit-out rent, pre-opening, ramp)',R.wc]
   ].map(u=>'<tr><td>'+u[0]+'</td><td>'+fmt(u[1])+'</td><td>'+pct(u[1]/R.equity,1)+'</td></tr>').join('')+'<tr class="tot"><td>Total investor equity</td><td>'+fmt(R.equity)+'</td><td>100%</td></tr>';
   $('tTerms').innerHTML='<tr><th>Deal terms</th><th>Value</th></tr>'+[
-    ['Building','Sky Tower, Shams Abu Dhabi, Al Reem Island (ADGM)'],['Area','750 + 315 sqm on one floor = '+fmt(FIX.area)+' sqm ('+fmt(FIX.sqft)+' sq ft), all suite area'],['Head rent Y1','AED '+fmt(R.headRent)+' (AED '+fmt(hrSqm)+'/sqm, '+fmt(hrSqft)+'/sq ft)'],['Legal and set-up','AED '+fmt(p.key)+' one-off at signing'],['Rent-free / term / escalation',p.free+' months / '+p.term+' years / '+(p.hesc>0?p.hesc.toFixed(1)+'%':'fixed')],['Capacity desks',fmt(R.desks)+' at '+p.dens+' sq ft of suite area each'],['Desk rate Y1 / escalation','AED '+fmt(p.rent)+' (RICE Sky Tower weighted 3,068) / '+p.esc+'%'],['Occupancy ramp','60% opening, +5 pts a month to '+p.occ+'%'],['Core operating cost','AED '+fmt(R.coreMonth)+' a month (Floor 38 budget scaled to 1,065 sqm)'],['Operator terms',p.fee.toFixed(1)+'% of revenue + '+(100-p.split)+'% of NOI'],['Residual value',R.exitY?p.exit.toFixed(1)+'x NOI sale, year '+R.exitY:'none at lease expiry']
+    ['Building','Sky Tower, Shams Abu Dhabi, Al Reem Island (ADGM)'],['Area','750 + 315 sqm on one floor = '+fmt(FIX.area)+' sqm ('+fmt(FIX.sqft)+' sq ft), all suite area'],['Head rent Y1','AED '+fmt(R.headRent)+' (AED '+fmt(hrSqm)+'/sqm, '+fmt(hrSqft)+'/sq ft)'],['Legal and set-up / broker','AED '+fmt(p.key)+' / AED '+fmt(R.brok)+' ('+p.brok+'% of Y1 rent), one-off at signing'],['Rent-free / term / escalation',p.free+' months / '+p.term+' years / '+(p.hesc>0?p.hesc.toFixed(1)+'%':'fixed')],['Capacity desks',fmt(R.desks)+' at '+p.dens+' sq ft of suite area each'],['Desk rate Y1 / escalation','AED '+fmt(p.rent)+' (RICE Sky Tower weighted 3,068) / '+p.esc+'%'],['Occupancy ramp','60% opening, +5 pts a month to '+p.occ+'%'],['Core operating cost','AED '+fmt(R.coreMonth)+' a month (Floor 38 budget scaled to 1,065 sqm)'],['Operator terms',p.fee.toFixed(1)+'% of revenue + '+(100-p.split)+'% of NOI'],['Residual value',R.exitY?p.exit.toFixed(1)+'x NOI sale, year '+R.exitY:'none at lease expiry']
   ].map(u=>'<tr><td>'+u[0]+'</td><td>'+u[1]+'</td></tr>').join('');
   // ops table
   const yrs=R.years;
@@ -551,7 +556,7 @@ function drawCum(lp){
 
 // wiring
 if(typeof document!=="undefined"){
-const sliders={iHr:'hr',iKey:'key',iFree:'free',iHesc:'hesc',iSc:'sc',iDep:'dep',iCapex:'capex',iFit:'fit',iRent:'rent',iDens:'dens',iOcc:'occ',iEsc:'esc',iSplit:'split',iFee:'fee',iExit:'exit',iExitY:'exitY',iEff:'eff'};
+const sliders={iHr:'hr',iKey:'key',iBrok:'brok',iFree:'free',iHesc:'hesc',iSc:'sc',iDep:'dep',iCapex:'capex',iFit:'fit',iRent:'rent',iDens:'dens',iOcc:'occ',iEsc:'esc',iSplit:'split',iFee:'fee',iExit:'exit',iExitY:'exitY',iEff:'eff'};
 Object.keys(sliders).forEach(id=>{$(id).addEventListener('input',e=>{S[sliders[id]]=parseFloat(e.target.value);render();});});
 document.querySelectorAll('#segTerm button').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('#segTerm button').forEach(x=>x.classList.remove('on'));b.classList.add('on');S.term=parseInt(b.dataset.v);$('iExitY').max=S.term-1;if(S.exitY>=S.term){S.exitY=S.term-1;$('iExitY').value=S.exitY;}render();}));
 $('btnReset').addEventListener('click',()=>{S=Object.assign({},BASE);Object.keys(sliders).forEach(id=>$(id).value=S[sliders[id]]);document.querySelectorAll('#segTerm button').forEach(x=>x.classList.toggle('on',parseInt(x.dataset.v)===S.term));$('iExitY').max=S.term-1;render();});
