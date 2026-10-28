@@ -93,6 +93,7 @@ main .wrap>div{min-width:0}.grid2>div{min-width:0}
 #tOps td:first-child,#tCf td:first-child{min-width:230px}
 #tBreak td:last-child,#tBreak th:last-child,#tLadder td:nth-child(2),#tLadder th:nth-child(2){text-align:left}
 tr.mut td[colspan]{white-space:normal}
+#tPrec td,#tPrec th{white-space:normal;text-align:left;vertical-align:top;line-height:1.45}#tPrec td:first-child{width:15%}#tPrec td:nth-child(2){width:20%}#tPrec{min-width:640px}
 #tTerms th{white-space:nowrap}#tTerms th:last-child{text-align:left}#tTerms td:first-child{width:34%;white-space:nowrap;font-size:10.5px;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);font-weight:600;vertical-align:top;padding-top:8px}#tTerms td:last-child{text-align:left;white-space:normal;line-height:1.4}
 .note{font-size:11.5px;color:var(--muted);margin-top:10px;line-height:1.55}
 .legend{display:flex;gap:14px;flex-wrap:wrap;font-size:11.5px;color:var(--muted);margin-bottom:8px}
@@ -133,9 +134,9 @@ footer{border-top:1px solid var(--line);padding:18px 0 40px;font-size:11.5px;col
 
 <div class="kpis"><div class="wrap">
   <div class="kpi"><div class="v" id="kCap"></div><div class="l">Fit-out Capital (AED)</div><div class="d" id="dCap"></div></div>
-  <div class="kpi"><div class="v" id="kIrr"></div><div class="l">Investor IRR</div><div class="d" id="dIrr"></div></div>
-  <div class="kpi"><div class="v" id="kMult"></div><div class="l">Investor Multiple</div><div class="d" id="dMult"></div></div>
-  <div class="kpi"><div class="v" id="kLl"></div><div class="l">Landlord Income, Term (AED)</div><div class="d" id="dLl"></div></div>
+  <div class="kpi"><div class="v" id="kIrr"></div><div class="l" id="lIrr">Investor IRR</div><div class="d" id="dIrr"></div></div>
+  <div class="kpi"><div class="v" id="kMult"></div><div class="l" id="lMult">Investor Multiple</div><div class="d" id="dMult"></div></div>
+  <div class="kpi"><div class="v" id="kLl"></div><div class="l" id="lLl">Landlord Income, Term (AED)</div><div class="d" id="dLl"></div></div>
   <div class="kpi"><div class="v" id="kEff"></div><div class="l" id="lEff">Landlord Effective Rent / sq ft</div><div class="d" id="dEff"></div></div>
   <div class="kpi"><div class="v" id="kOp"></div><div class="l">Operator Income, Term (AED)</div><div class="d" id="dOp"></div></div>
 </div></div>
@@ -196,8 +197,14 @@ footer{border-top:1px solid var(--line);padding:18px 0 40px;font-size:11.5px;col
   <div class="ctl"><div class="row"><label>Service Charge / yr</label><span class="val" id="vSc"></span></div>
     <input type="range" id="iSc" min="0" max="30" step="1" value="18">
     <div class="hint" id="hSc"></div></div>
-  <div class="subhdr">Fit-out investor</div>
-  <div class="ctl"><div class="row"><label>Target IRR (capped)</label><span class="val" id="vHur"></span></div>
+  <div class="subhdr">Fit-out funding</div>
+  <div class="ctl"><div class="row"><label>Fit-out Funded by</label><span class="val" id="vFund"></span></div>
+    <div class="seg" id="segFund" style="grid-template-columns:1fr 1fr"><button data-v="0" class="on">Investor</button><button data-v="1">Landlord</button></div>
+    <div class="hint" id="hFund"></div></div>
+  <div class="ctl"><div class="row"><label>Investor Share of Residual</label><span class="val" id="vKickOn"></span></div>
+    <div class="seg" id="segKick" style="grid-template-columns:1fr 1fr"><button data-v="1" class="on">On</button><button data-v="0">Off</button></div>
+    <div class="hint">Off: the fit-out capital earns only its target IRR (cost of capital) and the whole residual goes to the operator / landlord split.</div></div>
+  <div class="ctl"><div class="row"><label id="lHur">Target IRR (capped)</label><span class="val" id="vHur"></span></div>
     <input type="range" id="iHur" min="8" max="20" step="0.5" value="12">
     <div class="hint">The investor's balance compounds at this rate until repaid from its share of cash below.</div></div>
   <div class="ctl"><div class="row"><label>Investor Share of Cash until Hurdle</label><span class="val" id="vSweep"></span></div>
@@ -206,7 +213,7 @@ footer{border-top:1px solid var(--line);padding:18px 0 40px;font-size:11.5px;col
   <div class="ctl"><div class="row"><label>Full Sweep if Hurdle Unmet after</label><span class="val" id="vTrap"></span></div>
     <input type="range" id="iTrap" min="3" max="10" step="1" value="7">
     <div class="hint">Protection for the investor: if the hurdle is still unmet at the end of this year, 100% of cash after the priority return goes to the investor until it is.</div></div>
-  <div class="ctl"><div class="row"><label>Investor Share of Residual</label><span class="val" id="vKick"></span></div>
+  <div class="ctl" id="cKick"><div class="row"><label>Investor Residual Share, Size</label><span class="val" id="vKick"></span></div>
     <input type="range" id="iKick" min="0" max="25" step="1" value="10">
     <div class="hint">Taken from the residual once the hurdle is met, for the rest of the term, before the operator and landlord split. Compensates for a fit-out with no salvage value on a floor the investor does not own.</div></div>
   <div class="ctl"><div class="row"><label>Fit-out Cost</label><span class="val" id="vCapex"></span></div>
@@ -250,7 +257,7 @@ footer{border-top:1px solid var(--line);padding:18px 0 40px;font-size:11.5px;col
 <div>
 <section class="sec"><h2>Returns Summary</h2><div class="body">
   <div class="grid2">
-    <div class="retcard"><h3>Fit-out investor</h3>
+    <div class="retcard"><h3 id="hInv">Fit-out investor</h3>
       <div class="big" id="rIrr"></div><div class="bigs" id="rIrrS">IRR, monthly cash flows annualised, pre-tax</div>
       <div class="rows">
         <div><span>Capital at closing (fit-out, VAT, set-up)</span><span id="rUp"></span></div>
@@ -264,9 +271,11 @@ footer{border-top:1px solid var(--line);padding:18px 0 40px;font-size:11.5px;col
         <div><span>Residual share received after hurdle</span><span id="rKick"></span></div>
       </div></div>
     <div class="retcard"><h3>Landlord</h3>
-      <div class="big" id="rLl"></div><div class="bigs">Total income over the term</div>
+      <div class="big" id="rLl"></div><div class="bigs" id="rLlS">Total income over the term</div>
       <div class="rows">
         <div><span>Priority return received</span><span id="rLlBase"></span></div>
+        <div id="rowLlFit"><span>Fit-out capital recovered with return</span><span id="rLlFit"></span></div>
+        <div id="rowLlCap"><span>Less: fit-out capital funded</span><span id="rLlCap"></span></div>
         <div><span>Share of residual</span><span id="rLlRes"></span></div>
         <div><span>Same floor on a plain lease at the priority rate</span><span id="rPlain"></span></div>
         <div><span>Uplift over the plain lease</span><span id="rUplift"></span></div>
@@ -288,7 +297,7 @@ footer{border-top:1px solid var(--line);padding:18px 0 40px;font-size:11.5px;col
         <div><span>Landlord share of cash after operating costs</span><span id="rLlPct"></span></div>
         <div><span>Investor share (profit) of cash after operating costs</span><span id="rInvPct"></span></div>
       </div></div>
-    <div class="retcard"><h3>If the landlord funds the fit-out</h3>
+    <div class="retcard"><h3 id="hLf">If the landlord funds the fit-out</h3>
       <div class="big" id="rLf"></div><div class="bigs">Landlord IRR on the fit-out capital, incremental to a plain lease</div>
       <div class="rows">
         <div><span>Fit-out capital funded by the landlord</span><span id="rLfCap"></span></div>
@@ -360,6 +369,22 @@ footer{border-top:1px solid var(--line);padding:18px 0 40px;font-size:11.5px;col
   <p class="note">Base case outlined in teal. Muted grey marks an investor not repaid within the term (repayment grids) or a landlord below the priority rate on average (landlord grids). Scenarios: Bear = suite rate minus 10%, 85% occupancy, 3% escalation; Bull = suite rate plus 10%, 97% occupancy, 6% escalation; other inputs as set.</p>
 </div></section>
 
+<section class="sec"><h2>Market Precedents - Landlord-Funded Flex Structures</h2><div class="body">
+  <p class="galintro">Internationally, the operator-funded lease is no longer the default. Landlords increasingly fund the fit-out and contract the operator to run the space, with the operator paid from revenue rather than holding a lease. In the UK, Savills counts management agreements at 53% of flex operator transactions by Q3 2025, the highest share in five years; IWG reports 99% of its 2025 new deals as capital-light.</p>
+  <div class="tscroll" style="margin-top:14px"><table id="tPrec">
+    <tr><th>Structure</th><th>Who funds fit-out</th><th>How cash is split</th><th>Who uses it</th></tr>
+    <tr><td><b>Management agreement</b></td><td>Landlord (operator capex near zero)</td><td>No rent. Revenue pays operating costs and the operator's fee; the owner keeps what is left. Fees are a contracted share of revenue, sometimes with a flat element.</td><td>IWG (managed and franchised network: 1,891 centres, $876M system revenue in 2025), Industrious, WeWork since 2024</td></tr>
+    <tr><td><b>Tiered revenue share (waterfall)</b></td><td>Landlord, recouped through its share</td><td>Landlord takes the larger share first until a rent that covers its costs, then a middle tier, then the split moves in the operator's favour once market rent or a target occupancy is reached.</td><td>US landlord-operator deals per JLL; Deskworks example: 80/20 to the landlord, then 50/50, then reversed</td></tr>
+    <tr><td><b>Hybrid lease</b></td><td>Typically shared or landlord-led</td><td>Reduced base rent, often around half of market, plus variable payments linked to occupancy or profit.</td><td>German market (GSG, Design Offices, Unicorn); Industrious with Brookfield, Frankfurt</td></tr>
+    <tr class="hl"><td><b>This JV</b></td><td>Third-party investor or landlord, at a 12% cost of capital</td><td>Landlord priority return of AED 2,000 / sqm first, fit-out capital repaid from a 75/25 cash split, then 50/50, 60/40 and 65/35 to the operator across revenue tiers</td><td>Sky Tower floor 24</td></tr>
+  </table></div>
+  <div class="grid2" style="margin-top:14px">
+    <div class="reco"><b>What landlords get.</b> Industrious states its landlord partners earn about 30% more than they would on a lease; German operators cite 15% to 20% above market rent for management contracts, with owners clearing market rent at around 90% occupancy. This model shows the landlord at <span id="precUp"></span> over a plain lease at the priority rate.</div>
+    <div class="reco"><b>How this JV differs.</b> A pure management agreement gives the landlord no floor: it takes all the operating risk. This structure keeps the landlord's AED 2,000 senior, which makes it closer to a hybrid lease at full base rent, and adds an explicit, auditable tier test. The fit-out tranche is repaid as capital at 12% before the split, rather than being netted out of the landlord's share as in a management agreement.</div>
+  </div>
+  <p class="note">Sources: Savills UK Flex Overview 2025; IWG plc preliminary results FY2025 (March 2026); Allwork.Space interview with Industrious CEO Jamie Hodari (Aug 2020); WealthManagement.com on landlord management agreements (Mar 2020); REFIRE on German flex revenue sharing (Aug 2025); Deskworks guide to coworking management agreements; WeWork newsroom (Feb 2024). Fee percentages in these agreements are rarely disclosed and vary deal by deal.</p>
+</div></section>
+
 <section class="sec"><h2>Pricing - What the Floor Charges</h2><div class="body">
   <div class="galsub">The same suite rate on each quoting convention</div>
   <div class="conv">
@@ -383,7 +408,7 @@ footer{border-top:1px solid var(--line);padding:18px 0 40px;font-size:11.5px;col
 
 <script>
 const SQFT=10.7639;
-const BASE={rate:5905,occ:95,esc:5,dens:6.5,capex:550,fit:6,rf:6,base:2000,besc:5,sc:18,hurdle:12,sweep:75,trap:7,kick:10,fee:5,t1:80,t2:90,s0:50,s1:60,s2:65,guar:0,term:10};
+const BASE={rate:5905,occ:95,esc:5,dens:6.5,capex:550,fit:6,rf:6,base:2000,besc:5,sc:18,hurdle:12,sweep:75,trap:7,kick:10,kickOn:1,fund:0,fee:5,t1:80,t2:90,s0:50,s1:60,s2:65,guar:0,term:10};
 const FIX={sqm:2146.44,cont:0.05,vat:0.05,setup:80000,legal:110000,marketing:500000,preopen:2,rampStart:0.60,rampStep:0.05,credit:0.01,
   coreMonth:105100,payrollMonth:52000,opexEsc:0.03,licence:50000,comm:0.10,leaseYears:3};
 FIX.area=FIX.sqm; FIX.sqft=FIX.sqm*SQFT;
@@ -431,7 +456,7 @@ function engine(p){
     // residual tiers, measured as revenue bands at the contracted rate
     let R=C; r.res=R;
     if(R>0){
-      r.kick=B<=1e-6?R*p.kick/100:0; r.invOut+=r.kick; dist+=r.kick; const k1=1-r.kick/R; R-=r.kick;
+      r.kick=B<=1e-6&&p.kickOn?R*p.kick/100:0; r.invOut+=r.kick; dist+=r.kick; const k1=1-r.kick/R; R-=r.kick;
       const top=Math.max(0,r.rev-t2*r.full)*(1-feeR)*k1;
       const mid=Math.max(0,Math.min(r.rev,t2*r.full)-t1*r.full)*(1-feeR)*k1;
       r.resT2=Math.min(R,top); r.resT1=Math.min(R-r.resT2,mid); r.resT0=R-r.resT2-r.resT1;
@@ -495,13 +520,15 @@ function render(){
   const opAfter=Y.slice(R.repaidM?Math.ceil(R.repaidM/12):p.term);
   const opAvg=opAfter.length?opAfter.reduce((a,t)=>a+t.op,0)/opAfter.length:0;
   const deskM=p.rate*p.dens/12;
+  const LF=!!p.fund, kickE=p.kickOn?p.kick:0, INV=LF?'the landlord\'s fit-out capital':'the investor';
+  const llNet=LF?R.llTotal+R.dist-R.contrib:R.llTotal, llUp=llNet-R.plainTotal, llEffN=llNet/A/p.term;
   // controls
   $('vTerm').textContent=p.term+' years';
   $('vBase').textContent=ra(p.base); $('hBase').textContent='Year 1: AED '+fmt(p.base*A)+' a year on '+areaTxt()+'. AED '+fmt(p.base)+' / sqm = AED '+fmt(p.base/SQFT)+' / sq ft. Senior to the investor and the operator.';
   $('vBesc').textContent=p.besc+'%'; $('vRf').textContent=p.rf+' months';
   $('vGuar').textContent=p.guar?'Guaranteed':'Priority';
   $('vSc').textContent=U==='sqft'?'AED '+p.sc+' / sq ft':'AED '+fmt(p.sc*SQFT)+' / sqm'; $('hSc').textContent='AED '+fmt(p.sc*FIX.sqft)+' a year, borne by the JV as an operating cost. Set to 0 if the priority return is quoted inclusive of service charge.';
-  $('vHur').textContent=p.hurdle.toFixed(1)+'%'; $('vSweep').textContent=p.sweep+' / '+(100-p.sweep); $('hSweep').textContent=p.sweep+'% of cash after the priority return to the investor, '+(100-p.sweep)+'% straight into the operator / landlord revenue share from day one. Hurdle met at '+yrs(R.repaidM)+'.'; $('vTrap').textContent='Year '+p.trap; $('vKick').textContent=p.kick+'%';
+  $('vFund').textContent=LF?'Landlord':'Investor'; $('hFund').textContent=LF?'The landlord funds the fit-out and is repaid its capital at the target IRR (its cost of capital) from the cash split below, ahead of the residual.':'A third-party investor funds the fit-out and is repaid at the target IRR from the cash split below.'; $('vKickOn').textContent=p.kickOn?'On':'Off'; $('cKick').hidden=!p.kickOn; $('lHur').textContent=LF?'Cost of Capital on Fit-out':'Target IRR (capped)'; $('vHur').textContent=p.hurdle.toFixed(1)+'%'; $('vSweep').textContent=p.sweep+' / '+(100-p.sweep); $('hSweep').textContent=p.sweep+'% of cash after the priority return to the investor, '+(100-p.sweep)+'% straight into the operator / landlord revenue share from day one. Hurdle met at '+yrs(R.repaidM)+'.'; $('vTrap').textContent='Year '+p.trap; $('vKick').textContent=p.kick+'%';
   $('vCapex').textContent='AED '+fmt(rcu(p.capex))+' / '+UL(); $('hCapex').textContent='AED '+fmt(R.capex)+' plus 5% contingency and 5% VAT (recovered in year 1). Standard basis AED 550 / sq ft (AED '+fmt(550*SQFT)+' / sqm).';
   $('vFit').textContent=p.fit+' months';
   $('vRate').textContent=ra(p.rate); $('hRate').textContent='= AED '+fmt(deskM)+' per workstation per month at '+p.dens+' sqm ('+fmt(p.dens*SQFT)+' sq ft); AED '+fmt(p.rate*A*(p.occ/100)*(1-FIX.credit))+' a year at stabilised occupancy.';
@@ -516,23 +543,23 @@ function render(){
   $('hOcc').textContent='Ramp opens at 60% and climbs 5 points a month. Operating break-even '+pct(beOpex,0)+'; priority return covered from '+pct(beOcc,0)+' (lease year 3).';
   // KPIs
   $('kCap').textContent=fM(R.contrib)+'M'; $('dCap').textContent=fM(R.upfront)+'M at signing + '+fM(R.contrib-R.upfront)+'M ramp';
-  $('kIrr').textContent=pct(R.invIrr); $('dIrr').textContent=p.hurdle+'% hurdle met at '+yrs(R.repaidM);
+  $('lIrr').textContent=LF?'Return on Fit-out Capital':'Investor IRR'; $('lMult').textContent=LF?'Fit-out Capital Multiple':'Investor Multiple'; $('lLl').textContent=LF?'Landlord Net Income, Term (AED)':'Landlord Income, Term (AED)'; $('kIrr').textContent=pct(R.invIrr); $('dIrr').textContent=p.hurdle+'% hurdle met at '+yrs(R.repaidM);
   $('kMult').textContent=R.mult.toFixed(2)+'x'; $('dMult').textContent='profit '+fM(R.profit)+'M';
-  $('kLl').textContent=fM(R.llTotal)+'M'; $('dLl').textContent=(R.llUplift>=0?'+':'')+fM(R.llUplift)+'M vs plain lease';
-  $('kEff').textContent='AED '+fmt(ru(R.llEff)); $('dEff').textContent=fmt(ru(R.llEffStab))+' once investor repaid'; $('lEff').textContent='Landlord Effective Rent / '+UL();
+  $('kLl').textContent=fM(llNet)+'M'; $('dLl').textContent=(llUp>=0?'+':'')+fM(llUp)+'M vs plain lease'+(LF?', after fit-out':'');
+  $('kEff').textContent='AED '+fmt(ru(llEffN)); $('dEff').textContent=fmt(ru(R.llEffStab))+' once investor repaid'; $('lEff').textContent='Landlord Effective Rent / '+UL();
   $('kOp').textContent=fM(R.opTotal)+'M'; $('dOp').textContent=pct(R.opShare,0)+' of cash after opex';
   // exec summary
   const stab=Y[Math.min(2,p.term-1)];
-  $('exSum').innerHTML='A '+p.term+'-year operating joint venture on floor 24 of Sky Tower, Al Reem Island: units 2401-2406, '+areaTxt()+' of title deed area. The landlord keeps title and, in place of a lease, takes a senior priority return of '+ra(p.base)+' a year ('+p.besc+'% escalation, from month '+(p.rf+1)+'). A fit-out investor funds AED '+fM(R.contrib)+'M for a '+p.fit+'-month fit-out at AED '+fmt(rcu(p.capex))+' per '+UL()+', set-up and the opening ramp. The operator lets the floor as six corporate suites on the existing unit lines at '+ra(p.rate)+' a year all-inclusive (AED '+fmt(deskM)+' per workstation per month) and stabilises at '+p.occ+'%, producing AED '+fM(stab.rev)+'M of revenue and AED '+fM(stab.cash)+'M of cash after operating costs and the '+p.fee+'% management fee in lease year 3.';
-  $('exSum2').innerHTML='Cash is paid in order: operating costs and fee, the landlord\'s priority return, then '+p.sweep+'% to the investor until capital plus a '+p.hurdle+'% IRR is repaid ('+yrs(R.repaidM)+')'+(p.sweep<100?' while the other '+(100-p.sweep)+'% goes straight into the revenue share from the first trading month':'')+'; once the hurdle is met, '+p.kick+'% of the residual goes to the investor and the rest is split between operator and landlord in tiers ('+p.s0+'/'+(100-p.s0)+' to the '+p.t1+'% line, '+p.s1+'/'+(100-p.s1)+' to '+p.t2+'%, '+p.s2+'/'+(100-p.s2)+' above). Over the term the investor earns '+pct(R.invIrr)+' and '+R.mult.toFixed(2)+'x; the landlord receives AED '+fM(R.llTotal)+'M, AED '+fM(R.llUplift)+'M more than the same floor let at the priority rate, an average of '+ra(R.llEff)+' and '+ra(R.llEffStab)+' once the investor is repaid; the operator earns AED '+fM(R.opTotal)+'M with no capital at risk. '+(R.unpaid>1?'<b>The investor is not repaid within the term at these inputs.</b>':'');
+  $('exSum').innerHTML='A '+p.term+'-year operating joint venture on floor 24 of Sky Tower, Al Reem Island: units 2401-2406, '+areaTxt()+' of title deed area. The landlord keeps title and, in place of a lease, takes a senior priority return of '+ra(p.base)+' a year ('+p.besc+'% escalation, from month '+(p.rf+1)+'). '+(LF?'The landlord also funds':'A fit-out investor funds')+' AED '+fM(R.contrib)+'M for a '+p.fit+'-month fit-out at AED '+fmt(rcu(p.capex))+' per '+UL()+', set-up and the opening ramp. The operator lets the floor as six corporate suites on the existing unit lines at '+ra(p.rate)+' a year all-inclusive (AED '+fmt(deskM)+' per workstation per month) and stabilises at '+p.occ+'%, producing AED '+fM(stab.rev)+'M of revenue and AED '+fM(stab.cash)+'M of cash after operating costs and the '+p.fee+'% management fee in lease year 3.';
+  $('exSum2').innerHTML='Cash is paid in order: operating costs and fee, the landlord\'s priority return, then '+p.sweep+'% to '+INV+' until capital plus a '+p.hurdle+'% IRR is repaid ('+yrs(R.repaidM)+')'+(p.sweep<100?' while the other '+(100-p.sweep)+'% goes straight into the revenue share from the first trading month':'')+'; once the hurdle is met, '+(kickE?kickE+'% of the residual goes to the investor and the rest is split':'the whole residual is split')+' between operator and landlord in tiers ('+p.s0+'/'+(100-p.s0)+' to the '+p.t1+'% line, '+p.s1+'/'+(100-p.s1)+' to '+p.t2+'%, '+p.s2+'/'+(100-p.s2)+' above). Over the term the investor earns '+pct(R.invIrr)+' and '+R.mult.toFixed(2)+'x; the landlord receives AED '+fM(R.llTotal)+'M, AED '+fM(R.llUplift)+'M more than the same floor let at the priority rate, an average of '+ra(R.llEff)+' and '+ra(R.llEffStab)+' once the investor is repaid; the operator earns AED '+fM(R.opTotal)+'M with no capital at risk. '+(R.unpaid>1?'<b>The investor is not repaid within the term at these inputs.</b>':'');
   $('exCards').innerHTML=[['Stabilised revenue, year 3',fm(stab.rev),pct(stab.occ,0)+' occupancy, '+ra(stab.rate)],['Cash after opex and fee, year 3',fm(stab.cash),pct(stab.cash/stab.rev,0)+' margin; priority return '+fm(stab.due)],['Landlord vs plain lease',(R.llUplift>=0?'+':'')+fm(R.llUplift),ra(R.llEff)+' average vs '+fmt(ru(R.plainTotal/A/p.term))+' on a lease']].map((c,i)=>'<div class="card'+(i===2?' on':'')+'"><div class="y">'+c[0]+'</div><div class="irr">'+c[1]+'</div><small>'+c[2]+'</small></div>').join('');
   // waterfall ladder
   const preOpex=T.rev-T.opex;
   const st=[['1','Operating costs','Service charge, ADGM licence, payroll, utilities, pantry, maintenance, leasing commissions',T.opex,'',''],
     ['2','Management fee',p.fee+'% of collected revenue to the operator',T.fee,'',''],
     ['3','Landlord priority return',ra(p.base)+' / yr, +'+p.besc+'% a year. '+(p.guar?'Guaranteed: investor funds any shortfall.':'Priority, not guaranteed: shortfalls accrue and are caught up first.'),T.llBase,'',''],
-    ['4','Investor: capital plus '+p.hurdle+'% IRR',(p.sweep<100?p.sweep+'% of remaining cash until the hurdle is met; the other '+(100-p.sweep)+'% flows straight to the revenue share below. Full sweep from year '+(p.trap+1)+' if still unmet.':'100% of remaining cash until the hurdle is met')+' Incl. the year 1 VAT refund.',T.invOut-T.kick,'',''],
-    ['5','Investor residual share',p.kick+'% of the residual for the rest of the term',T.kick,'',''],
+    ['4',(LF?'Landlord fit-out capital':'Investor')+': capital plus '+p.hurdle+'% '+(LF?'cost of capital':'IRR'),(p.sweep<100?p.sweep+'% of remaining cash until the hurdle is met; the other '+(100-p.sweep)+'% flows straight to the revenue share below. Full sweep from year '+(p.trap+1)+' if still unmet.':'100% of remaining cash until the hurdle is met')+' Incl. the year 1 VAT refund.',T.invOut-T.kick,'',''],
+    ['5','Investor residual share',kickE?kickE+'% of the residual for the rest of the term':'Off: the fit-out capital earns its target IRR only',T.kick,'',''],
     ['6','Residual to the '+p.t1+'% line','Operator '+p.s0+' / landlord '+(100-p.s0),T.resT0,'tier',''],
     ['7','Residual, '+p.t1+'% to '+p.t2+'% line','Operator '+p.s1+' / landlord '+(100-p.s1),T.resT1,'tier',''],
     ['8','Residual above the '+p.t2+'% line','Operator '+p.s2+' / landlord '+(100-p.s2),T.resT2,'tier','']];
@@ -549,9 +576,9 @@ function render(){
   $('rIrr').textContent=pct(R.invIrr); $('rUp').textContent=fmt(R.upfront); $('rIn').textContent=fmt(R.contrib-R.upfront); $('rCap').textContent=fmt(R.contrib);
   $('rDist').textContent=fmt(R.dist); $('rProfit').textContent=fmt(R.profit); $('rMult').textContent=R.mult.toFixed(2)+'x';
   $('rBack').textContent=R.capBackM===null?'not within term':(R.capBackM/12).toFixed(1)+' yrs'; $('rRepaid').textContent=yrs(R.repaidM); $('rKick').textContent=fmt(T.kick);
-  $('rLl').textContent=fm(R.llTotal); $('rLlBase').textContent=fmt(T.llBase); $('rLlRes').textContent=fmt(T.llRes); $('rPlain').textContent=fmt(R.plainTotal);
-  $('rUplift').textContent=(R.llUplift>=0?'+':'')+fmt(R.llUplift)+' ('+pct(R.llUplift/R.plainTotal,0)+')'; $('rNpv').textContent=fM(R.llNpv)+'M vs '+fM(R.plainNpv)+'M';
-  $('rEff').textContent=ra(R.llEff); $('rEffS').textContent=ra(R.llEffStab); $('rArr').textContent=fmt(R.arrearsEnd);
+  $('hInv').textContent=LF?'Fit-out capital (funded by the landlord)':'Fit-out investor'; $('rLlS').textContent=LF?'Net income over the term, after recovering the fit-out capital':'Total income over the term'; $('rowLlFit').hidden=!LF; $('rowLlCap').hidden=!LF; $('rLlFit').textContent=fmt(R.dist); $('rLlCap').textContent='('+fmt(R.contrib)+')'; $('hLf').textContent=LF?'Landlord return on funding the fit-out':'If the landlord funds the fit-out'; $('rLl').textContent=fm(llNet); $('rLlBase').textContent=fmt(T.llBase); $('rLlRes').textContent=fmt(T.llRes); $('rPlain').textContent=fmt(R.plainTotal);
+  $('rUplift').textContent=(llUp>=0?'+':'')+fmt(llUp)+' ('+pct(llUp/R.plainTotal,0)+')'; $('rNpv').textContent=fM(R.llNpv)+'M vs '+fM(R.plainNpv)+'M';
+  $('rEff').textContent=ra(llEffN); $('precUp').textContent=(llUp>=0?'+':'')+pct(llUp/R.plainTotal,0)+(LF?' net of the fit-out it funds':''); $('rEffS').textContent=ra(R.llEffStab); $('rArr').textContent=fmt(R.arrearsEnd);
   $('rOp').textContent=fm(R.opTotal); $('rOpFee').textContent=fmt(T.fee); $('rOpRes').textContent=fmt(T.opRes); $('rOpAvg').textContent=fmt(opAvg); $('rOp5').textContent=fmt(Y.slice(0,5).reduce((a,t)=>a+t.op,0));
   $('rOpPct').textContent=pct(R.opShare); $('rLlPct').textContent=pct(R.llShare); $('rInvPct').textContent=pct(R.profit/preOpex);
   $('rLf').textContent=pct(R.llFundIrr); $('rLfCap').textContent=fmt(R.contrib); $('rLfTot').textContent=fmt(R.llTotal+R.dist);
@@ -560,7 +587,7 @@ function render(){
   // S&U
   const uses=[['Fit-out, AED '+fmt(rcu(p.capex))+' / '+UL()+' x '+fmt(ar(A))+' '+UL(),R.capex],['Contingency 5%',R.cont],['VAT 5% on fit-out (recovered year 1)',R.vatC],['Set-up, legal and launch marketing',R.initial],['Capital at signing',R.upfront,'tot'],['Fit-out period and ramp funding',R.contrib-R.upfront],['Total investor capital',R.contrib,'hl'],['Less VAT refunded in year 1',-R.vatC,'mut'],['Net capital at risk',R.contrib-R.vatC,'mut'],['Per '+UL()+' of floor',R.contrib/ar(A),'mut']];
   $('tUses').innerHTML='<tr><th>Uses</th><th>AED</th></tr>'+uses.map(u=>'<tr'+(u[2]?' class="'+u[2]+'"':'')+'><td>'+u[0]+'</td><td>'+neg(u[1])+'</td></tr>').join('');
-  const terms=[['Parties','Landlord (owner of the floor); fit-out investor (third party, or the landlord); operator'],['Term',p.term+' years from signing; the fit-out reverts to the landlord at expiry'],['Floor','Floor 24, units 2401-2406, '+areaTxt()+' title deed area, Sky Tower, Al Reem Island'],['Landlord priority return',ra(p.base)+' a year (AED '+fmt(p.base*A)+' year 1), +'+p.besc+'% a year, from month '+(p.rf+1)+'; '+(p.guar?'guaranteed by the JV':'senior but not guaranteed; shortfalls accrue without interest and are paid before the investor')],['Fit-out funding','AED '+fmt(R.contrib)+' by the investor: fit-out, contingency, VAT, set-up and the opening ramp'],['Investor return',p.sweep+'% of cash after the priority return until capital plus a '+p.hurdle+'% IRR is repaid (100% from year '+(p.trap+1)+' if unmet); the remaining '+(100-p.sweep)+'% enters the revenue share from day one. After the hurdle, '+p.kick+'% of the residual for the rest of the term'],['Management fee',p.fee+'% of collected revenue to the operator, paid with operating costs'],['Revenue share','Residual after the investor\'s share: operator / landlord '+p.s0+'/'+(100-p.s0)+' to the '+p.t1+'% revenue line, '+p.s1+'/'+(100-p.s1)+' to the '+p.t2+'% line, '+p.s2+'/'+(100-p.s2)+' above'],['Tier measurement','Monthly collected revenue against the revenue the floor would collect at '+p.t1+'% and '+p.t2+'% occupancy at the contracted rate; audited from the revenue register and bank statements'],['Protection of fit-out','No landlord break before the investor hurdle is met; step-in rights for the investor on operator default'],['Reporting','Monthly management accounts and waterfall statement to landlord and investor']];
+  const terms=[['Parties','Landlord (owner of the floor); fit-out investor (third party, or the landlord); operator'],['Term',p.term+' years from signing; the fit-out reverts to the landlord at expiry'],['Floor','Floor 24, units 2401-2406, '+areaTxt()+' title deed area, Sky Tower, Al Reem Island'],['Landlord priority return',ra(p.base)+' a year (AED '+fmt(p.base*A)+' year 1), +'+p.besc+'% a year, from month '+(p.rf+1)+'; '+(p.guar?'guaranteed by the JV':'senior but not guaranteed; shortfalls accrue without interest and are paid before the investor')],['Fit-out funding','AED '+fmt(R.contrib)+' by '+(LF?'the landlord':'a third-party investor')+': fit-out, contingency, VAT, set-up and the opening ramp'],[LF?'Return on fit-out capital':'Investor return',p.sweep+'% of cash after the priority return until capital plus a '+p.hurdle+'% IRR is repaid (100% from year '+(p.trap+1)+' if unmet); the remaining '+(100-p.sweep)+'% enters the revenue share from day one. '+(kickE?'After the hurdle, '+kickE+'% of the residual for the rest of the term':'No share of the residual: the capital earns its '+p.hurdle+'% cost of capital only')],['Management fee',p.fee+'% of collected revenue to the operator, paid with operating costs'],['Revenue share','Residual after the investor\'s share: operator / landlord '+p.s0+'/'+(100-p.s0)+' to the '+p.t1+'% revenue line, '+p.s1+'/'+(100-p.s1)+' to the '+p.t2+'% line, '+p.s2+'/'+(100-p.s2)+' above'],['Tier measurement','Monthly collected revenue against the revenue the floor would collect at '+p.t1+'% and '+p.t2+'% occupancy at the contracted rate; audited from the revenue register and bank statements'],['Protection of fit-out','No landlord break before the investor hurdle is met; step-in rights for the investor on operator default'],['Reporting','Monthly management accounts and waterfall statement to landlord and investor']];
   $('tTerms').innerHTML='<tr><th>Term</th><th>Proposed</th></tr>'+terms.map(t=>'<tr><td>'+t[0]+'</td><td>'+t[1]+'</td></tr>').join('');
   // area
   $('tArea').innerHTML='<tr><th>Basis</th><th>Per sqm / yr</th><th>Per sq ft / yr</th><th>Floor, year 1</th></tr>'+
@@ -683,12 +710,16 @@ function drawCum(inv){
 const sliders={iSweep:'sweep',iTrap:'trap',iBase:'base',iBesc:'besc',iRf:'rf',iSc:'sc',iHur:'hurdle',iKick:'kick',iCapex:'capex',iFit:'fit',iRate:'rate',iDens:'dens',iOcc:'occ',iEsc:'esc',iFee:'fee',iS0:'s0',iT1:'t1',iS1:'s1',iT2:'t2',iS2:'s2'};
 function syncInputs(){Object.entries(sliders).forEach(([id,k])=>{$(id).value=S[k];});
   document.querySelectorAll('#segTerm button').forEach(b=>b.classList.toggle('on',+b.dataset.v===S.term));
-  document.querySelectorAll('#segGuar button').forEach(b=>b.classList.toggle('on',+b.dataset.v===S.guar));}
+  document.querySelectorAll('#segGuar button').forEach(b=>b.classList.toggle('on',+b.dataset.v===S.guar));
+  document.querySelectorAll('#segFund button').forEach(b=>b.classList.toggle('on',+b.dataset.v===S.fund));
+  document.querySelectorAll('#segKick button').forEach(b=>b.classList.toggle('on',+b.dataset.v===S.kickOn));}
 Object.entries(sliders).forEach(([id,k])=>{$(id).addEventListener('input',e=>{S[k]=+e.target.value;
   if(k==='t1'&&S.t2<=S.t1){S.t2=Math.min(99,S.t1+1);} if(k==='t2'&&S.t1>=S.t2){S.t1=Math.max(60,S.t2-1);}
   syncInputs();render();});});
 document.querySelectorAll('#segTerm button').forEach(b=>b.addEventListener('click',()=>{S.term=+b.dataset.v;syncInputs();render();}));
 document.querySelectorAll('#segUnit button').forEach(b=>b.addEventListener('click',()=>{U=b.dataset.v;document.querySelectorAll('#segUnit button').forEach(x=>x.classList.toggle('on',x.dataset.v===U));render();}));
+document.querySelectorAll('#segFund button').forEach(b=>b.addEventListener('click',()=>{S.fund=+b.dataset.v;S.kickOn=S.fund?0:1;syncInputs();render();}));
+document.querySelectorAll('#segKick button').forEach(b=>b.addEventListener('click',()=>{S.kickOn=+b.dataset.v;syncInputs();render();}));
 document.querySelectorAll('#segGuar button').forEach(b=>b.addEventListener('click',()=>{S.guar=+b.dataset.v;syncInputs();render();}));
 $('btnReset').addEventListener('click',()=>{S=Object.assign({},BASE);syncInputs();render();});
 syncInputs();render();
