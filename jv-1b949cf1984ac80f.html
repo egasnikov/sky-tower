@@ -270,7 +270,7 @@ footer{border-top:1px solid var(--line);padding:18px 0 40px;font-size:11.5px;col
     <div class="seg" id="segKick" style="grid-template-columns:1fr 1fr"><button data-v="1" class="on">On</button><button data-v="0">Off</button></div>
     <div class="hint">Off: the fit-out capital earns only its target IRR (cost of capital) and the whole residual goes to the operator / landlord split.</div></div>
   <div class="ctl"><div class="row"><label id="lHur">Cost of Capital on Fit-out</label><span class="val" id="vHur"></span></div>
-    <input type="range" id="iHur" min="8" max="20" step="0.5" value="12">
+    <input type="range" id="iHur" min="6" max="20" step="0.5" value="8">
     <div class="hint">The landlord's fit-out balance compounds at this rate until recovered from the recovery share of cash below. Above that, the landlord earns its share of the residual.</div></div>
   <div class="ctl"><div class="row"><label>Fit-out Recovery Share of Cash</label><span class="val" id="vSweep"></span></div>
     <input type="range" id="iSweep" min="50" max="100" step="5" value="75">
@@ -446,11 +446,11 @@ footer{border-top:1px solid var(--line);padding:18px 0 40px;font-size:11.5px;col
     <tr><td><b>Management agreement</b></td><td>Landlord (operator capex near zero)</td><td>No rent. Revenue pays operating costs and the operator's fee; the owner keeps what is left. Fees are a contracted share of revenue, sometimes with a flat element.</td><td>IWG (managed and franchised network: 1,891 centres, $876M system revenue in 2025), Industrious, WeWork since 2024</td></tr>
     <tr><td><b>Tiered revenue share (waterfall)</b></td><td>Landlord, recouped through its share</td><td>Landlord takes the larger share first until a rent that covers its costs, then a middle tier, then the split moves in the operator's favour once market rent or a target occupancy is reached.</td><td>US landlord-operator deals per JLL; Deskworks example: 80/20 to the landlord, then 50/50, then reversed</td></tr>
     <tr><td><b>Hybrid lease</b></td><td>Typically shared or landlord-led</td><td>Reduced base rent, often around half of market, plus variable payments linked to occupancy or profit.</td><td>German market (GSG, Design Offices, Unicorn); Industrious with Brookfield, Frankfurt</td></tr>
-    <tr class="hl"><td><b>This JV</b></td><td>Landlord, recovered at a 12% cost of capital</td><td>Landlord priority return of AED 2,000 / sqm first, fit-out capital repaid from a 75/25 cash split, then 50/50, 60/40 and 65/35 to the operator across revenue tiers</td><td>Sky Tower floor 24</td></tr>
+    <tr class="hl"><td><b>This JV</b></td><td>Landlord, recovered at an 8% cost of capital</td><td>Landlord priority return of AED 2,000 / sqm first, fit-out capital repaid from a 75/25 cash split, then 50/50, 60/40 and 65/35 to the operator across revenue tiers</td><td>Sky Tower floor 24</td></tr>
   </table></div>
   <div class="grid2" style="margin-top:14px">
     <div class="reco"><b>What landlords get.</b> Industrious states its landlord partners earn about 30% more than they would on a lease; German operators cite 15% to 20% above market rent for management contracts, with owners clearing market rent at around 90% occupancy. This model shows the landlord at <span id="precUp"></span> over a plain lease at the priority rate.</div>
-    <div class="reco"><b>How this JV differs.</b> A pure management agreement gives the landlord no floor: it takes all the operating risk. This structure keeps the landlord's AED 2,000 senior, which makes it closer to a hybrid lease at full base rent, and adds an explicit, auditable tier test. The fit-out tranche is repaid as capital at 12% before the split, rather than being netted out of the landlord's share as in a management agreement.</div>
+    <div class="reco"><b>How this JV differs.</b> A pure management agreement gives the landlord no floor: it takes all the operating risk. This structure keeps the landlord's AED 2,000 senior, which makes it closer to a hybrid lease at full base rent, and adds an explicit, auditable tier test. The fit-out tranche is repaid as capital at 8% before the split, rather than being netted out of the landlord's share as in a management agreement.</div>
   </div>
   <p class="note">Sources: Savills UK Flex Overview 2025; IWG plc preliminary results FY2025 (March 2026); Allwork.Space interview with Industrious CEO Jamie Hodari (Aug 2020); WealthManagement.com on landlord management agreements (Mar 2020); REFIRE on German flex revenue sharing (Aug 2025); Deskworks guide to coworking management agreements; WeWork newsroom (Feb 2024). Fee percentages in these agreements are rarely disclosed and vary deal by deal.</p>
 </div></section>
@@ -478,7 +478,7 @@ footer{border-top:1px solid var(--line);padding:18px 0 40px;font-size:11.5px;col
 
 <script>
 const SQFT=10.7639;
-const BASE={rate:5905,occ:95,esc:5,dens:6.5,capex:550,fit:6,rf:6,base:2000,besc:5,sc:0,hurdle:12,sweep:75,trap:7,kick:0,kickOn:0,fund:1,fee:5,t1:80,t2:90,s0:50,s1:60,s2:65,guar:0,term:10,struct:0,lsplit:75,lsplit2:75};
+const BASE={rate:5905,occ:95,esc:5,dens:6.5,capex:550,fit:6,rf:6,base:2000,besc:5,sc:0,hurdle:8,sweep:75,trap:7,kick:0,kickOn:0,fund:1,fee:5,t1:80,t2:90,s0:50,s1:60,s2:65,guar:0,term:10,struct:0,lsplit:75,lsplit2:75};
 const FIX={sqm:2146.44,cont:0.05,vat:0.05,setup:80000,legal:110000,marketing:500000,preopen:2,rampStart:0.60,rampStep:0.05,credit:0.01,
   coreMonth:105100,payrollMonth:52000,opexEsc:0.03,licence:50000,comm:0.10,leaseYears:3};
 FIX.area=FIX.sqm; FIX.sqft=FIX.sqm*SQFT;
@@ -672,7 +672,7 @@ function render(){
   $('rLfPlain').textContent='('+fmt(R.plainTotal)+')'; const inc=R.llTotal+R.dist-R.plainTotal-R.contrib; $('rLfInc').textContent=fmt(inc); $('rLfMult').textContent=((inc+R.contrib)/R.contrib).toFixed(2)+'x';
   $('retNote').innerHTML='The plain-lease comparison lets the same floor at the priority rate with the same '+p.rf+'-month rent-free period and escalation, fully paid. The landlord\'s income in the joint venture runs below the lease only if the priority return falls into arrears; at the base case it is paid in full every month, so the uplift is the landlord\'s share of the residual. At expiry the fitted floor reverts to the landlord, which is not valued here.';
   // structure comparison
-  const cmp=[['Tiered JV: 12% capital tranche ('+p.sweep+'/'+(100-p.sweep)+' sweep), then 50/60/65 tiers',{struct:0,fund:1,kickOn:0,fee:SS?BASE.fee:p.fee},!SS],
+  const cmp=[['Tiered JV: '+(SS?BASE.hurdle:p.hurdle)+'% capital tranche ('+p.sweep+'/'+(100-p.sweep)+' sweep), then 50/60/65 tiers',{struct:0,fund:1,kickOn:0,fee:SS?BASE.fee:p.fee},!SS],
     ['Simple '+p.lsplit+'/'+(100-p.lsplit)+' flat, no management fee',{struct:1,fee:0,lsplit2:p.lsplit},SS&&!p.fee&&p.lsplit2===p.lsplit],
     ['Simple '+p.lsplit+'/'+(100-p.lsplit)+' flat, plus 5% management fee',{struct:1,fee:5,lsplit2:p.lsplit},SS&&p.fee===5&&p.lsplit2===p.lsplit],
     ['Simple '+p.lsplit+'/'+(100-p.lsplit)+' until fit-out recovered, then 50/50',{struct:1,fee:0,lsplit2:50},SS&&!p.fee&&p.lsplit2===50]];
