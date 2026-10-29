@@ -180,13 +180,38 @@ th br+span{font-size:10px}
   <div class="ctl"><div class="row"><label>Desk Rent Escalation</label><span class="val" id="vEsc"></span></div>
     <input type="range" id="iEsc" min="0" max="8" step="1" value="5">
     <div class="hint">Applied each trading year from the phase 1 opening; phase 2 sells off the same rate card. Sky Tower standard 5%.</div></div>
-  <div class="subhdr">Operator terms</div>
+  <div class="subhdr">Operator terms - Boris (operator)</div>
   <div class="ctl"><div class="row"><label>Investor Share of NOI</label><span class="val" id="vSplit"></span></div>
     <input type="range" id="iSplit" min="50" max="100" step="5" value="70">
     <div class="hint" id="hSplit"></div></div>
   <div class="ctl"><div class="row"><label>Management Fee (of revenue)</label><span class="val" id="vFee"></span></div>
     <input type="range" id="iFee" min="0" max="8" step="0.5" value="5">
-    <div class="hint">Charged monthly on collected revenue, before the NOI split. Sky Tower negotiated set: 5%.</div></div>
+    <div class="hint">Paid to Boris as operator, monthly on collected revenue, before the NOI split. Sky Tower negotiated set: 5%.</div></div>
+  <div class="subhdr">Consultant fees - Gas (acquisition &amp; leasing)</div>
+  <div class="ctl"><div class="row"><label>Acquisition Fee</label><span class="val" id="vAcq"></span></div>
+    <input type="range" id="iAcq" min="0" max="800000" step="10000" value="430000">
+    <div class="hint" id="hAcq"></div></div>
+  <div class="ctl"><div class="row"><label>Stage 1 Pre-launch Consulting</label><span class="val" id="vC1"></span></div>
+    <input type="range" id="iC1" min="0" max="300000" step="10000" value="200000">
+    <div class="hint">Consulting agreement cl. 4.1: fixed, 70% at signing, 30% on delivery of Deliverables 1-9. Includes subcontractors.</div></div>
+  <div class="ctl"><div class="row"><label>Stage 2 Retainer / month</label><span class="val" id="vRet"></span></div>
+    <input type="range" id="iRet" min="0" max="60000" step="5000" value="40000">
+    <div class="hint">Cl. 4.2: AED 40,000 a month, months 2-6 of the engagement, during fit-out; unchanged if construction runs late.</div></div>
+  <div class="ctl"><div class="row"><label>Retainer Months</label><span class="val" id="vRetM"></span></div>
+    <input type="range" id="iRetM" min="0" max="9" step="1" value="5">
+    <div class="hint" id="hRetM"></div></div>
+  <div class="ctl"><div class="row"><label>Stage 3 Launch Support</label><span class="val" id="vLaunch"></span></div>
+    <input type="range" id="iLaunch" min="0" max="100000" step="5000" value="50000">
+    <div class="hint" id="hLaunch"></div></div>
+  <div class="ctl"><div class="row"><label>Performance Bonuses</label><span class="val" id="vBon"></span></div>
+    <div class="seg" id="segBon" style="grid-template-columns:repeat(2,1fr)"><button data-v="1" class="on">Include</button><button data-v="0">Exclude</button></div>
+    <div class="hint" id="hBon"></div></div>
+  <div class="ctl"><div class="row"><label>WALE Kicker Tier</label><span class="val" id="vWale"></span></div>
+    <div class="seg" id="segWale" style="grid-template-columns:repeat(3,1fr)"><button data-v="0">&lt;24 mo</button><button data-v="300000">24-30 mo</button><button data-v="500000" class="on">30+ mo</button></div>
+    <div class="hint">Cl. 4.4.2: WALE at opening + 3 months; 36-month minimum leases in the premium phase put it in the top tier. Paid in 4 quarterly instalments, months 13-24 after opening.</div></div>
+  <div class="ctl"><div class="row"><label>Consultant Fees Paid By</label><span class="val" id="vPayer"></span></div>
+    <div class="seg" id="segPayer" style="grid-template-columns:repeat(2,1fr)"><button data-v="inv" class="on">Investor</button><button data-v="op">Boris (operator)</button></div>
+    <div class="hint">Investor: fees are funded in equity like the broker commission (later instalments come out of distributions). Boris: fees come out of his management fee and NOI share; investor returns unchanged.</div></div>
   <div class="subhdr">Optional exit</div>
   <div class="ctl"><div class="row"><label>Sale of Operating Business</label><span class="val" id="vExit"></span></div>
     <input type="range" id="iExit" min="0" max="6" step="0.5" value="0">
@@ -218,7 +243,7 @@ th br+span{font-size:10px}
         <div><span>Payback (interpolated)</span><span id="rPay"></span></div>
         <div><span>Average cash yield on equity, years 2 onward</span><span id="rYield"></span></div>
       </div></div>
-    <div class="retcard"><h3>Operator</h3>
+    <div class="retcard"><h3>Operator - Boris (5% fee + 30% of NOI)</h3>
       <div class="big" id="rGp"></div>
       <div class="rows">
         <div><span>Management fee, total term</span><span id="rGpFee"></span></div>
@@ -230,6 +255,12 @@ th br+span{font-size:10px}
       </div></div>
   </div>
   <p class="note" id="retNote"></p>
+</div></section>
+
+<section class="sec"><h2>Consultant Fees - Gas &amp; Acquisition Fee Schedule</h2><div class="body">
+  <div class="cards" id="gasCards"></div>
+  <div class="tscroll" style="margin-top:16px"><table id="tFees"></table></div>
+  <p class="note" id="feeNote"></p>
 </div></section>
 
 <section class="sec"><h2>Sources &amp; Uses / Deal Terms</h2><div class="body">
@@ -303,7 +334,7 @@ th br+span{font-size:10px}
 </div></main>
 
 <footer><div class="wrap">
-  <b style="color:var(--navy)">Method and assumptions.</b> Monthly engine, six units on floor 24 of Sky Tower (2,146.44 sqm, 23,104 sq ft per title deeds), all of it rentable suite area and run as one serviced-office operation, taken in two phases on one direct head lease. Phase 1 - 2401, 2404, 2405, 2406 (1,518.60 sqm) - hands over on 15 January 2027 and starts the 10-year term. Phase 2 - 2402, 2403 (627.84 sqm) - hands over 2 months later (scenario A, 15 March 2027) or 12 months later at the end of the sitting tenant's 1-year lease (scenario B, 15 January 2028), and expires with the main lease. Head rent AED 2,000/sqm in lease year 1 on all units, 5% annual escalation on each 15 January anniversary, 3 months rent-free from each phase's handover; service charge from each handover; security deposit 25% of first-year rent per phase, returned at term end. No compensation to any outgoing tenant. Fit-out AED 550/sq ft plus 5% contingency, 9 months per phase; 5% VAT on fit-out recovered the following year. Legal and company set-up AED 120,000 once at signing; broker commission 10% of first-year head rent per phase, paid at each phase's handover; launch marketing AED 250,000 per 1,065 sqm (the 750 + 315 sqm model basis) scaled to each phase. Phase 1 costs are funded at closing; phase 2 fit-out, deposit, broker fee and marketing are called at the phase 2 handover. Two months of pre-opening payroll per phase. Each phase opens at 60% of capacity desks, rising 5 points a month to stabilisation; 1% credit loss. Capacity 70 sq ft of suite area per desk. Core operating costs are the Sky Tower Floor 38 budget (AED 105,100 a month for 23,000 sq ft) scaled pro rata to each phase's area, 3% escalation; ADGM licence AED 50,000 a year. Leasing commission 10% of contracted annual rent on origination and each 3-year renewal. Operator: 5% management fee on collected revenue, then a 70/30 investor/operator split of each year's positive NOI after fee (no loss carry-forward); the investor funds any negative year through a working-capital reserve sized at closing. Annual cash flows; returns are pre-tax and unlevered; no residual value at lease expiry unless the optional business-sale control is switched on.<br><br>
+  <b style="color:var(--navy)">Method and assumptions.</b> Monthly engine, six units on floor 24 of Sky Tower (2,146.44 sqm, 23,104 sq ft per title deeds), all of it rentable suite area and run as one serviced-office operation, taken in two phases on one direct head lease. Phase 1 - 2401, 2404, 2405, 2406 (1,518.60 sqm) - hands over on 15 January 2027 and starts the 10-year term. Phase 2 - 2402, 2403 (627.84 sqm) - hands over 2 months later (scenario A, 15 March 2027) or 12 months later at the end of the sitting tenant's 1-year lease (scenario B, 15 January 2028), and expires with the main lease. Head rent AED 2,000/sqm in lease year 1 on all units, 5% annual escalation on each 15 January anniversary, 3 months rent-free from each phase's handover; service charge from each handover; security deposit 25% of first-year rent per phase, returned at term end. No compensation to any outgoing tenant. Fit-out AED 550/sq ft plus 5% contingency, 9 months per phase; 5% VAT on fit-out recovered the following year. Legal and company set-up AED 120,000 once at signing; broker commission 10% of first-year head rent per phase, paid at each phase's handover; launch marketing AED 250,000 per 1,065 sqm (the 750 + 315 sqm model basis) scaled to each phase. Phase 1 costs are funded at closing; phase 2 fit-out, deposit, broker fee and marketing are called at the phase 2 handover. Two months of pre-opening payroll per phase. Each phase opens at 60% of capacity desks, rising 5 points a month to stabilisation; 1% credit loss. Capacity 70 sq ft of suite area per desk. Core operating costs are the Sky Tower Floor 38 budget (AED 105,100 a month for 23,000 sq ft) scaled pro rata to each phase's area, 3% escalation; ADGM licence AED 50,000 a year. Leasing commission 10% of contracted annual rent on origination and each 3-year renewal. Operator (Boris): 5% management fee on collected revenue, then a 70/30 investor/operator split of each year's positive NOI after fee (no loss carry-forward); the investor funds any negative year through a working-capital reserve sized at closing. Consultant (Gas, acquisition and leasing, not operator): acquisition fee AED 430,000 (10% of full-floor first-year head rent, the broker basis) split by area and paid at phase 1 lease signing and the phase 2 handover; Sky Tower consulting agreement (Feb 2026) applied once to the floor - stage 1 pre-launch AED 200,000 (70% at signing, 30% on delivery), stage 2 retainer AED 40,000 a month for months 2-6, stage 3 launch support AED 50,000 within 30 days of opening, occupancy bonus up to AED 550,000 pro rata to occupancy signed 2 months after opening, WALE kicker up to AED 500,000 in four quarterly instalments, months 13-24 after opening; funded by the investor in the base case. Annual cash flows; returns are pre-tax and unlevered; no residual value at lease expiry unless the optional business-sale control is switched on.<br><br>
   <b style="color:var(--navy)">Sources.</b> Unit areas: landlord title-deed schedule for floor 24, October 2026. Lease terms and cost basis: Sky Tower 1,065 sqm Lease Model, October 2026. Desk pricing: RICE Offices rate card, September 2026 (Sky Tower L25 Premium and L34 Business, 11 suites, ex-VAT), RICE Radiant pre-lease rate card; Centrum Sky Tower, The Executive Centre, Regus, Cloud Spaces public rate cards and Office Hub listings (Aug-Sep 2026). Market rents: Property Finder and Bayut Sky Tower office listings (Sep 2026); Cushman &amp; Wakefield Abu Dhabi Mid-Year 2026; Savills Abu Dhabi Q2 2026. Operating cost basis: Sky Tower Floor 38 operating budget and Deliverables model, July 2026. October 2026. For the intended recipient only.
 </div></footer>
 
@@ -313,7 +344,8 @@ const SQFT=10.7639;
 const UNITS=[{u:'2401',sqm:452.07,ph:1,st:'Tenant leaving - in discussion'},{u:'2402',sqm:338.82,ph:2,st:'Sitting tenant, 1-year lease'},{u:'2403',sqm:289.02,ph:2,st:'Sitting tenant, 1-year lease'},
   {u:'2404',sqm:447.61,ph:1,st:'Vacant from 15 Jan 2027'},{u:'2405',sqm:319.03,ph:1,st:'Vacant from 15 Jan 2027'},{u:'2406',sqm:299.89,ph:1,st:'Vacant from 15 Jan 2027'}];
 const PH=[1,2].map(k=>{const us=UNITS.filter(x=>x.ph===k);const sqm=us.reduce((a,x)=>a+x.sqm,0);return {k,sqm,sqft:sqm*SQFT,units:us.map(x=>x.u)};});
-const BASE={d2:2,hr:2000,key:120000,brok:10,free:3,term:10,hesc:5,sc:18,dep:25,capex:550,fit:9,rent:3500,dens:70,occ:95,esc:5,split:70,fee:5,exit:0,exitY:5,eff:100};
+const fmt2s=n=>n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+const BASE={d2:2,acq:430000,c1:200000,ret:40000,retM:5,launch:50000,bon:1,wale:500000,payer:'inv',hr:2000,key:120000,brok:10,free:3,term:10,hesc:5,sc:18,dep:25,capex:550,fit:9,rent:3500,dens:70,occ:95,esc:5,split:70,fee:5,exit:0,exitY:5,eff:100};
 const FIX={cont:0.05,vat:0.05,mktPer:250000/1065,preopen:2,rampStart:0.60,rampStep:0.05,credit:0.01,
   coreRef:105100,coreRefSqft:23000,payrollShare:53500/105100,opexEsc:0.03,licence:50000,comm:0.10,leaseYears:3};
 FIX.area=PH[0].sqm+PH[1].sqm; FIX.sqft=FIX.area*SQFT;
@@ -381,10 +413,30 @@ function engine(p){
   let exitVal=0, exitY=0;
   if(p.exit>0 && p.exitY<p.term){ exitY=p.exitY; exitVal=p.exit*years[exitY-1].noi_bf; }
   const horizon=exitY||p.term;
+  // fee schedule: consultant (Gas) + head-lease broker, by lease month (0 = at signing, 1 = 15 Jan 2027)
+  const sched=[];
+  act.forEach(P=>{const mm=P.i===0?0:P.hm, lab=P.i===0?'phase 1 lease signing':'phase 2 handover';
+    sched.push({m:mm,gas:true,cap:true,item:'Acquisition fee - '+lab+' ('+P.units.join(', ')+', '+fmt2s(P.sqm)+' sqm)',amt:p.acq*P.sqm/FIX.area});
+    sched.push({m:mm,gas:false,item:'Head-lease broker - '+lab+' ('+p.brok+'% of Y1 rent)',amt:P.brok});});
+  if(p.c1>0){sched.push({m:0,gas:true,item:'Stage 1 pre-launch consulting - 70% advance at signing',amt:p.c1*0.7});
+    sched.push({m:2,gas:true,item:'Stage 1 pre-launch consulting - 30% on delivery of Deliverables 1-9',amt:p.c1*0.3});}
+  for(let k=0;k<p.retM;k++) if(p.ret>0) sched.push({m:2+k,gas:true,item:'Stage 2 construction-period retainer - month '+(k+2),amt:p.ret});
+  const o1=ph[0].open;
+  if(p.launch>0) sched.push({m:o1+1,gas:true,item:'Stage 3 launch support - within 30 days of opening',amt:p.launch});
+  let ctrlOcc=0;
+  if(p.bon){const ctrl=o1+2; ctrlOcc=ctrl<=months?rows[ctrl-1].occ:0;
+    sched.push({m:ctrl,gas:true,item:'Occupancy bonus - '+Math.round(ctrlOcc*100)+'% signed at opening + 2 months, pro rata to 95% (cap 550,000)',amt:550000*Math.min(1,ctrlOcc/0.95)});
+    if(p.wale>0) for(let q=0;q<4;q++) sched.push({m:o1+12+3*q,gas:true,item:'WALE kicker - quarterly instalment '+(q+1)+' of 4',amt:p.wale/4});}
+  const per=m=>m<=1?0:Math.floor((m-1)/12);
+  const live=sched.filter(s=>s.m<=months&&per(s.m)<=horizon).sort((a,b)=>a.m-b.m);
+  const gasY=new Array(horizon+1).fill(0), gasCap=new Array(horizon+1).fill(0);
+  live.filter(s=>s.gas).forEach(s=>{const y=per(s.m); if(s.cap||y===0) gasCap[y]+=s.amt; else gasY[y]+=s.amt;});
+  const gasTot=live.filter(s=>s.gas).reduce((a,s)=>a+s.amt,0), invPays=p.payer!=='op';
   const calls=new Array(horizon+1).fill(0), vatRec=new Array(horizon+2).fill(0);
   let depTot=0;
   act.forEach(P=>{ if(P.dp<horizon){ calls[P.dp]+=P.up; vatRec[P.dp+1]+=P.vat; depTot+=P.dep; } });
   calls[0]+=wc;
+  if(invPays) gasCap.forEach((v,y)=>calls[y]+=v);
   const equity=calls.reduce((a,b)=>a+b,0);
   const lp=[], proj=[], distA=[];
   for(let y=0;y<=horizon;y++){
@@ -393,6 +445,8 @@ function engine(p){
     c+=vatRec[y]; pc+=vatRec[y];
     if(y===horizon){c+=depTot; pc+=depTot;}
     if(exitY && y===exitY){c+=exitVal*split; pc+=exitVal;}
+    if(invPays) c-=gasY[y];
+    pc-=gasY[y]+(invPays?0:gasCap[y]);
     distA.push(c); lp.push(c-calls[y]); proj.push(pc-calls[y]);
   }
   const dist=distA.reduce((a,b)=>a+b,0);
@@ -400,7 +454,7 @@ function engine(p){
   let cum=0, payback=null;
   for(let y=0;y<lp.length;y++){const prev=cum; cum+=lp[y]; if(y>0&&cum>=0&&prev<0&&payback===null){payback=(y-1)+(lp[y]?-prev/lp[y]:0);}}
   const gpFee=years.slice(0,horizon).reduce((a,t)=>a+t.fee,0), gpOp=years.slice(0,horizon).reduce((a,t)=>a+t.gp_op,0)+(exitY?exitVal*(1-split):0);
-  const pdist=proj.reduce((a,b,i)=>a+b+calls[i],0);
+  const pdist=proj.reduce((a,b)=>a+b,0)+equity;
   // stabilised year: first full lease year with every active phase at stabilised occupancy
   const lastStab=Math.max(...act.map(P=>P.stabM));
   let sy=Math.min(p.term-1,Math.ceil((lastStab-1)/12)); sy=Math.max(sy,0);
@@ -415,7 +469,7 @@ function engine(p){
   const sum=k=>act.reduce((a,P)=>a+P[k],0);
   return {ph,act,leasedSqm,desks,areaSqft:leasedSqm*SQFT,headRent:p.hr*leasedSqm,capex:sum('capex'),cont:sum('cont'),vatCapex:sum('vat'),initial:sum('mkt'),deposit:sum('dep'),key:p.key,brok:sum('brok'),
     calls,wc,equity,years,rows,lp,proj,dist,profit:dist-equity,mult:dist/equity,irr,pirr,pmult:pdist/equity,
-    payback,gpFee,gpOp,gpTotal:gpFee+gpOp,stabRev,stabMargin,rentPct,beOcc,beRate,avgYield,exitVal,exitY,horizon,sy,rampM};
+    payback,gpFee,gpOp,gpGross:gpFee+gpOp,gpTotal:gpFee+gpOp-(invPays?0:gasTot),sched:live,gasTot,gasY,gasCap,ctrlOcc,invPays,stabRev,stabMargin,rentPct,beOcc,beRate,avgYield,exitVal,exitY,horizon,sy,rampM};
 }
 function IRR(cf){let lo=-0.99,hi=5;const f=r=>cf.reduce((a,c,i)=>a+c/Math.pow(1+r,i),0);if(f(lo)*f(hi)>0)return null;for(let i=0;i<200;i++){const mid=(lo+hi)/2;if(f(lo)*f(mid)<=0)hi=mid;else lo=mid;}return (lo+hi)/2;}
 if(typeof module!=="undefined"){module.exports={engine,BASE,FIX,PH,UNITS};}
@@ -474,10 +528,29 @@ function render(){
     '<small>Equity '+fm(Rs.equity)+' &middot; payback '+(Rs.payback===null?'n/a':Rs.payback.toFixed(1)+' yrs')+'</small><small>NOI after fee Y'+(Rs.sy+1)+' '+fm(Rs.years[Rs.sy].noi_af)+' &middot; profit '+fm(Rs.profit)+'</small></div>';}).join('');
   document.querySelectorAll('#scCards .click').forEach(c=>{const go=()=>setD2(parseInt(c.dataset.d));c.addEventListener('click',go);c.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go();}});});
   const A=SC[0].R, B=SC[1].R;
+  // consultant fees (Gas) and fee schedule
+  const perM=m=>m<=1?0:Math.floor((m-1)/12);
+  const gas=R.sched.filter(s=>s.gas), brokS=R.sched.filter(s=>!s.gas);
+  const sumIf=f=>gas.filter(f).reduce((a,s)=>a+s.amt,0);
+  const gAcq=sumIf(s=>s.cap), gBon=sumIf(s=>/bonus|kicker/i.test(s.item)), gFix=R.gasTot-gAcq-gBon;
+  $('vAcq').textContent=fm(p.acq); $('hAcq').textContent='Gas, for originating and structuring the floor 24 deal. Split by area and tied to the acquisition stages, like the broker: '+fm(p.acq*PH[0].sqm/FIX.area)+' at phase 1 lease signing, '+fm(p.acq*PH[1].sqm/FIX.area)+' at the phase 2 handover ('+dt(P2.hm)+'). Base 430,000 = 10% of full-floor Y1 head rent, the broker basis.';
+  $('vC1').textContent=fm(p.c1); $('vRet').textContent=fm(p.ret); $('vRetM').textContent=p.retM+' months'; $('hRetM').textContent='Contract: 5 months (months 2-6) = '+fm(p.ret*5)+'. Now '+fm(p.ret*p.retM)+', '+(p.retM?dtS(2)+' - '+dtS(1+p.retM):'none')+'; fit-out of phase 1 runs to '+dtS(P1.open)+'.';
+  $('vLaunch').textContent=fm(p.launch); $('hLaunch').textContent='Cl. 4.3: one month from the official opening ('+dt(P1.open)+'), paid within 30 days.';
+  $('vBon').textContent=p.bon?fm(gBon):'excluded'; $('hBon').textContent='Cl. 4.4.1 occupancy bonus up to 550,000 for 95% of desks under signed leases 2 months after opening, fixed pro rata at that date: the model ramp gives '+pct(R.ctrlOcc,0)+' on '+dt(P1.open+2)+'. Plus the WALE kicker below. Quality conditions apply (90% at opening + 3 months, WALE 24+ months, 70% of leases 36+ months, rent at least 90% of model).';
+  $('vWale').textContent=p.wale?fm(p.wale):'none'; $('vPayer').textContent=p.payer==='op'?'Boris':'Investor';
+  $('gasCards').innerHTML=[
+    ['Gas - total fees',fm(R.gasTot),'paid by '+(R.invPays?'the investor':'Boris as operator')],
+    ['Acquisition fee',fm(gAcq),'tied to phase 1 signing and phase 2 handover'],
+    ['Consulting + bonuses',fm(gFix+gBon),fm(gFix)+' fixed (stages 1-3) + '+fm(gBon)+' performance, at risk']
+  ].map(c=>'<div class="card"><div class="y">'+c[0]+'</div><div class="irr">'+c[1]+'</div><small>'+c[2]+'</small></div>').join('');
+  $('tFees').innerHTML='<tr><th>Date</th><th>Payee</th><th style="text-align:left">Item</th><th>AED</th><th>Model year</th></tr>'+
+    R.sched.map(s=>'<tr'+(s.cap?' class="hl"':'')+'><td style="white-space:nowrap">'+(s.m===0?'Signing, Jan 2027':dt(s.m))+'</td><td>'+(s.gas?'Gas':'Broker')+'</td><td style="text-align:left;white-space:normal">'+s.item+'</td><td>'+fmt(s.amt)+'</td><td>Y'+perM(s.m)+'</td></tr>').join('')+
+    '<tr class="tot"><td>Total</td><td>Gas</td><td></td><td>'+fmt(R.gasTot)+'</td><td></td></tr><tr class="tot"><td>Total</td><td>Broker</td><td></td><td>'+fmt(brokS.reduce((a,s)=>a+s.amt,0))+'</td><td></td></tr>';
+  $('feeNote').textContent='Gas acts as acquisition and leasing consultant, not operator: the 5% management fee and 30% of NOI go to Boris. Stages 1-3 and the bonuses follow the Sky Tower consulting agreement (Feb 2026), applied once to floor 24 and timed from the phase 1 handover. The acquisition fee and the head-lease broker commission are both split by phase and paid at phase 1 signing and the phase 2 handover. Model year Y0 items are funded at closing (or with the phase 2 capital call); later instalments '+(R.invPays?'are paid out of investor distributions.':'are paid by Boris.');
   // exec summary
   const yS=R.years[R.sy];
   $('exSum').innerHTML='Floor 24 of Sky Tower, Al Reem Island - six units, <b>'+fmt2(FIX.area)+' sqm</b> ('+fmt(FIX.sqft)+' sq ft) - taken on one direct head lease in two phases. <b>Phase 1</b>: 2401, 2404, 2405 and 2406 ('+fmt2(PH[0].sqm)+' sqm) hand over on <b>15 January 2027</b> and open on '+dt(P1.open)+' after a '+p.fit+'-month fit-out. <b>Phase 2</b>: 2402 and 2403 ('+fmt2(PH[1].sqm)+' sqm) follow when the sitting tenant leaves - <b>scenario A</b> on 15 March 2027 (+2 months), <b>scenario B</b> on 15 January 2028 (+12 months, end of the tenant\'s 1-year lease) - and expire with the main lease. Terms as in the 750 + 315 sqm model: AED '+fmt(hrSqm)+'/sqm (<b>'+fm(p.hr*FIX.area)+'</b> a year on the full floor), '+p.term+'-year term, '+p.free+' months rent-free per phase, '+(p.hesc>0?p.hesc.toFixed(1)+'% escalation':'rent fixed for the term')+', legal set-up '+fm(p.key)+', broker '+p.brok+'%. Sold at <b>AED '+fmt(p.rent)+' per desk a month</b> (AED '+fmt(perSuite)+'/sqm suite), the full floor produces revenue of <b>'+fm(R.stabRev)+'</b> and NOI after fee of <b>'+fm(yS.noi_af)+'</b> in lease year '+(R.sy+1)+' (first full year with both phases stabilised), a '+pct(R.stabMargin,0)+' margin.';
-  $('exSum2').innerHTML='Showing <b>'+scName(p.d2)+'</b>. The investor funds <b>'+fm(R.equity)+'</b>'+(R.calls[1]>0?' - '+fm(R.calls[0])+' at closing and '+fm(R.calls[1])+' called at the phase 2 handover -':' at closing (phase 2 costs are called in March 2027, inside the first year)')+' and receives '+p.split+'% of NOI after a '+p.fee.toFixed(1)+'% management fee: <b>'+pct(R.irr)+' IRR / '+R.mult.toFixed(2)+'x</b> over '+R.horizon+' years, project '+pct(R.pirr)+' / '+R.pmult.toFixed(2)+'x before operator terms. The 10 extra months of phase 2 delay in scenario B cost <b>'+fm(A.profit-B.profit)+'</b> of investor profit and '+fm(A.gpTotal-B.gpTotal)+' of operator income against scenario A, as 2402-2403 lose 10 months of trading. '+(B.irr>=A.irr?'The IRR moves the other way ('+pct(B.irr)+' vs '+pct(A.irr)+') because '+fm(B.calls[1])+' of phase 2 capital is called a year later and its fit-out carry is paid from phase 1 income rather than new equity: <b>delay costs money, not yield</b>.':'Scenario B also costs '+((A.irr-B.irr)*100).toFixed(1)+' IRR points.')+' Taking phase 1 alone returns '+pct(SC[2].R.irr)+' / '+SC[2].R.mult.toFixed(2)+'x.';
+  $('exSum2').innerHTML='Showing <b>'+scName(p.d2)+'</b>. The investor funds <b>'+fm(R.equity)+'</b>'+(R.calls[1]>0?' - '+fm(R.calls[0])+' at closing and '+fm(R.calls[1])+' called at the phase 2 handover -':' at closing (phase 2 costs are called in March 2027, inside the first year)')+' and receives '+p.split+'% of NOI after a '+p.fee.toFixed(1)+'% management fee: <b>'+pct(R.irr)+' IRR / '+R.mult.toFixed(2)+'x</b> over '+R.horizon+' years, project '+pct(R.pirr)+' / '+R.pmult.toFixed(2)+'x before operator terms. The 10 extra months of phase 2 delay in scenario B cost <b>'+fm(A.profit-B.profit)+'</b> of investor profit and '+fm(A.gpTotal-B.gpTotal)+' of Boris\'s operator income against scenario A, as 2402-2403 lose 10 months of trading. '+(B.irr>=A.irr?'The IRR moves the other way ('+pct(B.irr)+' vs '+pct(A.irr)+') because '+fm(B.calls[1])+' of phase 2 capital is called a year later and its fit-out carry is paid from phase 1 income rather than new equity: <b>delay costs money, not yield</b>.':'Scenario B also costs '+((A.irr-B.irr)*100).toFixed(1)+' IRR points.')+' Taking phase 1 alone returns '+pct(SC[2].R.irr)+' / '+SC[2].R.mult.toFixed(2)+'x. Boris, as operator, earns the '+p.fee.toFixed(1)+'% fee and '+(100-p.split)+'% of NOI ('+fm(R.gpGross)+' over the term). Gas, as acquisition and leasing consultant, earns <b>'+fm(R.gasTot)+'</b>: a '+fm(gAcq)+' acquisition fee paid at phase 1 signing and the phase 2 handover, '+fm(gFix)+' of fixed consulting (stages 1-3) and '+fm(gBon)+' of performance bonuses, '+(R.invPays?'funded by the investor':'paid by Boris')+'.';
   // units & phasing
   $('tUnits').innerHTML='<tr><th>Unit</th><th>Title deed sqm</th><th>sq ft</th><th>Capacity desks</th><th>Phase</th><th style="text-align:left">Status</th><th>Handover</th></tr>'+
     UNITS.map(u=>{const P=R.ph[u.ph-1];return '<tr><td>'+u.u+'</td><td>'+fmt2(u.sqm)+'</td><td>'+fmt(u.sqm*SQFT)+'</td><td>'+fmt(u.sqm*SQFT/p.dens)+'</td><td>'+u.ph+'</td><td style="text-align:left;color:var(--muted)">'+u.st+'</td><td>'+dt(P.hm)+'</td></tr>';}).join('')+
@@ -494,9 +567,9 @@ function render(){
     prow('Upfront cost, investor-funded',P=>'<td>'+fm(P.up)+' &middot; '+(P.dp===0?'year 0':'year '+P.dp)+'</td>');
   drawGantt(R,p);
   // returns cards
-  $('rIrr').textContent=pct(R.irr)+' IRR'; $('rEq').textContent=fm(R.equity); $('rCall').textContent=R.calls[1]>0?fm(R.calls[1])+' (Jan 2028)':fm(P2.up)+' (Mar 2027, year 0)'; $('rDist').textContent=fm(R.dist); $('rProfit').textContent=fm(R.profit);
+  $('rIrr').textContent=pct(R.irr)+' IRR'; $('rEq').textContent=fm(R.equity); const c2=P2.up+(R.invPays?p.acq*PH[1].sqm/FIX.area:0); $('rCall').textContent=fm(c2)+(p.d2===12?' (Jan 2028)':' (Mar 2027, year 0)'); $('rDist').textContent=fm(R.dist); $('rProfit').textContent=fm(R.profit);
   $('rMult').textContent=R.mult.toFixed(2)+'x'; $('rPay').textContent=R.payback===null?'beyond term':R.payback.toFixed(1)+' years'; $('rYield').textContent=pct(R.avgYield);
-  $('rGp').textContent=fm(R.gpTotal); $('rGpFee').textContent=fm(R.gpFee); $('rGpOp').textContent=fm(R.gpOp); $('rGpPct').textContent=pct(R.gpTotal/(R.gpTotal+R.profit),0);
+  $('rGp').textContent=fm(R.gpTotal)+(R.invPays?'':' net of Gas fees'); $('rGpFee').textContent=fm(R.gpFee); $('rGpOp').textContent=fm(R.gpOp); $('rGpPct').textContent=pct(R.gpTotal/(R.gpTotal+R.profit),0);
   $('rProjIrr').textContent=pct(R.pirr); $('rProjMult').textContent=R.pmult.toFixed(2)+'x'; $('rRentPct').textContent=pct(R.rentPct,0);
   $('retNote').textContent='The investor return is income only: with a head lease there is no asset to sell at the end, so the fit-out is a wasting investment recovered from operating cash flow within the term. Phase 2 runs on a shorter remaining term than phase 1, so each month of handover delay cuts its trading life and moves its fit-out spend later.';
   // uses
@@ -504,7 +577,10 @@ function render(){
   $('tUses').innerHTML='<tr><th>Uses</th><th>Phase 1 &middot; closing, Jan 2027</th><th>Phase 2 &middot; '+dtS(P2.hm)+'</th><th>Total</th><th>%</th></tr>'+
     uses.map(u=>{const a=P1[u[1]], b=P2.active?P2[u[1]]:0;return '<tr><td>'+u[0]+'</td><td>'+fmt(a)+'</td><td>'+fmt(b)+'</td><td>'+fmt(a+b)+'</td><td>'+pct((a+b)/R.equity,1)+'</td></tr>';}).join('')+
     '<tr><td>Working-capital reserve (fit-out rent, pre-opening, ramp)</td><td>'+fmt(R.wc)+'</td><td>0</td><td>'+fmt(R.wc)+'</td><td>'+pct(R.wc/R.equity,1)+'</td></tr>'+
-    '<tr class="tot"><td>Total investor equity</td><td>'+fmt(P1.up+R.wc)+'</td><td>'+fmt(P2.active?P2.up:0)+'</td><td>'+fmt(R.equity)+'</td><td>100%</td></tr>';
+    (R.invPays?(()=>{const a1=sumIf(s=>s.cap&&s.m===0), a2=gAcq-a1, o0=sumIf(s=>!s.cap&&perM(s.m)===0);
+      return '<tr><td>Acquisition fee - Gas (by phase)</td><td>'+fmt(a1)+'</td><td>'+fmt(a2)+'</td><td>'+fmt(gAcq)+'</td><td>'+pct(gAcq/R.equity,1)+'</td></tr>'+
+      '<tr><td>Consulting fees - Gas, paid in year 0 (stages 1-3'+(p.bon?', occupancy bonus':'')+')</td><td>'+fmt(o0)+'</td><td>0</td><td>'+fmt(o0)+'</td><td>'+pct(o0/R.equity,1)+'</td></tr>';})():'')+
+    '<tr class="tot"><td>Total investor equity</td><td>'+fmt(R.equity-(P2.active?P2.up:0)-(R.invPays?sumIf(s=>s.cap&&s.m>0):0))+'</td><td>'+fmt((P2.active?P2.up:0)+(R.invPays?sumIf(s=>s.cap&&s.m>0):0))+'</td><td>'+fmt(R.equity)+'</td><td>100%</td></tr>';
   $('tTerms').innerHTML='<tr><th>Deal terms</th><th>Value</th></tr>'+[
     ['Building','Sky Tower, Shams Abu Dhabi, Al Reem Island (ADGM) - floor 24'],['Area','Six units, '+fmt2(FIX.area)+' sqm ('+fmt(FIX.sqft)+' sq ft) per title deeds, all suite area'],
     ['Phasing','Phase 1 2401, 2404-2406 ('+fmt2(PH[0].sqm)+' sqm) 15 Jan 2027; phase 2 2402-2403 ('+fmt2(PH[1].sqm)+' sqm) '+dt(P2.hm)+' ('+scName(p.d2)+')'],
@@ -531,13 +607,14 @@ function render(){
   let cum=0;
   let cf='<tr><th>AED</th>'+R.lp.map((c,i)=>'<th>Y'+i+'</th>').join('')+'<th>Total</th></tr>';
   cf+='<tr class="mut"><td>Capital called</td>'+R.calls.map(c=>'<td>'+neg(-c)+'</td>').join('')+'<td>'+neg(-R.equity)+'</td></tr>';
-  cf+='<tr class="mut"><td>Distributions (NOI share, VAT refund, deposit'+(R.exitY?', sale':'')+')</td>'+R.lp.map((c,i)=>'<td>'+neg(c+R.calls[i])+'</td>').join('')+'<td>'+neg(R.dist)+'</td></tr>';
+  cf+='<tr class="mut"><td>Distributions (NOI share, VAT refund, deposit'+(R.exitY?', sale':'')+(R.invPays?', net of later Gas instalments':'')+')</td>'+R.lp.map((c,i)=>'<td>'+neg(c+R.calls[i])+'</td>').join('')+'<td>'+neg(R.dist)+'</td></tr>';
+  cf+='<tr class="mut"><td>memo: Gas consultant fees by year ('+(R.invPays?'investor':'Boris')+')</td>'+R.calls.map((c,i)=>'<td>'+neg(-(R.gasY[i]+R.gasCap[i]))+'</td>').join('')+'<td>'+neg(-R.gasTot)+'</td></tr>';
   cf+='<tr><td>Investor net cash flow</td>'+R.lp.map(c=>'<td>'+neg(c)+'</td>').join('')+'<td>'+neg(R.profit)+'</td></tr>';
   cf+='<tr class="hl"><td>Cumulative</td>'+R.lp.map(c=>{cum+=c;return '<td>'+neg(cum)+'</td>';}).join('')+'<td></td></tr>';
   cf+='<tr><td>Project cash flow (before operator terms)</td>'+R.proj.map(c=>'<td>'+neg(c)+'</td>').join('')+'<td>'+neg(R.proj.reduce((a,b)=>a+b,0))+'</td></tr>';
-  cf+='<tr class="mut"><td>Operator fee</td><td></td>'+yrs.slice(0,R.horizon).map(t=>'<td>'+fmt(t.fee)+'</td>').join('')+'<td>'+fmt(R.gpFee)+'</td></tr>';
-  cf+='<tr class="mut"><td>Operator NOI share</td><td></td>'+yrs.slice(0,R.horizon).map((t,i)=>'<td>'+fmt(t.gp_op+((R.exitY&&i+1===R.exitY)?R.exitVal*(1-p.split/100):0))+'</td>').join('')+'<td>'+fmt(R.gpOp)+'</td></tr>';
-  cf+='<tr class="tot"><td>Operator total</td><td></td>'+yrs.slice(0,R.horizon).map((t,i)=>'<td>'+fmt(t.fee+t.gp_op+((R.exitY&&i+1===R.exitY)?R.exitVal*(1-p.split/100):0))+'</td>').join('')+'<td>'+fmt(R.gpTotal)+'</td></tr>';
+  cf+='<tr class="mut"><td>Operator (Boris) management fee</td><td></td>'+yrs.slice(0,R.horizon).map(t=>'<td>'+fmt(t.fee)+'</td>').join('')+'<td>'+fmt(R.gpFee)+'</td></tr>';
+  cf+='<tr class="mut"><td>Operator (Boris) NOI share</td><td></td>'+yrs.slice(0,R.horizon).map((t,i)=>'<td>'+fmt(t.gp_op+((R.exitY&&i+1===R.exitY)?R.exitVal*(1-p.split/100):0))+'</td>').join('')+'<td>'+fmt(R.gpOp)+'</td></tr>';
+  cf+='<tr class="tot"><td>Operator (Boris) total, gross</td><td></td>'+yrs.slice(0,R.horizon).map((t,i)=>'<td>'+fmt(t.fee+t.gp_op+((R.exitY&&i+1===R.exitY)?R.exitVal*(1-p.split/100):0))+'</td>').join('')+'<td>'+fmt(R.gpTotal)+'</td></tr>';
   $('tCf').innerHTML=cf;
   // charts
   drawBars(yrs); drawCum(R.lp);
@@ -673,11 +750,14 @@ function drawCum(lp){
 // wiring
 function setD2(d){S.d2=d;document.querySelectorAll('#segD2 button').forEach(x=>x.classList.toggle('on',parseInt(x.dataset.v)===d));render();}
 if(typeof document!=="undefined"){
-const sliders={iHr:'hr',iKey:'key',iBrok:'brok',iFree:'free',iHesc:'hesc',iSc:'sc',iDep:'dep',iCapex:'capex',iFit:'fit',iRent:'rent',iDens:'dens',iOcc:'occ',iEsc:'esc',iSplit:'split',iFee:'fee',iExit:'exit',iExitY:'exitY',iEff:'eff'};
+const sliders={iHr:'hr',iKey:'key',iBrok:'brok',iFree:'free',iHesc:'hesc',iSc:'sc',iDep:'dep',iCapex:'capex',iFit:'fit',iRent:'rent',iDens:'dens',iOcc:'occ',iEsc:'esc',iSplit:'split',iFee:'fee',iExit:'exit',iExitY:'exitY',iEff:'eff',iAcq:'acq',iC1:'c1',iRet:'ret',iRetM:'retM',iLaunch:'launch'};
+const segs={segBon:['bon',v=>parseInt(v)],segWale:['wale',v=>parseInt(v)],segPayer:['payer',v=>v]};
+const syncSegs=()=>Object.keys(segs).forEach(id=>document.querySelectorAll('#'+id+' button').forEach(x=>x.classList.toggle('on',segs[id][1](x.dataset.v)===S[segs[id][0]])));
+Object.keys(segs).forEach(id=>document.querySelectorAll('#'+id+' button').forEach(b=>b.addEventListener('click',()=>{S[segs[id][0]]=segs[id][1](b.dataset.v);syncSegs();render();})));
 Object.keys(sliders).forEach(id=>{$(id).addEventListener('input',e=>{S[sliders[id]]=parseFloat(e.target.value);render();});});
 document.querySelectorAll('#segD2 button').forEach(b=>b.addEventListener('click',()=>setD2(parseInt(b.dataset.v))));
 document.querySelectorAll('#segTerm button').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('#segTerm button').forEach(x=>x.classList.remove('on'));b.classList.add('on');S.term=parseInt(b.dataset.v);$('iExitY').max=S.term-1;if(S.exitY>=S.term){S.exitY=S.term-1;$('iExitY').value=S.exitY;}render();}));
-$('btnReset').addEventListener('click',()=>{S=Object.assign({},BASE);Object.keys(sliders).forEach(id=>$(id).value=S[sliders[id]]);document.querySelectorAll('#segTerm button').forEach(x=>x.classList.toggle('on',parseInt(x.dataset.v)===S.term));$('iExitY').max=S.term-1;setD2(S.d2);});
+$('btnReset').addEventListener('click',()=>{S=Object.assign({},BASE);Object.keys(sliders).forEach(id=>$(id).value=S[sliders[id]]);document.querySelectorAll('#segTerm button').forEach(x=>x.classList.toggle('on',parseInt(x.dataset.v)===S.term));$('iExitY').max=S.term-1;syncSegs();setD2(S.d2);});
 $('iExitY').max=S.term-1;
 render();
 window.__engine=engine; window.__state=()=>S;
