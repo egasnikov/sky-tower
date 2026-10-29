@@ -292,7 +292,7 @@ footer{border-top:1px solid var(--line);padding:18px 0 40px;font-size:11.5px;col
     <input type="range" id="iAcct" min="0" max="10000" step="500" value="3500">
     <div class="hint" id="hAcct"></div></div>
   <div class="ctl"><div class="row"><label>Refurbishment Reserve</label><span class="val" id="vRef"></span></div>
-    <input type="range" id="iRef" min="0" max="40" step="5" value="20">
+    <input type="range" id="iRef" min="0" max="40" step="5" value="10">
     <div class="hint" id="hRef"></div></div>
   <div class="ctl"><div class="row"><label>Refurbishment Year</label><span class="val" id="vRefY"></span></div>
     <input type="range" id="iRefY" min="4" max="8" step="1" value="6"></div>
@@ -490,7 +490,7 @@ footer{border-top:1px solid var(--line);padding:18px 0 40px;font-size:11.5px;col
 
 <script>
 const SQFT=10.7639;
-const BASE={rate:5905,occ:95,esc:5,dens:6.5,capex:550,fit:6,rf:6,base:2000,besc:5,sc:0,hurdle:8,sweep:75,trap:7,kick:0,kickOn:0,fund:1,fee:5,t1:80,t2:90,s0:50,s1:60,s2:65,guar:0,term:10,struct:0,lsplit:75,lsplit2:75,acct:3500,refPct:20,refY:6,taxOn:1};
+const BASE={rate:5905,occ:95,esc:5,dens:6.5,capex:550,fit:6,rf:6,base:2000,besc:5,sc:0,hurdle:8,sweep:75,trap:7,kick:0,kickOn:0,fund:1,fee:5,t1:80,t2:90,s0:50,s1:60,s2:65,guar:0,term:10,struct:0,lsplit:75,lsplit2:75,acct:3500,refPct:10,refY:6,taxOn:1};
 const FIX={sqm:2146.44,cont:0.05,vat:0.05,setup:80000,legal:110000,marketing:500000,preopen:2,rampStart:0.60,rampStep:0.05,credit:0.01,
   coreMonth:105100,ctRate:0.09,ctFree:375000,lossCap:0.75,payrollMonth:52000,opexEsc:0.03,licence:50000,comm:0.10,leaseYears:3};
 FIX.area=FIX.sqm; FIX.sqft=FIX.sqm*SQFT;
