@@ -286,7 +286,11 @@ footer{border-top:1px solid var(--line);padding:18px 0 40px;font-size:11.5px;col
     <div class="hint" id="hCapex"></div></div>
   <div class="ctl"><div class="row"><label>Fit-out Period</label><span class="val" id="vFit"></span></div>
     <input type="range" id="iFit" min="3" max="12" step="1" value="6">
-    <div class="hint">No revenue; service charge, licence and two months of pre-opening payroll run.</div></div>
+    <div class="hint">No revenue; licence, accounting and two months of pre-opening payroll run.</div></div>
+  <div class="subhdr">Operating costs</div>
+  <div class="ctl"><div class="row"><label>Accounting, Audit &amp; Tax Top-up / month</label><span class="val" id="vAcct"></span></div>
+    <input type="range" id="iAcct" min="0" max="10000" step="500" value="3500">
+    <div class="hint" id="hAcct"></div></div>
   <div class="subhdr">Commercial levers</div>
   <div class="ctl"><div class="row"><label>Suite Rate / yr (Y1)</label><span class="val" id="vRate"></span></div>
     <input type="range" id="iRate" min="4000" max="8000" step="25" value="5905">
@@ -478,7 +482,7 @@ footer{border-top:1px solid var(--line);padding:18px 0 40px;font-size:11.5px;col
 
 <script>
 const SQFT=10.7639;
-const BASE={rate:5905,occ:95,esc:5,dens:6.5,capex:550,fit:6,rf:6,base:2000,besc:5,sc:0,hurdle:8,sweep:75,trap:7,kick:0,kickOn:0,fund:1,fee:5,t1:80,t2:90,s0:50,s1:60,s2:65,guar:0,term:10,struct:0,lsplit:75,lsplit2:75};
+const BASE={rate:5905,occ:95,esc:5,dens:6.5,capex:550,fit:6,rf:6,base:2000,besc:5,sc:0,hurdle:8,sweep:75,trap:7,kick:0,kickOn:0,fund:1,fee:5,t1:80,t2:90,s0:50,s1:60,s2:65,guar:0,term:10,struct:0,lsplit:75,lsplit2:75,acct:3500};
 const FIX={sqm:2146.44,cont:0.05,vat:0.05,setup:80000,legal:110000,marketing:500000,preopen:2,rampStart:0.60,rampStep:0.05,credit:0.01,
   coreMonth:105100,payrollMonth:52000,opexEsc:0.03,licence:50000,comm:0.10,leaseYears:3};
 FIX.area=FIX.sqm; FIX.sqft=FIX.sqm*SQFT;
@@ -508,7 +512,8 @@ function engine(p){
       r.fee=r.rev*feeR;
       if(ty%FIX.leaseYears===0) r.comm=FIX.comm*area*stab*r.rate/12;
     } else if(m>p.fit-FIX.preopen){ r.core=FIX.payrollMonth; }
-    r.opex=r.sc+r.lic+r.core+r.comm;
+    r.acct=(p.acct||0)*Math.pow(1+FIX.opexEsc,m>p.fit?Math.floor((m-p.fit-1)/12):0);
+    r.opex=r.sc+r.lic+r.acct+r.core+r.comm;
     r.cash=r.rev-r.opex-r.fee;            // distributable cash after opex and fee
     let C=r.cash;
     B*=(1+i);
@@ -544,7 +549,7 @@ function engine(p){
   let fundPayM=null; {let c2=0; for(let m=0;m<inc.length;m++){const prev=c2; c2+=inc[m]; if(m>0&&c2>=0&&fundPayM===null){fundPayM=(m-1)+(inc[m]?-prev/inc[m]:0);}}}
   const incTotal=inc.reduce((a,b)=>a+b,0);
   const years=[];
-  const keys=['rev','sc','lic','core','comm','fee','opex','cash','due','llBase','invIn','invOut','res','kick','resT0','resT1','resT2','llRes','opRes'];
+  const keys=['rev','sc','lic','acct','core','comm','fee','opex','cash','due','llBase','invIn','invOut','res','kick','resT0','resT1','resT2','llRes','opRes'];
   for(let y=0;y<p.term;y++){
     const rs=rows.slice(y*12,(y+1)*12), t={};
     keys.forEach(k=>t[k]=rs.reduce((a,x)=>a+x[k],0));
@@ -609,7 +614,7 @@ function render(){
   ['iHur','iSweep','iTrap','iS0','iT1','iS1','iT2','iS2'].forEach(id=>{const c=$(id).closest('.ctl'); if(c) c.hidden=SS;});
   $('vFund').textContent=LF?'Landlord':'Investor'; $('hFund').textContent=LF?'The landlord funds the fit-out and is repaid its capital at the target IRR (its cost of capital) from the cash split below, ahead of the residual.':'A third-party investor funds the fit-out and is repaid at the target IRR from the cash split below.'; $('vKickOn').textContent=p.kickOn?'On':'Off'; $('cKick').hidden=!p.kickOn; $('lHur').textContent=LF?'Cost of Capital on Fit-out':'Target IRR (capped)'; $('vHur').textContent=p.hurdle.toFixed(1)+'%'; $('vSweep').textContent=p.sweep+' / '+(100-p.sweep); $('hSweep').textContent=p.sweep+'% of cash after the priority return to recover the landlord\'s fit-out, '+(100-p.sweep)+'% straight into the operator / landlord revenue share from day one. Hurdle met at '+yrs(R.repaidM)+'.'; $('vTrap').textContent='Year '+p.trap; $('vKick').textContent=p.kick+'%';
   $('vCapex').textContent='AED '+fmt(rcu(p.capex))+' / '+UL(); $('hCapex').textContent='AED '+fmt(R.capex)+' plus 5% contingency and 5% VAT (recovered in year 1). Standard basis AED 550 / sq ft (AED '+fmt(550*SQFT)+' / sqm).';
-  $('vFit').textContent=p.fit+' months';
+  $('vFit').textContent=p.fit+' months'; $('vAcct').textContent='AED '+fmt(p.acct); $('hAcct').textContent='Outsourced bookkeeping, occupier invoicing, VAT returns, payroll, annual audit and corporate tax return for the JV company, on top of AED '+fmt(4600)+' a month of insurance and admin in the core budget. Total finance and admin about AED '+fmt(p.acct+4600)+' a month. Paid from the lease start, escalating 3% a year, deducted with operating costs.';
   $('vRate').textContent=ra(p.rate); $('hRate').textContent='= AED '+fmt(deskM)+' per workstation per month at '+p.dens+' sqm ('+fmt(p.dens*SQFT)+' sq ft); AED '+fmt(p.rate*A*(p.occ/100)*(1-FIX.credit))+' a year at stabilised occupancy.';
   $('vDens').textContent=U==='sqft'?fmt(p.dens*SQFT)+' sq ft':p.dens+' sqm'; $('hDens').textContent=fmt(R.desks)+' workstations of capacity on the floor. Quote basis only; revenue is priced on floor area.';
   $('vOcc').textContent=p.occ+'%'; $('vEsc').textContent=p.esc+'%';
@@ -636,14 +641,14 @@ function render(){
   $('exCards').innerHTML=[['Stabilised revenue, year 3',fm(stab.rev),pct(stab.occ,0)+' occupancy, '+ra(stab.rate)],['Cash after opex and fee, year 3',fm(stab.cash),pct(stab.cash/stab.rev,0)+' margin; priority return '+fm(stab.due)],['Landlord vs plain lease',(R.llUplift>=0?'+':'')+fm(R.llUplift),ra(R.llEff)+' average vs '+fmt(ru(R.plainTotal/A/p.term))+' on a lease']].map((c,i)=>'<div class="card'+(i===2?' on':'')+'"><div class="y">'+c[0]+'</div><div class="irr">'+c[1]+'</div><small>'+c[2]+'</small></div>').join('');
   // waterfall ladder
   const preOpex=T.rev-T.opex;
-  const st=[['1','Operating costs',(p.sc?'Service charge, ':'')+'ADGM licence, payroll, utilities, pantry, maintenance, leasing commissions',T.opex,'',''],
+  const st=[['1','Operating costs',(p.sc?'Service charge, ':'')+'ADGM licence, accounting and audit, payroll, utilities, pantry, maintenance, leasing commissions',T.opex,'',''],
     ['2','Management fee',p.fee+'% of collected revenue to the operator',T.fee,'',''],
     ['3','Landlord priority return',ra(p.base)+' / yr, +'+p.besc+'% a year. '+(p.guar?'Guaranteed.':'Priority, not guaranteed: shortfalls accrue and are caught up first.'),T.llBase,'',''],
     ['4','Landlord fit-out recovery: capital plus '+p.hurdle+'% cost of capital',(p.sweep<100?p.sweep+'% of remaining cash until the hurdle is met; the other '+(100-p.sweep)+'% flows straight to the revenue share below. Full sweep from year '+(p.trap+1)+' if still unmet.':'100% of remaining cash until the hurdle is met')+' Incl. the year 1 VAT refund.',T.invOut-T.kick,'',''],
     ['6','Residual to the '+p.t1+'% line','Operator '+p.s0+' / landlord '+(100-p.s0),T.resT0,'tier',''],
     ['7','Residual, '+p.t1+'% to '+p.t2+'% line','Operator '+p.s1+' / landlord '+(100-p.s1),T.resT1,'tier',''],
     ['8','Residual above the '+p.t2+'% line','Operator '+p.s2+' / landlord '+(100-p.s2),T.resT2,'tier','']];
-  const stS=[['1','Operating costs',(p.sc?'Service charge, ':'')+'ADGM licence, payroll, utilities, pantry, maintenance, leasing commissions',T.opex,'',''],
+  const stS=[['1','Operating costs',(p.sc?'Service charge, ':'')+'ADGM licence, accounting and audit, payroll, utilities, pantry, maintenance, leasing commissions',T.opex,'',''],
     ...(p.fee?[['2','Management fee',p.fee+'% of collected revenue to the operator',T.fee,'','']]:[]),
     [p.fee?'3':'2','Lease to the landlord',ra(p.base)+' / yr, +'+p.besc+'% a year. '+(p.guar?'Guaranteed.':'Paid first from cash after operating costs; shortfalls accrue.'),T.llBase,'',''],
     [p.fee?'4':'3','Remainder to the landlord ('+p.lsplit+'%)','Recovers the fit-out the landlord funded'+(p.lsplit2!==p.lsplit?'; '+p.lsplit2+'% after recovery':''),T.llRes,'tier',''],
@@ -713,7 +718,7 @@ function render(){
   const grp=l=>'<tr class="grp"><td colspan="'+(Y.length+2)+'">'+l+'</td></tr>';
   let o=hd+'<tr class="mut"><td>Average occupancy (trading months)</td>'+Y.map(t=>'<td>'+(t.occ?pct(t.occ,0):'-')+'</td>').join('')+'<td></td></tr>'+
     '<tr class="mut"><td>Suite rate / '+UL()+' / yr (year end)</td>'+Y.map(t=>'<td>'+(t.rate?fmt(ru(t.rate)):'-')+'</td>').join('')+'<td></td></tr>'+
-    line('Revenue, net of 1% credit loss','rev','tot')+line('Building service charge','sc','',-1)+line('ADGM licence','lic','',-1)+line('Core operating costs','core','',-1)+line('Leasing commissions','comm','',-1)+line('Management fee','fee','',-1)+
+    line('Revenue, net of 1% credit loss','rev','tot')+line('Building service charge','sc','',-1)+line('ADGM licence','lic','',-1)+line('Accounting, audit and tax (top-up)','acct','',-1)+line('Core operating costs','core','',-1)+line('Leasing commissions','comm','',-1)+line('Management fee','fee','',-1)+
     line('Cash after operating costs and fee','cash','hl')+grp('Waterfall')+line('Landlord priority return due','due','mut')+line('Landlord priority return paid','llBase')+
     '<tr class="mut"><td>Arrears at year end</td>'+Y.map(t=>'<td>'+neg(t.arr)+'</td>').join('')+'<td></td></tr>'+
     line('Landlord fit-out and ramp funding','invIn','',-1)+'<tr><td>Fit-out recovery to landlord (incl. VAT refund)</td>'+Y.map(t=>'<td>'+neg(t.invOut-t.kick)+'</td>').join('')+'<td>'+neg(T.invOut-T.kick)+'</td></tr>'+
@@ -737,7 +742,7 @@ function render(){
   // opex
   const ox=[['Payroll: centre manager 20,000, two receptionists 14,000, facilities and IT 10,000, cleaning 8,000',52000],['Utilities (electricity, water, cooling share)',24000],['Pantry, coffee, consumables',8000],['Maintenance and repairs',7000],['Insurance and admin',4600],['Internet and software',6000],['Ongoing marketing',3500]];
   $('tOpex').innerHTML='<tr><th>Line</th><th>AED / month</th><th>AED / yr</th></tr>'+ox.map(x=>'<tr><td>'+x[0]+'</td><td>'+fmt(x[1])+'</td><td>'+fmt(x[1]*12)+'</td></tr>').join('')+'<tr class="tot"><td>Core operating costs</td><td>'+fmt(FIX.coreMonth)+'</td><td>'+fmt(FIX.coreMonth*12)+'</td></tr>';
-  $('tOpexRef').innerHTML='<tr><th>Item</th><th>AED / month</th><th>AED / '+UL()+' / yr</th></tr>'+[['Core operating costs',FIX.coreMonth],['Building service charge',p.sc*FIX.sqft/12],['ADGM licence',FIX.licence/12],['Management fee at stabilisation, year 3',stab.fee/12],['Leasing commissions, average over term',T.comm/p.term/12]].map(x=>'<tr><td>'+x[0]+'</td><td>'+fmt(x[1])+'</td><td>'+fmt(x[1]*12/ar(A))+'</td></tr>').join('');
+  $('tOpexRef').innerHTML='<tr><th>Item</th><th>AED / month</th><th>AED / '+UL()+' / yr</th></tr>'+[['Core operating costs',FIX.coreMonth],['Building service charge',p.sc*FIX.sqft/12],['ADGM licence',FIX.licence/12],['Accounting, audit and tax top-up, year 1',p.acct],['Management fee at stabilisation, year 3',stab.fee/12],['Leasing commissions, average over term',T.comm/p.term/12]].map(x=>'<tr><td>'+x[0]+'</td><td>'+fmt(x[1])+'</td><td>'+fmt(x[1]*12/ar(A))+'</td></tr>').join('');
   // sensitivities
   sensi(R,p);
   // pricing
@@ -748,7 +753,7 @@ function render(){
   // charts
   drawAlloc(Y); drawCum(R.inv);
   // method
-  $('method').innerHTML='Monthly engine over a '+p.term+'-year term on floor 24 (units 2401-2406), '+areaTxt()+' of title deed area. Fit-out AED '+p.capex+' per sq ft plus 5% contingency over '+p.fit+' months; 5% VAT on the fit-out funded at signing and refunded to the landlord in month 12; set-up, legal and launch marketing AED 690,000; two months of pre-opening payroll (AED 52,000 a month). Trading opens at 60% occupancy, rising 5 points a month to '+p.occ+'%; 1% credit loss; suite rate '+ra(p.rate)+' a year escalating '+p.esc+'% each trading year. Core operating costs AED 105,100 a month (2026 prices, 3% escalation); '+(p.sc?'building service charge AED '+p.sc+' per sq ft;':'building service charge included in the landlord\'s rent;')+' ADGM licence AED 50,000 a year; leasing commission 10% of contracted annual revenue on origination and each 3-year renewal. Waterfall each month: (1) operating costs and the '+p.fee+'% management fee; (2) the landlord priority return of '+ra(p.base)+' a year, +'+p.besc+'% each lease year from month '+(p.rf+1)+', '+(p.guar?'guaranteed':'with shortfalls carried as arrears without interest and paid first')+'; (3) '+p.sweep+'% to the landlord\'s fit-out recovery until contributions compounded at '+p.hurdle+'% a year are repaid (100% from year '+(p.trap+1)+' if unmet), with the remaining '+(100-p.sweep)+'% passing to step 4; operating deficits are funded by the landlord and join the fit-out balance; (4) the remaining residual split operator / landlord '+p.s0+'/'+(100-p.s0)+', '+p.s1+'/'+(100-p.s1)+' and '+p.s2+'/'+(100-p.s2)+' across revenue bands set at '+p.t1+'% and '+p.t2+'% of contracted capacity revenue, with revenue above each line attributed to the residual first. IRRs are computed on monthly flows and annualised, pre-tax; UAE corporate tax and any residual value of the fit-out at expiry are not modelled. The landlord\'s return on the fit-out is measured against a fully paid lease at the priority rate.';
+  $('method').innerHTML='Monthly engine over a '+p.term+'-year term on floor 24 (units 2401-2406), '+areaTxt()+' of title deed area. Fit-out AED '+p.capex+' per sq ft plus 5% contingency over '+p.fit+' months; 5% VAT on the fit-out funded at signing and refunded to the landlord in month 12; set-up, legal and launch marketing AED 690,000; two months of pre-opening payroll (AED 52,000 a month). Trading opens at 60% occupancy, rising 5 points a month to '+p.occ+'%; 1% credit loss; suite rate '+ra(p.rate)+' a year escalating '+p.esc+'% each trading year. Core operating costs AED 105,100 a month (2026 prices, 3% escalation); '+(p.sc?'building service charge AED '+p.sc+' per sq ft;':'building service charge included in the landlord\'s rent;')+' ADGM licence AED 50,000 a year; a further AED '+fmt(p.acct)+' a month for outsourced bookkeeping, occupier invoicing, VAT returns, payroll, annual audit and corporate tax return, from the lease start, escalating 3% a year; leasing commission 10% of contracted annual revenue on origination and each 3-year renewal. Waterfall each month: (1) operating costs and the '+p.fee+'% management fee; (2) the landlord priority return of '+ra(p.base)+' a year, +'+p.besc+'% each lease year from month '+(p.rf+1)+', '+(p.guar?'guaranteed':'with shortfalls carried as arrears without interest and paid first')+'; (3) '+p.sweep+'% to the landlord\'s fit-out recovery until contributions compounded at '+p.hurdle+'% a year are repaid (100% from year '+(p.trap+1)+' if unmet), with the remaining '+(100-p.sweep)+'% passing to step 4; operating deficits are funded by the landlord and join the fit-out balance; (4) the remaining residual split operator / landlord '+p.s0+'/'+(100-p.s0)+', '+p.s1+'/'+(100-p.s1)+' and '+p.s2+'/'+(100-p.s2)+' across revenue bands set at '+p.t1+'% and '+p.t2+'% of contracted capacity revenue, with revenue above each line attributed to the residual first. IRRs are computed on monthly flows and annualised, pre-tax; UAE corporate tax and any residual value of the fit-out at expiry are not modelled. The landlord\'s return on the fit-out is measured against a fully paid lease at the priority rate.';
 }
 
 function cellv(txt,base,muted){return '<td class="'+(base?'base ':'')+(muted?'neg':'')+'">'+txt+'</td>';}
@@ -818,7 +823,7 @@ function drawCum(inv){
   s+='</svg>';$('chCum').innerHTML=s;
 }
 
-const sliders={iLs:'lsplit',iLs2:'lsplit2',iSweep:'sweep',iTrap:'trap',iBase:'base',iBesc:'besc',iRf:'rf',iSc:'sc',iHur:'hurdle',iKick:'kick',iCapex:'capex',iFit:'fit',iRate:'rate',iDens:'dens',iOcc:'occ',iEsc:'esc',iFee:'fee',iS0:'s0',iT1:'t1',iS1:'s1',iT2:'t2',iS2:'s2'};
+const sliders={iAcct:'acct',iLs:'lsplit',iLs2:'lsplit2',iSweep:'sweep',iTrap:'trap',iBase:'base',iBesc:'besc',iRf:'rf',iSc:'sc',iHur:'hurdle',iKick:'kick',iCapex:'capex',iFit:'fit',iRate:'rate',iDens:'dens',iOcc:'occ',iEsc:'esc',iFee:'fee',iS0:'s0',iT1:'t1',iS1:'s1',iT2:'t2',iS2:'s2'};
 function syncInputs(){Object.entries(sliders).forEach(([id,k])=>{$(id).value=S[k];});
   document.querySelectorAll('#segTerm button').forEach(b=>b.classList.toggle('on',+b.dataset.v===S.term));
   document.querySelectorAll('#segGuar button').forEach(b=>b.classList.toggle('on',+b.dataset.v===S.guar));
