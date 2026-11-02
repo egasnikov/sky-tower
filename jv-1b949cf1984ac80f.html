@@ -711,7 +711,6 @@ function render(){
   $('retNote').innerHTML='The plain-lease comparison lets the same floor at the priority rate with the same '+p.rf+'-month rent-free period and escalation, fully paid. The landlord\'s income in the joint venture runs below the lease only if the priority return falls into arrears; at the base case it is paid in full every month, so the uplift is the landlord\'s share of the residual. At expiry the fitted floor reverts to the landlord, which is not valued here.';
   // structure comparison
   const cmp=[['Tiered JV: '+(SS?BASE.hurdle:p.hurdle)+'% capital tranche ('+p.sweep+'/'+(100-p.sweep)+' sweep), then '+(SS?BASE.s0+'/'+BASE.s1+'/'+BASE.s2:p.s0+'/'+p.s1+'/'+p.s2)+' tiers, '+(SS?BASE.fee:p.fee)+'% fee'+(BASE.pmFee?', PM and sales fee':''),{struct:0,fund:1,kickOn:0,pmFee:SS?BASE.pmFee:p.pmFee,pmMonths:SS?BASE.pmMonths:p.pmMonths,fee:SS?BASE.fee:p.fee,s0:SS?BASE.s0:p.s0,s1:SS?BASE.s1:p.s1,s2:SS?BASE.s2:p.s2},!SS],
-    ['Simple '+p.lsplit+'/'+(100-p.lsplit)+' flat, no management fee'+(BASE.pmFee?', PM and sales fee':''),{struct:1,fee:0,lsplit2:p.lsplit,pmFee:SS?p.pmFee:BASE.pmFee,pmMonths:SS?p.pmMonths:BASE.pmMonths},SS&&!p.fee&&p.lsplit2===p.lsplit],
     ['Simple '+p.lsplit+'/'+(100-p.lsplit)+' flat, plus '+BASE.fee+'% management fee'+(BASE.pmFee?', PM and sales fee':''),{struct:1,fee:BASE.fee,lsplit2:p.lsplit,pmFee:SS?p.pmFee:BASE.pmFee,pmMonths:SS?p.pmMonths:BASE.pmMonths},SS&&p.fee===BASE.fee&&p.lsplit2===p.lsplit]];
   let ct='<tr><th>Structure (landlord funds fit-out)</th><th>Fit-out payback</th><th>Landlord IRR on fit-out</th><th>Landlord vs plain lease</th><th>Landlord net, term</th><th>Operator, term</th><th>Operator Y1-5</th></tr>';
   cmp.forEach(c=>{const q2=Object.assign({},p,c[1]),x=engine(q2),net=x.llTotal+x.dist-x.contrib;
@@ -869,7 +868,7 @@ Object.entries(sliders).forEach(([id,k])=>{$(id).addEventListener('input',e=>{if
   syncInputs();render();});});
 document.querySelectorAll('#segTerm button').forEach(b=>b.addEventListener('click',()=>{S.term=+b.dataset.v;syncInputs();render();}));
 document.querySelectorAll('#segUnit button').forEach(b=>b.addEventListener('click',()=>{U=b.dataset.v;document.querySelectorAll('#segUnit button').forEach(x=>x.classList.toggle('on',x.dataset.v===U));render();}));
-document.querySelectorAll('#segStruct button').forEach(b=>b.addEventListener('click',()=>{S.struct=+b.dataset.v; if(S.struct){S.fund=1;S.kickOn=0;S.fee=0;} else {S.fee=BASE.fee;} syncInputs();render();}));
+document.querySelectorAll('#segStruct button').forEach(b=>b.addEventListener('click',()=>{S.struct=+b.dataset.v; if(S.struct){S.fund=1;S.kickOn=0;} S.fee=BASE.fee; syncInputs();render();}));
 document.querySelectorAll('#segFund button').forEach(b=>b.addEventListener('click',()=>{S.fund=+b.dataset.v;S.kickOn=S.fund?0:1;syncInputs();render();}));
 document.querySelectorAll('#segKick button').forEach(b=>b.addEventListener('click',()=>{S.kickOn=+b.dataset.v;syncInputs();render();}));
 document.querySelectorAll('#segTax button').forEach(b=>b.addEventListener('click',()=>{S.taxOn=+b.dataset.v;syncInputs();render();}));
