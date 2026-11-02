@@ -314,19 +314,19 @@ footer{border-top:1px solid var(--line);padding:18px 0 40px;font-size:11.5px;col
     <div class="hint">Applied each trading year on multi-year suite agreements.</div></div>
   <div class="subhdr">Operator terms and revenue share</div>
   <div class="ctl"><div class="row"><label>Management Fee (of revenue)</label><span class="val" id="vFee"></span></div>
-    <input type="range" id="iFee" min="0" max="8" step="0.5" value="5">
+    <input type="range" id="iFee" min="0" max="8" step="0.5" value="3">
     <div class="hint">Charged monthly on collected revenue with operating costs, ahead of the landlord.</div></div>
   <div class="ctl"><div class="row"><label>Operator Share up to Tier 1</label><span class="val" id="vS0"></span></div>
-    <input type="range" id="iS0" min="20" max="80" step="5" value="50">
+    <input type="range" id="iS0" min="20" max="80" step="5" value="40">
     <div class="hint" id="hS0"></div></div>
   <div class="ctl"><div class="row"><label>Tier 1 Line (occupancy equivalent)</label><span class="val" id="vT1"></span></div>
     <input type="range" id="iT1" min="60" max="90" step="1" value="80"></div>
   <div class="ctl"><div class="row"><label>Operator Share, Tier 1 to Tier 2</label><span class="val" id="vS1"></span></div>
-    <input type="range" id="iS1" min="20" max="85" step="5" value="60"></div>
+    <input type="range" id="iS1" min="20" max="85" step="5" value="50"></div>
   <div class="ctl"><div class="row"><label>Tier 2 Line (occupancy equivalent)</label><span class="val" id="vT2"></span></div>
     <input type="range" id="iT2" min="70" max="99" step="1" value="90"></div>
   <div class="ctl"><div class="row"><label>Operator Share above Tier 2</label><span class="val" id="vS2"></span></div>
-    <input type="range" id="iS2" min="20" max="90" step="5" value="65">
+    <input type="range" id="iS2" min="20" max="90" step="5" value="60">
     <div class="hint">Residual = cash left after operating costs, management fee, the landlord's priority return and the recovery of the landlord's fit-out at its cost of capital.</div></div>
   <button class="reset" id="btnReset">Reset to base case</button>
 </div>
@@ -458,7 +458,7 @@ footer{border-top:1px solid var(--line);padding:18px 0 40px;font-size:11.5px;col
     <tr><td><b>Management agreement</b></td><td>Landlord (operator capex near zero)</td><td>No rent. Revenue pays operating costs and the operator's fee; the owner keeps what is left. Fees are a contracted share of revenue, sometimes with a flat element.</td><td>IWG (managed and franchised network: 1,891 centres, $876M system revenue in 2025), Industrious, WeWork since 2024</td></tr>
     <tr><td><b>Tiered revenue share (waterfall)</b></td><td>Landlord, recouped through its share</td><td>Landlord takes the larger share first until a rent that covers its costs, then a middle tier, then the split moves in the operator's favour once market rent or a target occupancy is reached.</td><td>US landlord-operator deals per JLL; Deskworks example: 80/20 to the landlord, then 50/50, then reversed</td></tr>
     <tr><td><b>Hybrid lease</b></td><td>Typically shared or landlord-led</td><td>Reduced base rent, often around half of market, plus variable payments linked to occupancy or profit.</td><td>German market (GSG, Design Offices, Unicorn); Industrious with Brookfield, Frankfurt</td></tr>
-    <tr class="hl"><td><b>This JV</b></td><td>Landlord, recovered at an 8% cost of capital</td><td>Landlord priority return of AED 2,000 / sqm first, fit-out capital repaid from a 75/25 cash split, then 50/50, 60/40 and 65/35 to the operator across revenue tiers</td><td>Sky Tower floor 24</td></tr>
+    <tr class="hl"><td><b>This JV</b></td><td>Landlord, recovered at an 8% cost of capital</td><td>Landlord priority return of AED 2,000 / sqm first, fit-out capital repaid from a 75/25 cash split, then 40/60, 50/50 and 60/40 (operator / landlord) across revenue tiers</td><td>Sky Tower floor 24</td></tr>
   </table></div>
   <div class="grid2" style="margin-top:14px">
     <div class="reco"><b>What landlords get.</b> Industrious states its landlord partners earn about 30% more than they would on a lease; German operators cite 15% to 20% above market rent for management contracts, with owners clearing market rent at around 90% occupancy. This model shows the landlord at <span id="precUp"></span> over a plain lease at the priority rate.</div>
@@ -490,7 +490,7 @@ footer{border-top:1px solid var(--line);padding:18px 0 40px;font-size:11.5px;col
 
 <script>
 const SQFT=10.7639;
-const BASE={rate:5905,occ:95,esc:5,dens:6.5,capex:550,fit:6,rf:6,base:2000,besc:5,sc:0,hurdle:8,sweep:75,trap:7,kick:0,kickOn:0,fund:1,fee:5,t1:80,t2:90,s0:50,s1:60,s2:65,guar:0,term:10,struct:0,lsplit:75,lsplit2:75,acct:3500,refPct:10,refY:6,taxOn:1};
+const BASE={rate:5905,occ:95,esc:5,dens:6.5,capex:550,fit:6,rf:6,base:2000,besc:5,sc:0,hurdle:8,sweep:75,trap:7,kick:0,kickOn:0,fund:1,fee:3,t1:80,t2:90,s0:40,s1:50,s2:60,guar:0,term:10,struct:0,lsplit:75,lsplit2:75,acct:3500,refPct:10,refY:6,taxOn:1};
 const FIX={sqm:2146.44,cont:0.05,vat:0.05,setup:80000,legal:110000,marketing:500000,preopen:2,rampStart:0.60,rampStep:0.05,credit:0.01,
   coreMonth:105100,ctRate:0.09,ctFree:375000,lossCap:0.75,payrollMonth:52000,opexEsc:0.03,licence:50000,comm:0.10,leaseYears:3};
 FIX.area=FIX.sqm; FIX.sqft=FIX.sqm*SQFT;
@@ -640,7 +640,7 @@ function render(){
   $('vDens').textContent=U==='sqft'?fmt(p.dens*SQFT)+' sq ft':p.dens+' sqm'; $('hDens').textContent=fmt(R.desks)+' workstations of capacity on the floor. Quote basis only; revenue is priced on floor area.';
   $('vOcc').textContent=p.occ+'%'; $('vEsc').textContent=p.esc+'%';
   $('vFee').textContent=p.fee+'%';
-  $('vS0').textContent=p.s0+' / '+(100-p.s0); $('hS0').textContent='Operator / landlord split of the residual. Base: 50 / 50 up to the 80% line, 60 / 40 to the 90% line, 65 / 35 above.';
+  $('vS0').textContent=p.s0+' / '+(100-p.s0); $('hS0').textContent='Operator / landlord split of the residual. Base: 40 / 60 up to the 80% line, 50 / 50 to the 90% line, 60 / 40 above: the landlord takes the majority until the floor outperforms.';
   $('vT1').textContent=p.t1+'%'; $('vS1').textContent=p.s1+' / '+(100-p.s1); $('vT2').textContent=p.t2+'%'; $('vS2').textContent=p.s2+' / '+(100-p.s2);
   // break-even occupancy covering opex + priority return in lease year 3
   const y3r=R.rows.slice(24,36); const fixed3=y3r.reduce((a,x)=>a+x.opex+x.due,0), full3=y3r.reduce((a,x)=>a+x.full,0)*(1-p.fee/100);
@@ -700,10 +700,9 @@ function render(){
   $('rLfPlain').textContent='('+fmt(R.plainTotal)+')'; const inc=R.llTotal+R.dist-R.plainTotal-R.contrib; $('rLfInc').textContent=fmt(inc); $('rLfMult').textContent=((inc+R.contrib)/R.contrib).toFixed(2)+'x';
   $('retNote').innerHTML='The plain-lease comparison lets the same floor at the priority rate with the same '+p.rf+'-month rent-free period and escalation, fully paid. The landlord\'s income in the joint venture runs below the lease only if the priority return falls into arrears; at the base case it is paid in full every month, so the uplift is the landlord\'s share of the residual. At expiry the fitted floor reverts to the landlord, which is not valued here.';
   // structure comparison
-  const cmp=[['Tiered JV: '+(SS?BASE.hurdle:p.hurdle)+'% capital tranche ('+p.sweep+'/'+(100-p.sweep)+' sweep), then 50/60/65 tiers',{struct:0,fund:1,kickOn:0,fee:SS?BASE.fee:p.fee},!SS],
+  const cmp=[['Tiered JV: '+(SS?BASE.hurdle:p.hurdle)+'% capital tranche ('+p.sweep+'/'+(100-p.sweep)+' sweep), then '+(SS?BASE.s0+'/'+BASE.s1+'/'+BASE.s2:p.s0+'/'+p.s1+'/'+p.s2)+' tiers, '+(SS?BASE.fee:p.fee)+'% fee',{struct:0,fund:1,kickOn:0,fee:SS?BASE.fee:p.fee,s0:SS?BASE.s0:p.s0,s1:SS?BASE.s1:p.s1,s2:SS?BASE.s2:p.s2},!SS],
     ['Simple '+p.lsplit+'/'+(100-p.lsplit)+' flat, no management fee',{struct:1,fee:0,lsplit2:p.lsplit},SS&&!p.fee&&p.lsplit2===p.lsplit],
-    ['Simple '+p.lsplit+'/'+(100-p.lsplit)+' flat, plus 5% management fee',{struct:1,fee:5,lsplit2:p.lsplit},SS&&p.fee===5&&p.lsplit2===p.lsplit],
-    ['Simple '+p.lsplit+'/'+(100-p.lsplit)+' until fit-out recovered, then 50/50',{struct:1,fee:0,lsplit2:50},SS&&!p.fee&&p.lsplit2===50]];
+    ['Simple '+p.lsplit+'/'+(100-p.lsplit)+' flat, plus '+BASE.fee+'% management fee',{struct:1,fee:BASE.fee,lsplit2:p.lsplit},SS&&p.fee===BASE.fee&&p.lsplit2===p.lsplit]];
   let ct='<tr><th>Structure (landlord funds fit-out)</th><th>Fit-out payback</th><th>Landlord IRR on fit-out</th><th>Landlord vs plain lease</th><th>Landlord net, term</th><th>Operator, term</th><th>Operator Y1-5</th></tr>';
   cmp.forEach(c=>{const q2=Object.assign({},p,c[1]),x=engine(q2),net=x.llTotal+x.dist-x.contrib;
     ct+='<tr'+(c[2]?' class="hl"':'')+'><td>'+c[0]+'</td><td>'+yrs(x.fundPayM)+'</td><td>'+pct(x.llFundIrr)+'</td><td>+'+fM(x.incTotal)+'M</td><td>'+fM(net)+'M</td><td>'+fM(x.opTotal)+'M</td><td>'+fM(x.years.slice(0,5).reduce((a,t)=>a+t.op,0))+'M</td></tr>';});
@@ -797,7 +796,7 @@ function sensi(R,p){
   const oc=occs.map(o=>({l:o+'%',v:o}));
   grid('sRepay','Rate / '+UL(),rates.map(r=>({l:fmt(ru(r)),v:r})),'Occupancy',oc,(r,c)=>{const x=engine(Object.assign({},p,{rate:r.v,occ:c.v}));return cellv(x.repaidM===null?'n/a':(x.repaidM/12).toFixed(1),r.v===p.rate&&c.v===p.occ,x.repaidM===null);});
   grid('sLlEff','Rate / '+UL(),rates.map(r=>({l:fmt(ru(r)),v:r})),'Occupancy',oc,(r,c)=>{const x=engine(Object.assign({},p,{rate:r.v,occ:c.v}));return cellv(fmt(ru(x.llEff)),r.v===p.rate&&c.v===p.occ,x.llUplift<0);});
-  const structs=[{l:'Flat 50/50',s0:50,s1:50,s2:50},{l:'50 / 60 / 65 (base)',s0:50,s1:60,s2:65,base:1},{l:'Flat 60/40',s0:60,s1:60,s2:60},{l:'40 / 60 / 70',s0:40,s1:60,s2:70},{l:'50 / 65 / 75',s0:50,s1:65,s2:75}];
+  const structs=[{l:'30 / 50 / 60',s0:30,s1:50,s2:60},{l:'40 / 50 / 60 (base)',s0:40,s1:50,s2:60,base:1},{l:'Flat 50/50',s0:50,s1:50,s2:50},{l:'40 / 60 / 70',s0:40,s1:60,s2:70},{l:'50 / 60 / 65',s0:50,s1:60,s2:65}];
   const isBaseStruct=st=>st.s0===p.s0&&st.s1===p.s1&&st.s2===p.s2;
   grid('sStructOp','Operator share',structs,'Occupancy',oc,(r,c)=>{const x=engine(Object.assign({},p,{s0:r.s0,s1:r.s1,s2:r.s2,occ:c.v}));return cellv(fM(x.opTotal),isBaseStruct(r)&&c.v===p.occ,false);});
   grid('sStructLl','Operator share',structs,'Occupancy',oc,(r,c)=>{const x=engine(Object.assign({},p,{s0:r.s0,s1:r.s1,s2:r.s2,occ:c.v}));return cellv(fM(x.llTotal),isBaseStruct(r)&&c.v===p.occ,x.llUplift<0);});
