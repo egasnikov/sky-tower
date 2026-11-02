@@ -241,7 +241,7 @@ footer{border-top:1px solid var(--line);padding:18px 0 40px;font-size:11.5px;col
     <input type="range" id="iLs" min="50" max="90" step="5" value="75">
     <div class="hint">Cash after operating costs and the priority return, split landlord / operator from the first trading month. The landlord recovers its fit-out from this share.</div></div>
   <div class="ctl" id="cLs2"><div class="row"><label>Landlord Share after Fit-out Recovered</label><span class="val" id="vLs2"></span></div>
-    <input type="range" id="iLs2" min="30" max="90" step="5" value="75">
+    <input type="range" id="iLs2" min="30" max="90" step="5" value="60">
     <div class="hint" id="hLs2"></div></div>
   <div class="subhdr">Term</div>
   <div class="ctl"><div class="row"><label>JV Term</label><span class="val" id="vTerm"></span></div>
@@ -497,7 +497,7 @@ footer{border-top:1px solid var(--line);padding:18px 0 40px;font-size:11.5px;col
 
 <script>
 const SQFT=10.7639;
-const BASE={rate:5905,occ:95,esc:5,dens:6.5,capex:550,fit:6,rf:6,base:2000,besc:5,sc:0,hurdle:8,sweep:75,trap:7,kick:0,kickOn:0,fund:1,fee:3,t1:80,t2:90,s0:40,s1:50,s2:60,guar:0,term:10,struct:0,lsplit:75,lsplit2:75,acct:3500,refPct:10,refY:6,taxOn:1,pmFee:50000,pmMonths:10,leaseIn:0};
+const BASE={rate:5905,occ:95,esc:5,dens:6.5,capex:550,fit:6,rf:6,base:2000,besc:5,sc:0,hurdle:8,sweep:75,trap:7,kick:0,kickOn:0,fund:1,fee:3,t1:80,t2:90,s0:40,s1:50,s2:60,guar:0,term:10,struct:0,lsplit:75,lsplit2:60,acct:3500,refPct:10,refY:6,taxOn:1,pmFee:50000,pmMonths:10,leaseIn:0};
 const FIX={sqm:2146.44,cont:0,vat:0.05,setup:80000,legal:110000,marketing:500000,preopen:2,rampStart:0.60,rampStep:0.05,credit:0.01,
   coreMonth:105100,ctRate:0.09,ctFree:375000,lossCap:0.75,payrollMonth:52000,opexEsc:0.03,licence:50000,comm:0.10,leaseYears:3};
 FIX.area=FIX.sqm; FIX.sqft=FIX.sqm*SQFT;
@@ -711,7 +711,7 @@ function render(){
   $('retNote').innerHTML='The plain-lease comparison lets the same floor at the priority rate with the same '+p.rf+'-month rent-free period and escalation, fully paid. The landlord\'s income in the joint venture runs below the lease only if the priority return falls into arrears; at the base case it is paid in full every month, so the uplift is the landlord\'s share of the residual. At expiry the fitted floor reverts to the landlord, which is not valued here.';
   // structure comparison
   const cmp=[['Tiered JV: '+(SS?BASE.hurdle:p.hurdle)+'% capital tranche ('+p.sweep+'/'+(100-p.sweep)+' sweep), then '+(SS?BASE.s0+'/'+BASE.s1+'/'+BASE.s2:p.s0+'/'+p.s1+'/'+p.s2)+' tiers, '+(SS?BASE.fee:p.fee)+'% fee'+(BASE.pmFee?', PM and sales fee':''),{struct:0,fund:1,kickOn:0,pmFee:SS?BASE.pmFee:p.pmFee,pmMonths:SS?BASE.pmMonths:p.pmMonths,fee:SS?BASE.fee:p.fee,s0:SS?BASE.s0:p.s0,s1:SS?BASE.s1:p.s1,s2:SS?BASE.s2:p.s2},!SS],
-    ['Simple '+p.lsplit+'/'+(100-p.lsplit)+' flat, plus '+BASE.fee+'% management fee'+(BASE.pmFee?', PM and sales fee':''),{struct:1,fee:BASE.fee,lsplit2:p.lsplit,pmFee:SS?p.pmFee:BASE.pmFee,pmMonths:SS?p.pmMonths:BASE.pmMonths},SS&&p.fee===BASE.fee&&p.lsplit2===p.lsplit]];
+    ['Simple split: '+(SS?p.lsplit:BASE.lsplit)+'/'+(100-(SS?p.lsplit:BASE.lsplit))+' to the landlord until its funding is recovered, then '+(SS?p.lsplit2:BASE.lsplit2)+'/'+(100-(SS?p.lsplit2:BASE.lsplit2))+'; '+BASE.fee+'% fee'+(BASE.pmFee?', PM and sales fee':''),{struct:1,fee:SS?p.fee:BASE.fee,lsplit:SS?p.lsplit:BASE.lsplit,lsplit2:SS?p.lsplit2:BASE.lsplit2,pmFee:SS?p.pmFee:BASE.pmFee,pmMonths:SS?p.pmMonths:BASE.pmMonths},SS]];
   let ct='<tr><th>Structure (landlord funds fit-out)</th><th>Fit-out payback</th><th>Landlord IRR on fit-out</th><th>Landlord vs plain lease</th><th>Landlord net, term</th><th>Operator, term</th><th>Operator Y1-5</th></tr>';
   cmp.forEach(c=>{const q2=Object.assign({},p,c[1]),x=engine(q2),net=x.llTotal+x.dist-x.contrib;
     ct+='<tr'+(c[2]?' class="hl"':'')+'><td>'+c[0]+'</td><td>'+yrs(x.fundPayM)+'</td><td>'+pct(x.llFundIrr)+'</td><td>+'+fM(x.incTotal)+'M</td><td>'+fM(net)+'M</td><td>'+fM(x.opTotal)+'M</td><td>'+fM(x.years.slice(0,5).reduce((a,t)=>a+t.op,0))+'M</td></tr>';});
